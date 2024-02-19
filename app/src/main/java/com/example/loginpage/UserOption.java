@@ -12,6 +12,7 @@ import android.widget.TextView;
 public class UserOption extends AppCompatActivity {
      TextView owner_option ;
      TextView customer_option;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
