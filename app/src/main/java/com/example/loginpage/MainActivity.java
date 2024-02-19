@@ -14,34 +14,42 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     Button button ;
-    TextView textView;
     FirebaseUser user;
+
+    TextView Mess_1 , Mess_2 , Mess_3 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         auth = FirebaseAuth.getInstance();
-        button = findViewById(R.id.logout);
-        textView  = findViewById(R.id.user_details);
+       // button = findViewById(R.id.logout);
         user = auth.getCurrentUser();
+        Mess_1 = findViewById(R.id.Mess_1);
+        Mess_2 = findViewById(R.id.Mess_2);
+        Mess_3 = findViewById(R.id.Mess_3);
 
         if(user == null){
             Intent intent =new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
             finish();
         }
-        else{
-            textView.setText(user.getEmail());
-        }
-        button.setOnClickListener(new View.OnClickListener() {
+        Mess_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent =new Intent(getApplicationContext(), Login.class);
+                Intent intent = new Intent(getApplicationContext(),Mess_1.class);
                 startActivity(intent);
                 finish();
             }
         });
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FirebaseAuth.getInstance().signOut();
+//                Intent intent =new Intent(getApplicationContext(), Login.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
     }
 }
