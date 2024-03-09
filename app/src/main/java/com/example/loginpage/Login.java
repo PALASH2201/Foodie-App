@@ -31,10 +31,15 @@ public class Login extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent  = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
+        if(currentUser != null) {
+            if (currentUser.isEmailVerified()) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            else if(!currentUser.isEmailVerified()) {
+                Toast.makeText(Login.this, "Please verify your email!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
     @Override

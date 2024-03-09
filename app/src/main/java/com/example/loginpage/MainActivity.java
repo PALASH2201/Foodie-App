@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         Mess_2 = findViewById(R.id.Mess_2);
         Mess_3 = findViewById(R.id.Mess_3);
 
-        if(user == null){
+        if(user == null || !user.isEmailVerified()){
             Intent intent =new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
             finish();

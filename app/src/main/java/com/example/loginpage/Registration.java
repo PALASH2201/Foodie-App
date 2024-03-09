@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,14 +29,37 @@ public class Registration extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // Check if user is signed in
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent  = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
+        if (currentUser != null) {
+            // Check if email is verified
+            currentUser.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        FirebaseUser updatedUser = mAuth.getCurrentUser();
+                        if (updatedUser != null && updatedUser.isEmailVerified()) {
+                            // User's email is verified, redirect to main activity
+                            SharedPreferences.Editor editor = getSharedPreferences("UserPrefs", MODE_PRIVATE).edit();
+                            editor.putBoolean("isEmailVerified", true);
+                            editor.apply();
+                            Intent intent = new Intent(getApplicationContext(), Login.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            // User's email is not verified, prompt them to verify
+                            Toast.makeText(Registration.this, "Please verify your email to login.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        // Error refreshing user data
+                        Toast.makeText(Registration.this, "Failed to check email verification status.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
     }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,20 +97,31 @@ public class Registration extends AppCompatActivity {
                     return;
                 }
 
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
-//                                     Sign in success, update UI with the signed-in user's information
-//                                    FirebaseUser user =
                                     mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
                                                 Toast.makeText(Registration.this, "Account created.Please verify your email id",
                                                         Toast.LENGTH_SHORT).show();
+                                                SharedPreferences.Editor editor = getSharedPreferences("UserPrefs", MODE_PRIVATE).edit();
+                                                editor.putBoolean("isEmailVerified", false);
+                                                editor.apply();
+                                                mAuth.getCurrentUser().reload().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (mAuth.getCurrentUser().isEmailVerified()) {
+                                                            // Email is verified, allow user to log in
+                                                            Intent intent = new Intent(getApplicationContext(),Login.class);
+                                                            startActivity(intent);
+                                                            finish();
+                                                        }
+                                                    }
+                                                });
                                             }
                                             else{
                                                 Toast.makeText(Registration.this, "Authentication failed.",
@@ -94,9 +129,6 @@ public class Registration extends AppCompatActivity {
                                             }
                                         }
                                     });
-//                                    Intent intent = new Intent(getApplicationContext(), Login.class);
-//                                    startActivity(intent);
-//                                    finish();
                                 }
                                 else {
                                     // If sign in fails, display a message to the user.
