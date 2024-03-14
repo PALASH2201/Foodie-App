@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser user;
 
     TextView Mess_1 , Mess_2 , Mess_3 ;
+    public static final String EXTRA_NAME_1 = "com.example.Mess_1.extra.NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),Mess_1.class);
+                intent.putExtra(EXTRA_NAME_1,Mess_1.getText().toString());
                 startActivity(intent);
                 finish();
             }

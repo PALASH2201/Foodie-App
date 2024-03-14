@@ -12,7 +12,7 @@
         android:layout_width="303dp"
         android:layout_height="72dp"
         android:gravity="center"
-        android:text="Welcome to Foodie App!"
+        android:text="Welcome to Foodease App!"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"

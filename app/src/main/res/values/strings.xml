@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Foodie</string>
+    <string name="app_name">FoodEase</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -9,4 +9,6 @@
     <string name="logout">Logout</string>
     <string name="Appname">Foodie</string>
     <string name="tagline">Ordering Food became easy</string>
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
 </resources>
