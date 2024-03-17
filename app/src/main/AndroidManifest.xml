@@ -15,8 +15,15 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
         <activity
-            android:name=".Mess_1"
+            android:name=".navigationMenu"
             android:exported="false" />
+        <activity
+            android:name=".User_cart"
+            android:exported="false" />
+        <activity
+            android:name=".Mess_1"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".UserOption"
             android:exported="true"
@@ -31,7 +38,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Login"
             android:exported="true"
@@ -48,8 +54,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Material3.Light.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"
