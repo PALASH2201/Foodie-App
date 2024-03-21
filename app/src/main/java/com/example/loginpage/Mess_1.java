@@ -109,7 +109,7 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
                 for(DataSnapshot categorySnapshot : snapshot.getChildren()){
                     String name = categorySnapshot.child("name").getValue(String.class);
                     String imageUrl = categorySnapshot.child("image_url").getValue(String.class);
-                    CategoriesDataClass dataClass = new CategoriesDataClass(name, imageUrl);
+                    CategoriesDataClass dataClass = new CategoriesDataClass(name, imageUrl,restaurantId);
                     dataList.add(dataClass);
                 }
                 adapter.notifyDataSetChanged();

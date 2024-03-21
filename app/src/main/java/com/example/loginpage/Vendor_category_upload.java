@@ -85,19 +85,29 @@ public class Vendor_category_upload extends AppCompatActivity {
     private void fetchRestaurantDetails() {
 
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference("restaurants").child(currentUserId);
+        DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference("vendors").child(currentUserId);
 
         restaurantRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot vendorSnapshot : snapshot.getChildren()) {
+//                    String restaurantId = vendorSnapshot.child("key").getValue(String.class);
+//                    if (restaurantId != null) {
+//                        saveData(restaurantId);
+//                        break;
+//                    } else {
+//                        Toast.makeText(Vendor_category_upload.this, "Restaurant ID not found for vendor", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
                 if (snapshot.exists()) {
-
-                    String restaurantName = snapshot.child("name").getValue(String.class);
-                    String restaurantId = snapshot.getKey();
-
-                    saveData(restaurantName, restaurantId);
+                    String restaurantId = snapshot.child("key").getValue(String.class);
+                    if (restaurantId != null) {
+                        saveData(restaurantId);
+                    } else {
+                        Toast.makeText(Vendor_category_upload.this, "Restaurant ID not found for vendor", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(Vendor_category_upload.this, "Restaurant details not found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Vendor_category_upload.this, "Vendor details not found", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -109,11 +119,11 @@ public class Vendor_category_upload extends AppCompatActivity {
     }
 
 
-    private void saveData(String restaurantName,String restaurantId) {
+    private void saveData(String restaurantId) {
         String categoryName = uploadName.getText().toString();
         String categoryId = FirebaseDatabase.getInstance().getReference("categories").push().getKey();
 
-        StorageReference restaurantRef = FirebaseStorage.getInstance().getReference().child("restaurants").child(restaurantName);
+        StorageReference restaurantRef = FirebaseStorage.getInstance().getReference().child("vendors");
         StorageReference categoryRef = restaurantRef.child(categoryName);
         StorageReference imageRef = categoryRef.child(categoryId);
 
@@ -133,7 +143,7 @@ public class Vendor_category_upload extends AppCompatActivity {
                     public void onSuccess(Uri uri) {
                         imageURL = uri.toString();
                         dialog.dismiss();
-                        uploadData(restaurantName,categoryName,categoryId);
+                        uploadData(restaurantId,categoryName,categoryId);
                         uploadImage.setImageResource(R.drawable.uploading);
                     }
                 });
@@ -145,8 +155,8 @@ public class Vendor_category_upload extends AppCompatActivity {
             }
         });
     }
-    public void uploadData(String restaurantName , String categoryName, String categoryId){
-        CategoriesDataClass dataClass = new CategoriesDataClass(uploadName.getText().toString(),imageURL);
+    public void uploadData(String restaurantId , String categoryName, String categoryId){
+        CategoriesDataClass dataClass = new CategoriesDataClass(categoryName,imageURL,restaurantId);
         dataClass.setKey(categoryId);
 
         FirebaseDatabase.getInstance().getReference("categories").child(categoryId)

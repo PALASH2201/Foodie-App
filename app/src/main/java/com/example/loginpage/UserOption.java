@@ -31,7 +31,7 @@ public class UserOption extends AppCompatActivity {
         owner_option.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Vendor_registration.class);
+                Intent intent = new Intent(getApplicationContext(), Vendor_interface.class);
                 startActivity(intent);
                 finish();
             }

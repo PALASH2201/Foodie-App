@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -83,9 +84,9 @@ public class Vendor_registration extends AppCompatActivity {
     }
     private void saveData() {
 
-        String restaurant_id = FirebaseDatabase.getInstance().getReference("vendors").push().getKey();
+        String child_folder = "Restaurant Logo";
 
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("vendors").child(restaurant_id);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("vendors").child(child_folder);
         AlertDialog.Builder builder = new AlertDialog.Builder(Vendor_registration.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
@@ -102,7 +103,7 @@ public class Vendor_registration extends AppCompatActivity {
                     public void onSuccess(Uri uri) {
                         imageURL = uri.toString();
                         dialog.dismiss();
-                        uploadData(restaurant_id);
+                        uploadData();
                         uploadImage.setImageResource(R.drawable.uploading);
                     }
                 });
@@ -115,16 +116,20 @@ public class Vendor_registration extends AppCompatActivity {
         });
     }
 
-    public void uploadData(String restaurant_id){
+    public void uploadData(){
         String restaurant_name = uploadName.getText().toString();
         String owner_name = uploadOwnerName.getText().toString();
         String location = uploadLocation.getText().toString();
         String phone = uploadContact.getText().toString();
 
+        String restaurant_id = FirebaseDatabase.getInstance().getReference("vendors").push().getKey();
+
         VendorDataClass dataClass = new VendorDataClass(restaurant_name,owner_name,location,phone,imageURL);
         dataClass.setKey(restaurant_id);
 
-        FirebaseDatabase.getInstance().getReference("vendors").child(restaurant_id)
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        FirebaseDatabase.getInstance().getReference("vendors").child(currentUserId)
 
                 .setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
