@@ -1,15 +1,22 @@
 package com.example.loginpage;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Vendor_interface extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
     private TextView addCategories , registerNow;
+    private Button logout ;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +25,8 @@ public class Vendor_interface extends AppCompatActivity {
 
         addCategories = findViewById(R.id.addCategories);
         registerNow = findViewById(R.id.registerNow);
+        logout = findViewById(R.id.logout_btn);
+        mAuth = FirebaseAuth.getInstance();
 
         addCategories.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +41,25 @@ public class Vendor_interface extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent =new Intent(Vendor_interface.this,Vendor_registration.class);
                 startActivity(intent);
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+            }
+        });
+
+        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                // Check if user is signed out (user will be null)
+                if (firebaseAuth.getCurrentUser() == null) {
+                    // Redirect user to login activity or any other desired activity after logout
+                    startActivity(new Intent(Vendor_interface.this, VendorLogin.class));
+                    finish(); // Prevent user from returning to MainActivity using the back button
+                }
             }
         });
     }

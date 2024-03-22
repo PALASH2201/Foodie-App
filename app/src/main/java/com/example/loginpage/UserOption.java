@@ -25,15 +25,13 @@ public class UserOption extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Login.class);
                 startActivity(intent);
-                finish();
             }
         });
         owner_option.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Vendor_interface.class);
+                Intent intent = new Intent(getApplicationContext(), VendorLogin.class);
                 startActivity(intent);
-                finish();
             }
         });
     }

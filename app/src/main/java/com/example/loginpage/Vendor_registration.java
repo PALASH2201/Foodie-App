@@ -136,7 +136,7 @@ public class Vendor_registration extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(Vendor_registration.this,"Saved",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Vendor_registration.this, Login.class));
+                            startActivity(new Intent(Vendor_registration.this, Vendor_interface.class));
                             finish();
                         }
                     }
