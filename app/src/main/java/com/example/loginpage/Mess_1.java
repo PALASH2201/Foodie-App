@@ -143,6 +143,7 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
         if (fragmentClass != null) {
             try {
                 Fragment fragment = (Fragment) fragmentClass.newInstance();
+                mess_name.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
             } catch (Exception e) {
                 e.printStackTrace();

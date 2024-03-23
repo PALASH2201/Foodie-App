@@ -25,22 +25,18 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-
+        <TextView
+            android:id="@+id/mess_name"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:textAlignment="center"
+            android:textSize="35sp"
+            android:textStyle="bold"/>
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/mess_name"
-                android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:textAlignment="center"
-                android:textSize="35sp"
-                android:textStyle="bold"
-                android:elevation="4dp"/>
-
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
