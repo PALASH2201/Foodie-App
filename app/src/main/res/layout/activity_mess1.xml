@@ -25,6 +25,8 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+
+
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
@@ -40,13 +42,11 @@
                 android:elevation="4dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintTop_toBottomOf="@+id/mess_name"
-                app:layout_constraintVertical_bias="0.0" />
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible" />
         </FrameLayout>
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView

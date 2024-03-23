@@ -2,6 +2,7 @@ package com.example.loginpage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,9 @@ public class Categories_myAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Log.d("OnBindViewHolder","Inside OnBind");
+        Log.d("Adapter", "Name: " + dataList.get(position).getName());
+        Log.d("Adapter", "Image URL: " + dataList.get(position).getImage_url());
 
         Glide.with(context).load(dataList.get(position).getImage_url()).into(holder.recImage);
         holder.recName.setText(dataList.get(position).getName());

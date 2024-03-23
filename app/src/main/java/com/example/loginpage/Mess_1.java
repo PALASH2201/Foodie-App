@@ -36,7 +36,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Mess_1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    
+
+    private Categories_myAdapter adapter;
+    private AlertDialog dialog;
+
     private FirebaseAuth mAuth;
     private DrawerLayout drawerLayout;
     private HashMap<Integer, Class<?>> fragmentMap;
@@ -48,7 +51,7 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
     ValueEventListener eventListener;
     String restaurant_id;
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId", "NotifyDataSetChanged"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,57 +124,21 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
         AlertDialog.Builder builder = new AlertDialog.Builder(Mess_1.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
-        AlertDialog dialog = builder.create();
+        dialog = builder.create();
         dialog.show();
 
         dataList = new ArrayList<>();
 
-        Categories_myAdapter adapter = new Categories_myAdapter(Mess_1.this , dataList);
+        adapter = new Categories_myAdapter(Mess_1.this , dataList);
         recyclerView.setAdapter(adapter);
 
         retrieveVendorUserKeyByName();
-        Log.d("RestID","id:"+restaurant_id);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("categories");
-        eventListener = databaseReference.orderByChild("restaurant_id").equalTo(restaurant_id).addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                dataList.clear();
-              //  Log.d("Check function","Inside onData Change");
-                for(DataSnapshot categorySnapshot : snapshot.getChildren()){
-                    String name = categorySnapshot.child("name").getValue(String.class);
-                    String imageUrl = categorySnapshot.child("image_url").getValue(String.class);
-                   // Log.d("Name",name);
-                   // Log.d("image_url",imageUrl);
-                    CategoriesDataClass dataClass = new CategoriesDataClass(name, imageUrl,restaurant_id);
-                    dataList.add(dataClass);
-                }
-                adapter.notifyDataSetChanged();
-                dialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                dialog.dismiss();
-            }
-        });
-
-        Log.d("DataList", "Size: " + dataList.size());
-        for (CategoriesDataClass data : dataList) {
-            Log.d("DataList", "Name: " + data.getName() + ", Image URL: " + data.getImage_url() + " restaurant_id: " + data.getRestaurant_id() );
-        }
 
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Intent intent;
-        Class<?> activityClass = activityMap.get(item.getItemId());
-        if (activityClass != null) {
-            intent = new Intent(Mess_1.this, activityClass);
-            startActivity(intent);
-        }
         Class<?> fragmentClass = fragmentMap.get(item.getItemId());
         if (fragmentClass != null) {
             try {
@@ -180,6 +147,12 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            return true;
+        }
+        Class<?> activityClass = activityMap.get(item.getItemId());
+        if (activityClass != null) {
+            intent = new Intent(Mess_1.this, activityClass);
+            startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -191,10 +164,10 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        String userId = userSnapshot.getKey();
-                        retrieveRestaurantKey(userId);
-                    }
+                    DataSnapshot userSnapshot = snapshot.getChildren().iterator().next();
+                    String userId = userSnapshot.getKey();
+                    Log.d("User Id","Id :" + userId);
+                    retrieveRestaurantKey(userId);
                 } else {
                     Toast.makeText(Mess_1.this, "No vendor found for this key", Toast.LENGTH_SHORT).show();
                 }
@@ -212,7 +185,8 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    restaurant_id = snapshot.child("restaurant_key").getValue(String.class);
+                    restaurant_id = snapshot.child("key").getValue(String.class);
+                    HandleDatabase(restaurant_id);
                 } else {
                     Toast.makeText(Mess_1.this, "No registered restaurant for id: " + userId, Toast.LENGTH_SHORT).show();
                 }
@@ -224,6 +198,42 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
                 Toast.makeText(Mess_1.this, "Failed to fetch restaurant key: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void HandleDatabase(String restaurant_id){
+        databaseReference = FirebaseDatabase.getInstance().getReference("categories");
+        eventListener = databaseReference.orderByChild("restaurant_id").equalTo(restaurant_id).addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dataList.clear();
+                Log.d("CheckPoint","Inside OnDataChange");
+                for(DataSnapshot categorySnapshot : snapshot.getChildren()){
+                    String name = categorySnapshot.child("name").getValue(String.class);
+                    String imageUrl = categorySnapshot.child("image_url").getValue(String.class);
+                    Log.d("Field Check","Name: "+name);
+                    Log.d("Field Check","imageURL: "+imageUrl);
+                    CategoriesDataClass dataClass = new CategoriesDataClass(name, imageUrl,restaurant_id);
+                    dataList.add(dataClass);
+                    Log.d("DataList","Size: "+dataList.size());
+                }
+                adapter.notifyDataSetChanged();
+                dialog.dismiss();
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+              //  dialog.dismiss();
+            }
+        });
+
+    }
+    protected void onDestroy() {
+        super.onDestroy();
+        if (eventListener != null) {
+            databaseReference.removeEventListener(eventListener);
+        }
     }
 
 }
