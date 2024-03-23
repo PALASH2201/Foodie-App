@@ -54,11 +54,9 @@ public class Vendor_interface extends AppCompatActivity {
         mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                // Check if user is signed out (user will be null)
                 if (firebaseAuth.getCurrentUser() == null) {
-                    // Redirect user to login activity or any other desired activity after logout
                     startActivity(new Intent(Vendor_interface.this, VendorLogin.class));
-                    finish(); // Prevent user from returning to MainActivity using the back button
+                    finish();
                 }
             }
         });
