@@ -132,7 +132,8 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
         adapter = new Categories_myAdapter(Mess_1.this , dataList);
         recyclerView.setAdapter(adapter);
 
-        retrieveVendorUserKeyByName();
+       // retrieveVendorUserKeyByName();
+        retrieveRestaurantIdByName(mess_name.getText().toString());
 
     }
 
@@ -159,47 +160,73 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
         return true;
     }
 
-    private void retrieveVendorUserKeyByName(){
-        DatabaseReference vendorRef = FirebaseDatabase.getInstance().getReference("vendors");
-        vendorRef.orderByChild("restaurant_name").equalTo(mess_name.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    DataSnapshot userSnapshot = snapshot.getChildren().iterator().next();
-                    String userId = userSnapshot.getKey();
-                    Log.d("User Id","Id :" + userId);
-                    retrieveRestaurantKey(userId);
-                } else {
-                    Toast.makeText(Mess_1.this, "No vendor found for this key", Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Mess_1.this, "Failed to fetch key for the vendor: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void retrieveVendorUserKeyByName(){
+//        DatabaseReference vendorRef = FirebaseDatabase.getInstance().getReference("vendors");
+//        vendorRef.orderByChild("restaurant_name").equalTo(mess_name.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
+//                    DataSnapshot userSnapshot = snapshot.getChildren().iterator().next();
+//                    String userId = userSnapshot.getKey();
+//                    Log.d("User Id","Id :" + userId);
+//                    retrieveRestaurantKey(userId);
+//                } else {
+//                    Toast.makeText(Mess_1.this, "No vendor found for this key", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(Mess_1.this, "Failed to fetch key for the vendor: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+//
+//    private void retrieveRestaurantKey(String userId) {
+//        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("vendors").child(userId);
+//        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
+//                    restaurant_id = snapshot.child("key").getValue(String.class);
+//                    HandleDatabase(restaurant_id);
+//                } else {
+//                    Toast.makeText(Mess_1.this, "No registered restaurant for id: " + userId, Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                // Handle database error
+//                Toast.makeText(Mess_1.this, "Failed to fetch restaurant key: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
-    private void retrieveRestaurantKey(String userId) {
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("vendors").child(userId);
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+    private void retrieveRestaurantIdByName(String restaurantName) {
+        DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference("restaurants");
+        restaurantRef.orderByChild("restaurant_name").equalTo(mess_name.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    restaurant_id = snapshot.child("key").getValue(String.class);
-                    HandleDatabase(restaurant_id);
+                    // Iterate through the snapshot to get the restaurant_id
+                    for (DataSnapshot restaurantSnapshot : snapshot.getChildren()) {
+                        String restaurantId = restaurantSnapshot.getKey();
+                        Log.d("Restaurant Id", "Id: " + restaurantId);
+                        HandleDatabase(restaurantId);
+                    }
                 } else {
-                    Toast.makeText(Mess_1.this, "No registered restaurant for id: " + userId, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Mess_1.this, "No restaurant found with the specified name", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Handle database error
-                Toast.makeText(Mess_1.this, "Failed to fetch restaurant key: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Mess_1.this, "Failed to fetch restaurant ID: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     public void HandleDatabase(String restaurant_id){
         databaseReference = FirebaseDatabase.getInstance().getReference("categories");
@@ -225,7 +252,7 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-              //  dialog.dismiss();
+                dialog.dismiss();
             }
         });
 

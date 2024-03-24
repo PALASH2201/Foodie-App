@@ -24,10 +24,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Vendor_registration extends AppCompatActivity {
 
@@ -37,6 +41,8 @@ public class Vendor_registration extends AppCompatActivity {
     String imageURL ;
 
     Uri uri;
+
+    DatabaseReference restaurantsRef = FirebaseDatabase.getInstance().getReference("restaurants");
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -126,6 +132,12 @@ public class Vendor_registration extends AppCompatActivity {
 
         VendorDataClass dataClass = new VendorDataClass(restaurant_name,owner_name,location,phone,imageURL);
         dataClass.setKey(restaurant_id);
+
+        Map<String, Object> restaurantDetails = new HashMap<>();
+        restaurantDetails.put("restaurant_id", restaurant_id);
+        restaurantDetails.put("restaurant_name", restaurant_name);
+        assert restaurant_id != null;
+        restaurantsRef.child(restaurant_id).setValue(restaurantDetails);
 
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 

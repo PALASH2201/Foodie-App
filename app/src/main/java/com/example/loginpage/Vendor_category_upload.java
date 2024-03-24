@@ -12,6 +12,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,11 +28,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Vendor_category_upload extends AppCompatActivity {
@@ -41,6 +45,7 @@ public class Vendor_category_upload extends AppCompatActivity {
     EditText uploadName;
     String imageURL ;
     Uri uri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +89,7 @@ public class Vendor_category_upload extends AppCompatActivity {
 
     private void fetchRestaurantDetails() {
 
-        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String currentUserId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference("vendors").child(currentUserId);
 
         restaurantRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -125,6 +130,7 @@ public class Vendor_category_upload extends AppCompatActivity {
 
         StorageReference restaurantRef = FirebaseStorage.getInstance().getReference().child("vendors");
         StorageReference categoryRef = restaurantRef.child(categoryName);
+        assert categoryId != null;
         StorageReference imageRef = categoryRef.child(categoryId);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Vendor_category_upload.this);
@@ -159,6 +165,8 @@ public class Vendor_category_upload extends AppCompatActivity {
         CategoriesDataClass dataClass = new CategoriesDataClass(categoryName,imageURL,restaurantId);
         dataClass.setKey(categoryId);
 
+        appendCategoryToRestaurant(restaurantId,categoryId);
+
         FirebaseDatabase.getInstance().getReference("categories").child(categoryId)
                 .setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -176,4 +184,32 @@ public class Vendor_category_upload extends AppCompatActivity {
                     }
                 });
     }
+    private void appendCategoryToRestaurant(String restaurantId, String categoryId) {
+        DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurantId).child("categories");
+
+        // Check if the categories array exists
+        restaurantRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    List<String> categories = new ArrayList<>();
+                    for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                        categories.add(childSnapshot.getValue(String.class));
+                    }
+                    categories.add(categoryId);
+                    restaurantRef.setValue(categories);
+                } else {
+                    List<String> categories = new ArrayList<>();
+                    categories.add(categoryId);
+                    restaurantRef.setValue(categories);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Error retrieving categories: " + error.getMessage());
+            }
+        });
+    }
+
 }
