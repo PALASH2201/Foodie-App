@@ -16,6 +16,11 @@ public class VendorDataClass {
         this.profile_pic_image_url = profile_pic_image_url;
     }
 
+    public VendorDataClass(String restaurant_name, String profile_pic_image_url) {
+        this.restaurant_name = restaurant_name;
+        this.profile_pic_image_url = profile_pic_image_url;
+    }
+
     public String getKey() {
         return key;
     }

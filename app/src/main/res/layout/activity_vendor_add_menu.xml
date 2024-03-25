@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Vendor_category_upload">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/orange_border"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Menu Item"
+                android:textAlignment="center"
+                android:textColor="@color/orange"
+                android:textSize="30sp" />
+
+            <ImageView
+                android:id="@+id/uploadImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/uploading"
+                android:textColorHint="@color/orange" />
+
+            <EditText
+                android:id="@+id/uploadDishName"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/orange_border"
+                android:gravity="start|center_vertical"
+                android:hint="Enter dish name"
+                android:padding="16dp"
+                android:textColor="@color/orange"
+                android:textColorHint="@color/orange" />
+            <EditText
+                android:id="@+id/uploadDishDesc"
+                android:inputType="textMultiLine"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/orange_border"
+                android:gravity="start|center_vertical"
+                android:hint="Enter dish description"
+                android:padding="16dp"
+                android:textColor="@color/orange"
+                android:textColorHint="@color/orange" />
+            <EditText
+                android:id="@+id/uploadDishPrice"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/orange_border"
+                android:gravity="start|center_vertical"
+                android:hint="Enter dish price"
+                android:padding="16dp"
+                android:textColor="@color/orange"
+                android:textColorHint="@color/orange" />
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/orange"
+                android:text="Save"
+                android:textAlignment="center"
+                android:textSize="35sp"
+                app:cornerRadius="20dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</ScrollView>

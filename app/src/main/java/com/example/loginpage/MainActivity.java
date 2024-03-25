@@ -2,6 +2,8 @@ package com.example.loginpage;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,15 +19,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser user;
 
+    private Mess_myAdapter adapter;
+    private List<VendorDataClass> vendorList;
 
-
-    TextView Mess_1 , Mess_2 , Mess_3 ;
     public static final String EXTRA_NAME = "com.example.Mess_1.extra.NAME";
-    public static final String EXTRA_ID = "com.example.Mess_1.extra.ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        Mess_1 = findViewById(R.id.Mess_1);
-        Mess_2 = findViewById(R.id.Mess_2);
-        Mess_3 = findViewById(R.id.Mess_3);
 
         if(user == null || !user.isEmailVerified()){
             Intent intent =new Intent(getApplicationContext(), Login.class);
@@ -43,47 +44,48 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
+        RecyclerView recyclerView = findViewById(R.id.mess_choice_recycler);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this,1);
+        recyclerView.setLayoutManager(gridLayoutManager);
 
-        Mess_1.setOnClickListener(new View.OnClickListener() {
+        vendorList = new ArrayList<>();
+        adapter = new Mess_myAdapter(this,vendorList);
+        recyclerView.setAdapter(adapter);
+
+
+        // Initialize Firebase
+        DatabaseReference vendorsRef = FirebaseDatabase.getInstance().getReference("vendors");
+
+        // Read from the database
+        vendorsRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-            //    retrieveVendorUserKeyByName();
-                Intent intent = new Intent(getApplicationContext(),Mess_1.class);
-                intent.putExtra(EXTRA_NAME,Mess_1.getText().toString());
-            //    intent.putExtra(EXTRA_ID, restaurant_id);
-                startActivity(intent);
-                finish();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                vendorList.clear();
+                for (DataSnapshot vendorSnapshot : dataSnapshot.getChildren()) {
+                    String restaurantName = vendorSnapshot.child("restaurant_name").getValue(String.class);
+                    String profilePicUrl = vendorSnapshot.child("profile_pic_image_url").getValue(String.class);
+                    VendorDataClass vendor = new VendorDataClass(restaurantName, profilePicUrl);
+                    vendorList.add(vendor);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(MainActivity.this,"No restaurant found!",Toast.LENGTH_SHORT).show();
             }
         });
 
-        Mess_2.setOnClickListener(new View.OnClickListener() {
+        adapter.setOnItemClickListener(new Mess_myAdapter.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-             //   retrieveVendorUserKeyByName();
-                Intent intent = new Intent(getApplicationContext(),Mess_1.class);
-                intent.putExtra(EXTRA_NAME,Mess_2.getText().toString());
-            //    intent.putExtra(EXTRA_ID, restaurant_id);
+            public void onItemClick(int position) {
+                VendorDataClass clickedVendor = vendorList.get(position);
+                String restaurantName = clickedVendor.getRestaurant_name();
+                Intent intent = new Intent(MainActivity.this, Mess_1.class);
+                intent.putExtra(EXTRA_NAME, restaurantName);
                 startActivity(intent);
-                finish();
             }
         });
-
-        Mess_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-             //   retrieveVendorUserKeyByName();
-                Intent intent = new Intent(getApplicationContext(),Mess_1.class);
-                intent.putExtra(EXTRA_NAME,Mess_3.getText().toString());
-            //    intent.putExtra(EXTRA_ID, restaurant_id);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-
 
     }
-
-
-
 }

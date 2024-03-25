@@ -15,17 +15,17 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Vendor_interface extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private TextView addCategories , registerNow;
-    private Button logout ;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_interface);
 
-        addCategories = findViewById(R.id.addCategories);
-        registerNow = findViewById(R.id.registerNow);
-        logout = findViewById(R.id.logout_btn);
+        TextView addCategories = findViewById(R.id.addCategories);
+        TextView registerNow = findViewById(R.id.registerNow);
+        TextView addDishes = findViewById(R.id.addDishes);
+        Button logout = findViewById(R.id.logout_btn);
         mAuth = FirebaseAuth.getInstance();
 
         addCategories.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +40,14 @@ public class Vendor_interface extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(Vendor_interface.this,Vendor_registration.class);
+                startActivity(intent);
+            }
+        });
+
+        addDishes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(Vendor_interface.this,Vendor_Add_Menu.class);
                 startActivity(intent);
             }
         });

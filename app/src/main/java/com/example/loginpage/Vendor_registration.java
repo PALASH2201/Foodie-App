@@ -93,13 +93,14 @@ public class Vendor_registration extends AppCompatActivity {
         String child_folder = "Restaurant Logo";
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("vendors").child(child_folder);
+        StorageReference restRef = storageReference.child(uploadName.getText().toString());
         AlertDialog.Builder builder = new AlertDialog.Builder(Vendor_registration.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        restRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 

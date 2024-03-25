@@ -49,7 +49,7 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
     List<CategoriesDataClass> dataList ;
     DatabaseReference databaseReference;
     ValueEventListener eventListener;
-    String restaurant_id;
+   // public static final String EXTRA_NAME = "com.example.Mess_1.extra.NAME";
 
     @SuppressLint({"MissingInflatedId", "NotifyDataSetChanged"})
     @Override
@@ -135,6 +135,14 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
        // retrieveVendorUserKeyByName();
         retrieveRestaurantIdByName(mess_name.getText().toString());
 
+//        adapter.setOnItemClickListener(new Categories_myAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int position) {
+//                // Handle item click
+//                CategoriesDataClass clickedVendor = dataList.get(position);
+//
+//            }
+//        });
     }
 
     @Override
@@ -208,7 +216,6 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    // Iterate through the snapshot to get the restaurant_id
                     for (DataSnapshot restaurantSnapshot : snapshot.getChildren()) {
                         String restaurantId = restaurantSnapshot.getKey();
                         Log.d("Restaurant Id", "Id: " + restaurantId);
@@ -221,7 +228,6 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle database error
                 Toast.makeText(Mess_1.this, "Failed to fetch restaurant ID: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -235,15 +241,11 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataList.clear();
-                Log.d("CheckPoint","Inside OnDataChange");
                 for(DataSnapshot categorySnapshot : snapshot.getChildren()){
                     String name = categorySnapshot.child("name").getValue(String.class);
                     String imageUrl = categorySnapshot.child("image_url").getValue(String.class);
-                    Log.d("Field Check","Name: "+name);
-                    Log.d("Field Check","imageURL: "+imageUrl);
                     CategoriesDataClass dataClass = new CategoriesDataClass(name, imageUrl,restaurant_id);
                     dataList.add(dataClass);
-                    Log.d("DataList","Size: "+dataList.size());
                 }
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();

@@ -186,8 +186,6 @@ public class Vendor_category_upload extends AppCompatActivity {
     }
     private void appendCategoryToRestaurant(String restaurantId, String categoryId) {
         DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurantId).child("categories");
-
-        // Check if the categories array exists
         restaurantRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
