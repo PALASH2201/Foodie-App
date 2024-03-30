@@ -56,7 +56,7 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mess1);
-        Toolbar toolbar = findViewById(R.id.toolbar); //Ignore red line errors
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("FoodEase");
         setSupportActionBar(toolbar);
         mess_name = findViewById(R.id.mess_name);
@@ -129,7 +129,7 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
 
         dataList = new ArrayList<>();
 
-        adapter = new Categories_myAdapter(Mess_1.this , dataList);
+        adapter = new Categories_myAdapter(Mess_1.this , dataList,false);
         recyclerView.setAdapter(adapter);
 
        // retrieveVendorUserKeyByName();
@@ -155,7 +155,7 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
                 mess_name.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.d("Navigation" , "No fragment");
             }
             return true;
         }

@@ -16,6 +16,9 @@
         android:theme="@style/Base.Theme.LoginPage"
         tools:targetApi="31">
         <activity
+            android:name=".VendorMenu_viewer"
+            android:exported="false" />
+        <activity
             android:name=".Vendor_Add_Menu"
             android:exported="false" />
         <activity

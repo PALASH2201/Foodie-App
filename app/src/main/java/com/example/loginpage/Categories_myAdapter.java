@@ -1,5 +1,6 @@
 package com.example.loginpage;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -24,6 +25,7 @@ public class Categories_myAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private final Context context ;
     private final List<CategoriesDataClass> dataList;
     private OnItemClickListener mListener;
+    private final boolean isVendor ;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -31,9 +33,10 @@ public class Categories_myAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
-    public Categories_myAdapter(Context context, List<CategoriesDataClass> dataList) {
+    public Categories_myAdapter(Context context, List<CategoriesDataClass> dataList , boolean isVendor) {
         this.context = context;
         this.dataList = dataList;
+        this.isVendor = isVendor;
     }
 
     @NonNull
@@ -45,7 +48,7 @@ public class Categories_myAdapter extends RecyclerView.Adapter<MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Glide.with(context).load(dataList.get(position).getImage_url()).into(holder.recImage);
         holder.recName.setText(dataList.get(position).getName());
 
@@ -57,6 +60,24 @@ public class Categories_myAdapter extends RecyclerView.Adapter<MyViewHolder> {
                 }
             }
         });
+
+//        if (isVendor) {
+//            // Vendor actions
+//            // For example, perform vendor-specific action on item click
+//            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View view) {
+//                    // Perform vendor-specific action
+//                    return true;
+//                }
+//            });
+//        } else {
+//            // User actions
+//            // For example, perform user-specific action on item click
+//            // In this case, there is no additional action for users, so nothing needs to be done
+//        }
+
+
     }
 
     @Override

@@ -6,32 +6,67 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class Vendor_interface extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private String restaurant_name;
 
+    public static final String EXTRA_NAME = "com.example.Mess_1.extra.NAME";
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_interface);
 
-        TextView addCategories = findViewById(R.id.addCategories);
+        TextView viewCategories = findViewById(R.id.viewCategories);
         TextView registerNow = findViewById(R.id.registerNow);
-        TextView addDishes = findViewById(R.id.addDishes);
         Button logout = findViewById(R.id.logout_btn);
         mAuth = FirebaseAuth.getInstance();
 
-        addCategories.setOnClickListener(new View.OnClickListener() {
+        String userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+
+        DatabaseReference vendorRef = FirebaseDatabase.getInstance().getReference("vendors").child(userID);
+        vendorRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    restaurant_name = snapshot.child("restaurant_name").getValue(String.class);
+                    if (restaurant_name == null) {
+                         Toast.makeText(Vendor_interface.this , "No restaurant name found for given vendorID",Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(Vendor_interface.this , "No vendor found for given vendorID",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Vendor_interface.this , "Error in retrieving vendor information",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Intent intent = new Intent(Vendor_interface.this, VendorMenu_viewer.class);
+        intent.putExtra(EXTRA_NAME, restaurant_name);
+        viewCategories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(Vendor_interface.this,Vendor_category_upload.class);
+                Intent intent =new Intent(Vendor_interface.this,VendorMenu_viewer.class);
                 startActivity(intent);
             }
         });
@@ -40,14 +75,6 @@ public class Vendor_interface extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(Vendor_interface.this,Vendor_registration.class);
-                startActivity(intent);
-            }
-        });
-
-        addDishes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(Vendor_interface.this,Vendor_Add_Menu.class);
                 startActivity(intent);
             }
         });
