@@ -162,8 +162,7 @@ public class Vendor_category_upload extends AppCompatActivity {
         });
     }
     public void uploadData(String restaurantId , String categoryName, String categoryId){
-        CategoriesDataClass dataClass = new CategoriesDataClass(categoryName,imageURL,restaurantId);
-        dataClass.setKey(categoryId);
+        CategoriesDataClass dataClass = new CategoriesDataClass(categoryName,imageURL,restaurantId,categoryId);
 
         appendCategoryToRestaurant(restaurantId,categoryId);
 

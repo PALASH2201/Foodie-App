@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,15 +19,13 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class Categories_myAdapter extends RecyclerView.Adapter<MyViewHolder> {
-
-
     private final Context context ;
     private final List<CategoriesDataClass> dataList;
     private OnItemClickListener mListener;
     private final boolean isVendor ;
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(int position,boolean isVendor);
     }
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
@@ -56,28 +53,10 @@ public class Categories_myAdapter extends RecyclerView.Adapter<MyViewHolder> {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
-                    mListener.onItemClick(position);
+                    mListener.onItemClick(position,isVendor);
                 }
             }
         });
-
-//        if (isVendor) {
-//            // Vendor actions
-//            // For example, perform vendor-specific action on item click
-//            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View view) {
-//                    // Perform vendor-specific action
-//                    return true;
-//                }
-//            });
-//        } else {
-//            // User actions
-//            // For example, perform user-specific action on item click
-//            // In this case, there is no additional action for users, so nothing needs to be done
-//        }
-
-
     }
 
     @Override

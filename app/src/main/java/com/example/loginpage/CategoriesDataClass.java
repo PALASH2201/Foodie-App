@@ -8,18 +8,16 @@ public class CategoriesDataClass {
 
      private String key;
 
-    public String getKey() {
-        return key;
-    }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public CategoriesDataClass(String name, String image_url,String restaurant_id) {
+    public CategoriesDataClass(String name, String image_url,String restaurant_id,String key) {
         this.name = name;
         this.image_url = image_url;
         this.restaurant_id = restaurant_id;
+        this.key = key;
+    }
+
+    public String getKey() {
+        return key;
     }
 
     public String getRestaurant_id() {

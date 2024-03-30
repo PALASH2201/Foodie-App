@@ -6,19 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
-    tools:context=".VendorMenu_viewer">
+    tools:context=".Vendor_menu_detail">
 
     <TextView
         android:id="@+id/mess_name"
         android:layout_width="match_parent"
         android:layout_height="61dp"
-        android:layout_marginTop="24dp"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="35sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

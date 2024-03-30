@@ -49,7 +49,10 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
     List<CategoriesDataClass> dataList ;
     DatabaseReference databaseReference;
     ValueEventListener eventListener;
-   // public static final String EXTRA_NAME = "com.example.Mess_1.extra.NAME";
+    public static final String EXTRA_CAT_NAME = "com.example.Vendor_menu_detail.extra.CAT_NAME";
+    public static final String EXTRA_REST_NAME = "com.example.Vendor_menu_detail.extra.REST_NAME";
+    public static final String EXTRA_CAT_ID = "com.example.Vendor_menu_detail.extra.CAT_ID";
+    public static final String EXTRA_REST_ID = "com.example.Vendor_menu_detail.extra.REST_ID";
 
     @SuppressLint({"MissingInflatedId", "NotifyDataSetChanged"})
     @Override
@@ -137,10 +140,15 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
 
 //        adapter.setOnItemClickListener(new Categories_myAdapter.OnItemClickListener() {
 //            @Override
-//            public void onItemClick(int position) {
-//                // Handle item click
-//                CategoriesDataClass clickedVendor = dataList.get(position);
-//
+//            public void onItemClick(int position, boolean isVendor) {
+//                if(!isVendor){
+//                    Intent intent = new Intent(Mess_1.this,User_menu_detail.class);
+//                    intent.putExtra(EXTRA_CAT_NAME,dataList.get(position).getName());
+//                    intent.putExtra(EXTRA_REST_NAME,mess_name.getText().toString());
+//                    intent.putExtra(EXTRA_CAT_ID,dataList.get(position).getKey());
+//                    intent.putExtra(EXTRA_REST_ID,dataList.get(position).getRestaurant_id());
+//                    startActivity(intent);
+//                }
 //            }
 //        });
     }
@@ -244,7 +252,8 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
                 for(DataSnapshot categorySnapshot : snapshot.getChildren()){
                     String name = categorySnapshot.child("name").getValue(String.class);
                     String imageUrl = categorySnapshot.child("image_url").getValue(String.class);
-                    CategoriesDataClass dataClass = new CategoriesDataClass(name, imageUrl,restaurant_id);
+                    String categoryId = categorySnapshot.child("key").getValue(String.class);
+                    CategoriesDataClass dataClass = new CategoriesDataClass(name, imageUrl,restaurant_id,categoryId);
                     dataList.add(dataClass);
                 }
                 adapter.notifyDataSetChanged();
