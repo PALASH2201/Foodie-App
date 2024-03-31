@@ -88,6 +88,7 @@ public class Vendor_menu_detail extends AppCompatActivity {
                         dishIds.add(dishId);
                         Log.d("DishID",dishId);
                     }
+                    Log.d("List Length" , dishIds.size()+"");
                     fetchDishDetails(dishIds);
                 } else {
                     Toast.makeText(Vendor_menu_detail.this , "No dish present for given category",Toast.LENGTH_SHORT).show();
@@ -115,12 +116,15 @@ public class Vendor_menu_detail extends AppCompatActivity {
                         String dishImageURL = dataSnapshot.child("dish_image_url").getValue(String.class);
                         String categoryId = dataSnapshot.child("category_id").getValue(String.class);
                         String dishPrice = dataSnapshot.child("dish_price").getValue(String.class);
-                        String dishRating = dataSnapshot.child("dish_rating").getValue(String.class);
                         String restaurantId = dataSnapshot.child("restaurant_id").getValue(String.class);
                         String dishDescription = dataSnapshot.child("dish_description").getValue(String.class);
                         DishDataClass dataClass = new DishDataClass(dishName,dishDescription,dishPrice,dishImageURL,restaurantId,categoryId);
                         dataList.add(dataClass);
-                        dataClass.setDish_rating(dishRating);
+                        Log.d("Dishes List Length",dataList.size()+"");
+                        Log.d("dish name" , dishName);
+                        Log.d("dish price" , dishPrice);
+                        Log.d("dish desc" , dishDescription);
+                        Log.d("dish imageurl" , dishImageURL);
                         adapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(Vendor_menu_detail.this , "No dish present for given id",Toast.LENGTH_SHORT).show();

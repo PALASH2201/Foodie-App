@@ -1,6 +1,9 @@
 package com.example.loginpage;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +24,12 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
 
     private final Context context ;
     private final List<DishDataClass> dataList;
+    private final SparseBooleanArray expandedItems;
 
     public VendorDishDetails_myAdapter(Context context, List<DishDataClass> dataList) {
         this.context = context;
         this.dataList = dataList;
+        this.expandedItems = new SparseBooleanArray();
     }
 
     @NonNull
@@ -36,24 +41,29 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VendorDishDetails_MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull VendorDishDetails_MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
         Glide.with(context).load(dataList.get(position).getDish_image_url()).into(holder.recImage);
         holder.recName.setText(dataList.get(position).getDish_name());
+        holder.recDishPrice.setText(dataList.get(position).getDish_price());
+        holder.recDishDescription.setText(dataList.get(position).getDish_description());
+
+        boolean isExpanded = expandedItems.get(position, false);
+        holder.additionalDetailsLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         holder.arrowIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int visibility = holder.additionalDetailsLayout.getVisibility();
-                holder.additionalDetailsLayout.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
+                boolean isExpanded = expandedItems.get(position, false);
+                expandedItems.put(position, !isExpanded);
+                holder.arrowIcon.setRotation(isExpanded ? 0 : 180);
+                holder.additionalDetailsLayout.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
             }
         });
-        holder.recdishPrice.setText(dataList.get(position).getDish_price());
-        holder.recdishRating.setText(dataList.get(position).getDish_rating());
-        holder.recdishDescription.setText(dataList.get(position).getDish_description());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return dataList.size();
     }
 }
 class VendorDishDetails_MyViewHolder extends RecyclerView.ViewHolder{
@@ -63,9 +73,8 @@ class VendorDishDetails_MyViewHolder extends RecyclerView.ViewHolder{
     CardView recCard ;
     ImageView arrowIcon;
     ConstraintLayout additionalDetailsLayout;
-    TextView recdishPrice;
-    TextView recdishRating;
-    TextView recdishDescription;
+    TextView recDishPrice;
+    TextView recDishDescription;
     Button editButton;
     Button deleteButton;
     public VendorDishDetails_MyViewHolder(@NonNull View itemView){
@@ -73,10 +82,11 @@ class VendorDishDetails_MyViewHolder extends RecyclerView.ViewHolder{
         recImage = itemView.findViewById(R.id.recImage);
         recName = itemView.findViewById(R.id.recName);
         recCard = itemView.findViewById(R.id.recCard);
+        arrowIcon = itemView.findViewById(R.id.arrowIcon);
 
-        recdishPrice = itemView.findViewById(R.id.dishPrice);
-        recdishRating = itemView.findViewById(R.id.dishRating);
-        recdishDescription = itemView.findViewById(R.id.dishDescription);
+        additionalDetailsLayout = itemView.findViewById(R.id.additionalDetailsLayout);
+        recDishPrice = itemView.findViewById(R.id.dishPrice);
+        recDishDescription = itemView.findViewById(R.id.dishDescription);
         editButton = itemView.findViewById(R.id.editButton);
         deleteButton = itemView.findViewById(R.id.deleteButton);
     }
