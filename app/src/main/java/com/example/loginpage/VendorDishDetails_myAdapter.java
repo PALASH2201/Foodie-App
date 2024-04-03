@@ -45,11 +45,14 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
 
         Glide.with(context).load(dataList.get(position).getDish_image_url()).into(holder.recImage);
         holder.recName.setText(dataList.get(position).getDish_name());
-        holder.recDishPrice.setText(dataList.get(position).getDish_price());
-        holder.recDishDescription.setText(dataList.get(position).getDish_description());
+        String priceText = "Price:Rs " + dataList.get(position).getDish_price();
+        holder.recDishPrice.setText(priceText);
+        String descriptionText = "Description: " + dataList.get(position).getDish_description();
+        holder.recDishDescription.setText(descriptionText);
 
         boolean isExpanded = expandedItems.get(position, false);
         holder.additionalDetailsLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.arrowIcon.setRotation(isExpanded ? 180 : 0);
         holder.arrowIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

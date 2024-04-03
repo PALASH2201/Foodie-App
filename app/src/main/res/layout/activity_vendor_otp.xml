@@ -51,7 +51,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/otp_icon"
-        app:tint="@color/black"
+        app:tint="@color/yellow"
         android:layout_weight="20"
         />
 
@@ -95,11 +95,12 @@
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:layout_weight="10">
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_rounded_corner"
             android:text="NEXT"
+            app:backgroundTint="@color/yellow"
             android:textColor="@color/black"
             android:id="@+id/login_next_btn"/>
         <ProgressBar

@@ -120,11 +120,6 @@ public class Vendor_menu_detail extends AppCompatActivity {
                         String dishDescription = dataSnapshot.child("dish_description").getValue(String.class);
                         DishDataClass dataClass = new DishDataClass(dishName,dishDescription,dishPrice,dishImageURL,restaurantId,categoryId);
                         dataList.add(dataClass);
-                        Log.d("Dishes List Length",dataList.size()+"");
-                        Log.d("dish name" , dishName);
-                        Log.d("dish price" , dishPrice);
-                        Log.d("dish desc" , dishDescription);
-                        Log.d("dish imageurl" , dishImageURL);
                         adapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(Vendor_menu_detail.this , "No dish present for given id",Toast.LENGTH_SHORT).show();

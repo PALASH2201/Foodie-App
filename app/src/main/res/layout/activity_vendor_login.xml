@@ -20,7 +20,7 @@
             android:layout_height="32dp"
             android:layout_margin="10dp"
             android:background="@drawable/circular_bg"
-            android:backgroundTint="@color/yellow">
+            android:backgroundTint="@color/orange">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -99,12 +99,13 @@
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:layout_weight="20">
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_rounded_corner"
-            android:text="Send otp"
+            android:text="SEND OTP"
             android:textColor="@color/black"
+            app:backgroundTint="@color/yellow"
             android:id="@+id/send_otp_btn"/>
         <ProgressBar
             android:layout_width="32dp"

@@ -116,7 +116,6 @@ public class VendorMenu_viewer extends AppCompatActivity {
                     String categoryId = categorySnapshot.child("key").getValue(String.class);
                     CategoriesDataClass dataClass = new CategoriesDataClass(name, imageUrl,restaurant_id,categoryId);
                     dataList.add(dataClass);
-                    Log.d("CatID(inside handleDB)",categorySnapshot.child("key").getValue(String.class));
                 }
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
@@ -140,10 +139,6 @@ public class VendorMenu_viewer extends AppCompatActivity {
                         intent.putExtra(EXTRA_CAT_NAME,dataList.get(position).getName());
                         intent.putExtra(EXTRA_REST_NAME,restaurant_name.getText().toString());
                         intent.putExtra(EXTRA_CAT_ID,dataList.get(position).getKey());
-                        Log.d("DataList size",dataList.size()+"");
-                        Log.d("CatergoryName(Not sent):",dataList.get(position).getName());
-                        Log.d("RestID(Not sent):",dataList.get(position).getRestaurant_id());
-                        Log.d("CatID(Not sent):",dataList.get(position).getKey());
                         intent.putExtra(EXTRA_REST_ID,dataList.get(position).getRestaurant_id());
                         startActivity(intent);
                     } else {

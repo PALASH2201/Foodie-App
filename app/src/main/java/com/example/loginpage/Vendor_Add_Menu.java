@@ -98,7 +98,7 @@ public class Vendor_Add_Menu extends AppCompatActivity {
         String category_name = "Tea";
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Food Items").child(restaurant_name);
-        StorageReference catRef = storageReference.child(category_name);
+        StorageReference catRef = storageReference.child(category_name).child(uploadDishName.getText().toString());
         AlertDialog.Builder builder = new AlertDialog.Builder(Vendor_Add_Menu.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);

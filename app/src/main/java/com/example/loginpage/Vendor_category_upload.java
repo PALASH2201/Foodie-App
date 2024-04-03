@@ -95,15 +95,6 @@ public class Vendor_category_upload extends AppCompatActivity {
         restaurantRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot vendorSnapshot : snapshot.getChildren()) {
-//                    String restaurantId = vendorSnapshot.child("key").getValue(String.class);
-//                    if (restaurantId != null) {
-//                        saveData(restaurantId);
-//                        break;
-//                    } else {
-//                        Toast.makeText(Vendor_category_upload.this, "Restaurant ID not found for vendor", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
                 if (snapshot.exists()) {
                     String restaurantId = snapshot.child("key").getValue(String.class);
                     if (restaurantId != null) {
