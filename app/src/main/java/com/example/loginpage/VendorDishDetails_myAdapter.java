@@ -17,6 +17,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.List;
 
@@ -62,6 +65,20 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
                 holder.additionalDetailsLayout.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
             }
         });
+//        holder.editButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//            }
+//        });
+//        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                DatabaseReference dishRef = FirebaseDatabase.getInstance().getReference("dishes");
+//                FirebaseStorage storage =FirebaseStorage.getInstance();
+//            }
+//        });
     }
 
     @Override

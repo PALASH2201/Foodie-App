@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,11 @@ public class Vendor_menu_detail extends AppCompatActivity {
 
     RecyclerView recyclerView;
     String extra_restaurant_name , extra_category_name , extra_restaurant_id , extra_category_id;
+
+    public static final String EXTRA_CAT_NAME = "com.example.Vendor_add_Menu.extra.CAT_NAME";
+    public static final String EXTRA_REST_NAME = "com.example.Vendor_add_Menu.extra.REST_NAME";
+    public static final String EXTRA_CAT_ID = "com.example.Vendor_add_Menu.extra.CAT_ID";
+    public static final String EXTRA_REST_ID = "com.example.Vendor_add_Menu.extra.REST_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +80,23 @@ public class Vendor_menu_detail extends AppCompatActivity {
 
         retrieveDishIdByName(extra_category_id);
 
+        TextView addDishes = findViewById(R.id.addDishes);
+        addDishes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Vendor_menu_detail.this , Vendor_Add_Menu.class);
+                intent.putExtra(EXTRA_CAT_NAME,extra_category_name);
+                intent.putExtra(EXTRA_REST_NAME,extra_restaurant_name);
+                intent.putExtra(EXTRA_CAT_ID,extra_category_id);
+                intent.putExtra(EXTRA_REST_ID,extra_restaurant_id);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void retrieveDishIdByName(String extra_category_id) {
+
         DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("categories").child(extra_category_id).child("dishes");
         categoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -92,6 +112,7 @@ public class Vendor_menu_detail extends AppCompatActivity {
                     fetchDishDetails(dishIds);
                 } else {
                     Toast.makeText(Vendor_menu_detail.this , "No dish present for given category",Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                 }
             }
 
@@ -105,7 +126,6 @@ public class Vendor_menu_detail extends AppCompatActivity {
 
     private void fetchDishDetails(List<String> dishIds) {
         DatabaseReference dishesRef = FirebaseDatabase.getInstance().getReference("dishes");
-
         for (String dishId : dishIds) {
             DatabaseReference dishIdRef = dishesRef.child(dishId);
             dishIdRef.addListenerForSingleValueEvent(new ValueEventListener() {

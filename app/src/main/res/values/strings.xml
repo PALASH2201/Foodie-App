@@ -15,4 +15,11 @@
     <string name="view_profile">View Profile</string>
     <string name="spce_mess">SPCE Mess</string>
     <string name="applogo">appLogo</string>
+    <string name="addDishes">Click Here to Add a Dish</string>
+    <string name="addCategories">Click Here to Add a Category</string>
+    <string name="addtoCart">ADD TO CART</string>
+    <string name="dish_description">Dish Description</string>
+    <string name="dishPrice">Rs 10.00</string>
+    <string name="dishQuantity">1</string>
+    <string name="dish_image">Dish Image</string>
 </resources>

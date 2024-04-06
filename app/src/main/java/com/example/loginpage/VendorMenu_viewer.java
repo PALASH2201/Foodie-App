@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +32,6 @@ public class VendorMenu_viewer extends AppCompatActivity {
     private Categories_myAdapter adapter;
 
     List<CategoriesDataClass> dataList ;
-   // private List<Category> categoryList = new ArrayList<>();
-
     private TextView restaurant_name ;
 
     private AlertDialog dialog;
@@ -76,6 +75,14 @@ public class VendorMenu_viewer extends AppCompatActivity {
 
         retrieveRestaurantIdByName();
 
+        TextView addCategories = findViewById(R.id.addCategories);
+        addCategories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 Intent intent = new Intent(VendorMenu_viewer.this , Vendor_category_upload.class);
+                 startActivity(intent);
+            }
+        });
     }
 
     private void retrieveRestaurantIdByName() {

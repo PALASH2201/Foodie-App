@@ -50,11 +50,11 @@ public class Vendor_Add_Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_add_menu);
 
-//        Intent intent = getIntent();
-//        extra_restaurant_name = intent.getStringExtra(Category_view.EXTRA_REST_NAME);
-//        extra_category_name = intent.getStringExtra(Category_view.EXTRA_CAT_NAME);
-//        extra_restaurant_id = intent.getStringExtra(Category_view.EXTRA_REST_ID);
-//        extra_category_id = intent.getStringExtra(Category_view.EXTRA_CAT_ID);
+        Intent intent = getIntent();
+        extra_restaurant_name = intent.getStringExtra(Vendor_menu_detail.EXTRA_REST_NAME);
+        extra_category_name = intent.getStringExtra(Vendor_menu_detail.EXTRA_CAT_NAME);
+        extra_restaurant_id = intent.getStringExtra(Vendor_menu_detail.EXTRA_REST_ID);
+        extra_category_id = intent.getStringExtra(Vendor_menu_detail.EXTRA_CAT_ID);
 
 
         uploadImage = findViewById(R.id.uploadImage);
@@ -76,29 +76,17 @@ public class Vendor_Add_Menu extends AppCompatActivity {
                     }
                 }
         );
-        uploadImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent photocopier = new Intent(Intent.ACTION_PICK);
-                photocopier.setType("image/*");
-                activityResultLauncher.launch(photocopier);
-            }
+        uploadImage.setOnClickListener(v -> {
+            Intent photocopier = new Intent(Intent.ACTION_PICK);
+            photocopier.setType("image/*");
+            activityResultLauncher.launch(photocopier);
         });
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveData();
-            }
-        });
+        saveButton.setOnClickListener(v -> saveData());
     }
 
     private void saveData() {
-
-        String restaurant_name = "SPJIMR Mess";
-        String category_name = "Tea";
-
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Food Items").child(restaurant_name);
-        StorageReference catRef = storageReference.child(category_name).child(uploadDishName.getText().toString());
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Food Items").child(extra_restaurant_name);
+        StorageReference catRef = storageReference.child(extra_category_name).child(uploadDishName.getText().toString());
         AlertDialog.Builder builder = new AlertDialog.Builder(Vendor_Add_Menu.this);
         builder.setCancelable(false);
         builder.setView(R.layout.progress_layout);
@@ -129,10 +117,6 @@ public class Vendor_Add_Menu extends AppCompatActivity {
     }
 
     public void uploadData(){
-
-        extra_restaurant_id = "-NtlgbdkT6XovLFrUNdR";
-        extra_category_id = "-Ntlq0OOM2BKt3ScEtIy";
-
         String dish_name = uploadDishName.getText().toString();
         String dish_desc = uploadDishDesc.getText().toString();
         String dish_price = uploadDishPrice.getText().toString();
@@ -152,7 +136,7 @@ public class Vendor_Add_Menu extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(Vendor_Add_Menu.this,"Saved",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Vendor_Add_Menu.this, Vendor_interface.class));
+                            startActivity(new Intent(Vendor_Add_Menu.this, Vendor_menu_detail.class));
                             finish();
                         }
                     }

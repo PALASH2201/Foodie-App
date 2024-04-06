@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -142,6 +143,12 @@ public class Vendor_category_upload extends AppCompatActivity {
                         dialog.dismiss();
                         uploadData(restaurantId,categoryName,categoryId);
                         uploadImage.setImageResource(R.drawable.uploading);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        dialog.dismiss();
+                        Toast.makeText(Vendor_category_upload.this, "Failed to upload file: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
