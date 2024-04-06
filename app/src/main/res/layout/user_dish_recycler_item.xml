@@ -20,16 +20,17 @@
 
         <!-- Image -->
         <ImageView
-            android:id="@+id/imageViewItem"
+            android:id="@+id/recImage"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="250dp"
             android:src="@drawable/uploading"
             android:scaleType="centerCrop"
             android:contentDescription="@string/dish_image" />
 
         <!-- Quantity Selector -->
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,11 +44,11 @@
                 android:src="@drawable/minus_solid"/>
 
             <TextView
-                android:id="@+id/textViewQuantity"
+                android:id="@+id/recQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dishQuantity"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:paddingHorizontal="8dp" />
 
@@ -59,12 +60,12 @@
 
             <!-- Price -->
             <TextView
-                android:id="@+id/textViewPrice"
+                android:id="@+id/recDishPrice"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/dishPrice"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:gravity="end" />
 
@@ -72,25 +73,23 @@
             <TextView
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:id="@+id/textViewDescription"
+                android:id="@+id/recDishDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dish_description"
-                android:textSize="14sp"
+                android:textSize="20sp"
                 android:textColor="@color/black"
-                android:paddingTop="8dp"
-                android:paddingBottom="16dp" />
+                android:layout_marginTop="20dp"/>
         <!-- Add to Cart Button -->
         <Button
-            android:id="@+id/buttonAddToCart"
+            android:id="@+id/addToCartButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/addtoCart"
-            android:textColor="@color/black"
+            android:layout_marginTop="40dp"
             android:background="@drawable/btn_rounded_corner"
-            android:layout_marginTop="8dp"
-            android:padding="12dp"
-            android:textAllCaps="false" />
+            android:text="@string/addtoCart"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
 
     </LinearLayout>
 

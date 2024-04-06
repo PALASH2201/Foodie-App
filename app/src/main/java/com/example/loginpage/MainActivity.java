@@ -1,6 +1,7 @@
 package com.example.loginpage;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +26,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser user;
+    private AlertDialog dialog;
 
     private Mess_myAdapter adapter;
     private List<VendorDataClass> vendorList;
@@ -43,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setCancelable(false);
+        builder.setView(R.layout.progress_layout);
+        dialog = builder.create();
+        dialog.show();
 
         RecyclerView recyclerView = findViewById(R.id.mess_choice_recycler);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this,1);
@@ -68,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     vendorList.add(vendor);
                 }
                 adapter.notifyDataSetChanged();
+                dialog.dismiss();
             }
 
             @Override

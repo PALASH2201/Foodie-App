@@ -49,10 +49,10 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
     List<CategoriesDataClass> dataList ;
     DatabaseReference databaseReference;
     ValueEventListener eventListener;
-    public static final String EXTRA_CAT_NAME = "com.example.Vendor_menu_detail.extra.CAT_NAME";
-    public static final String EXTRA_REST_NAME = "com.example.Vendor_menu_detail.extra.REST_NAME";
-    public static final String EXTRA_CAT_ID = "com.example.Vendor_menu_detail.extra.CAT_ID";
-    public static final String EXTRA_REST_ID = "com.example.Vendor_menu_detail.extra.REST_ID";
+    public static final String EXTRA_CAT_NAME = "com.example.User_menu_detail.extra.CAT_NAME";
+    public static final String EXTRA_REST_NAME = "com.example.User_menu_detail.extra.REST_NAME";
+    public static final String EXTRA_CAT_ID = "com.example.User_menu_detail.extra.CAT_ID";
+    public static final String EXTRA_REST_ID = "com.example.User_menu_detail.extra.REST_ID";
 
     @SuppressLint({"MissingInflatedId", "NotifyDataSetChanged"})
     @Override
@@ -135,22 +135,21 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
         adapter = new Categories_myAdapter(Mess_1.this , dataList,false);
         recyclerView.setAdapter(adapter);
 
-       // retrieveVendorUserKeyByName();
-        retrieveRestaurantIdByName(mess_name.getText().toString());
+        retrieveRestaurantIdByName();
 
-//        adapter.setOnItemClickListener(new Categories_myAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(int position, boolean isVendor) {
-//                if(!isVendor){
-//                    Intent intent = new Intent(Mess_1.this,User_menu_detail.class);
-//                    intent.putExtra(EXTRA_CAT_NAME,dataList.get(position).getName());
-//                    intent.putExtra(EXTRA_REST_NAME,mess_name.getText().toString());
-//                    intent.putExtra(EXTRA_CAT_ID,dataList.get(position).getKey());
-//                    intent.putExtra(EXTRA_REST_ID,dataList.get(position).getRestaurant_id());
-//                    startActivity(intent);
-//                }
-//            }
-//        });
+        adapter.setOnItemClickListener(new Categories_myAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, boolean isVendor) {
+                if(!isVendor){
+                    Intent intent = new Intent(Mess_1.this,User_menu_detail.class);
+                    intent.putExtra(EXTRA_CAT_NAME,dataList.get(position).getName());
+                    intent.putExtra(EXTRA_REST_NAME,mess_name.getText().toString());
+                    intent.putExtra(EXTRA_CAT_ID,dataList.get(position).getKey());
+                    intent.putExtra(EXTRA_REST_ID,dataList.get(position).getRestaurant_id());
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -176,49 +175,7 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
         return true;
     }
 
-//    private void retrieveVendorUserKeyByName(){
-//        DatabaseReference vendorRef = FirebaseDatabase.getInstance().getReference("vendors");
-//        vendorRef.orderByChild("restaurant_name").equalTo(mess_name.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()) {
-//                    DataSnapshot userSnapshot = snapshot.getChildren().iterator().next();
-//                    String userId = userSnapshot.getKey();
-//                    Log.d("User Id","Id :" + userId);
-//                    retrieveRestaurantKey(userId);
-//                } else {
-//                    Toast.makeText(Mess_1.this, "No vendor found for this key", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(Mess_1.this, "Failed to fetch key for the vendor: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-//
-//    private void retrieveRestaurantKey(String userId) {
-//        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("vendors").child(userId);
-//        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()) {
-//                    restaurant_id = snapshot.child("key").getValue(String.class);
-//                    HandleDatabase(restaurant_id);
-//                } else {
-//                    Toast.makeText(Mess_1.this, "No registered restaurant for id: " + userId, Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                // Handle database error
-//                Toast.makeText(Mess_1.this, "Failed to fetch restaurant key: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-
-    private void retrieveRestaurantIdByName(String restaurantName) {
+    private void retrieveRestaurantIdByName() {
         DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference("restaurants");
         restaurantRef.orderByChild("restaurant_name").equalTo(mess_name.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

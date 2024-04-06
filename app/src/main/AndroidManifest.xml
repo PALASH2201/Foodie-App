@@ -16,9 +16,12 @@
         android:theme="@style/Base.Theme.LoginPage"
         tools:targetApi="31">
         <activity
+            android:name=".User_menu_detail"
+            android:exported="false" />
+        <activity
             android:name=".Vendor_menu_detail"
             android:exported="false"
-            android:theme="@style/Theme.Material3.Light.NoActionBar"/>
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".VendorMenu_viewer"
             android:exported="false"
