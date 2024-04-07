@@ -11,13 +11,14 @@ public class DishDataClass {
     private String category_id;
     private String key;
 
-    public DishDataClass(String dish_name, String dish_description, String dish_price,String dish_image_url, String restaurant_id, String category_id) {
+    public DishDataClass(String dish_name, String dish_description, String dish_price,String dish_image_url, String restaurant_id, String category_id , String key) {
         this.dish_name = dish_name;
         this.dish_description = dish_description;
         this.dish_price = dish_price;
         this.dish_image_url = dish_image_url;
         this.restaurant_id = restaurant_id;
         this.category_id = category_id;
+        this.key = key;
     }
 
     public void setDish_rating(String dish_rating) {
@@ -31,9 +32,9 @@ public class DishDataClass {
         return key;
     }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+//    public void setKey(String key) {
+//        this.key = key;
+//    }
 
     public String getDish_name() {
         return dish_name;

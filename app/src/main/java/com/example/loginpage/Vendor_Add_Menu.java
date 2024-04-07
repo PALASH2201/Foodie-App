@@ -123,8 +123,7 @@ public class Vendor_Add_Menu extends AppCompatActivity {
 
         String dish_id = FirebaseDatabase.getInstance().getReference("dishes").push().getKey();
 
-        DishDataClass dataClass = new DishDataClass(dish_name,dish_desc,dish_price,imageURL,extra_restaurant_id,extra_category_id);
-        dataClass.setKey(dish_id);
+        DishDataClass dataClass = new DishDataClass(dish_name,dish_desc,dish_price,imageURL,extra_restaurant_id,extra_category_id,dish_id);
 
         appendCategoryToRestaurant(dish_id,extra_category_id);
 

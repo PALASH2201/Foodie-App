@@ -111,7 +111,7 @@ public class User_menu_detail extends AppCompatActivity {
                         String dishPrice = dataSnapshot.child("dish_price").getValue(String.class);
                         String restaurantId = dataSnapshot.child("restaurant_id").getValue(String.class);
                         String dishDescription = dataSnapshot.child("dish_description").getValue(String.class);
-                        DishDataClass dataClass = new DishDataClass(dishName,dishDescription,dishPrice,dishImageURL,restaurantId,categoryId);
+                        DishDataClass dataClass = new DishDataClass(dishName,dishDescription,dishPrice,dishImageURL,restaurantId,categoryId,dishId);
                         dataList.add(dataClass);
                         adapter.notifyDataSetChanged();
                     } else {
