@@ -38,6 +38,7 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
     private final Context context ;
     private final List<DishDataClass> dataList;
     private final SparseBooleanArray expandedItems;
+    private String restaurant_name , category_name;
 
     public VendorDishDetails_myAdapter(Context context, List<DishDataClass> dataList) {
         this.context = context;
@@ -66,6 +67,9 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
         boolean isExpanded = expandedItems.get(position, false);
         holder.additionalDetailsLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         holder.arrowIcon.setRotation(isExpanded ? 180 : 0);
+
+        findRestaurantName(dataList.get(position).getRestaurant_id());
+        findCategoryName(dataList.get(position).getCategory_id());
         holder.arrowIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +88,8 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
                 intent.putExtra("Dish Price",dataList.get(position).getDish_price());
                 intent.putExtra("Dish Image",dataList.get(position).getDish_image_url());
                 intent.putExtra("Dish Id",dataList.get(position).getKey());
+                intent.putExtra("Category Name",category_name);
+                intent.putExtra("Restaurant Name",restaurant_name);
                 context.startActivity(intent);
             }
         });
@@ -114,21 +120,20 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
             imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    // Image deleted successfully
+
                     Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
                     Log.d("DeleteImage", "Image deleted successfully");
                 }
             }).addOnFailureListener(e -> {
-                // Failed to delete image
+
                 Toast.makeText(context, "Error deleting. Try Again", Toast.LENGTH_SHORT).show();
                 Log.e("DeleteImage", "Failed to delete image: " + e.getMessage());
             });
         }
             DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("categories")
-                    .child(categoryId) // Replace categoryId with the actual ID of the category
+                    .child(categoryId)
                     .child("dishes");
 
-            // Remove the dish ID from the dishes array in the category
             categoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -163,6 +168,36 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
                      Toast.makeText(context,"Database error",Toast.LENGTH_SHORT).show();
                 }
             });
+    }
+    private void findRestaurantName(String restaurantId){
+         DatabaseReference restRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurantId);
+         restRef.addValueEventListener(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                  if(snapshot.exists()){
+                      restaurant_name = snapshot.child("restaurant_name").getValue(String.class);
+                  }
+             }
+             @Override
+             public void onCancelled(@NonNull DatabaseError error) {
+                  Toast.makeText(context,"Database error in retrieving restaurant name",Toast.LENGTH_SHORT).show();
+             }
+         });
+    }
+    private void findCategoryName(String categoryId){
+        DatabaseReference restRef = FirebaseDatabase.getInstance().getReference("categories").child(categoryId);
+        restRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    category_name = snapshot.child("name").getValue(String.class);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(context,"Database error in retrieving category name",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
 class VendorDishDetails_MyViewHolder extends RecyclerView.ViewHolder{

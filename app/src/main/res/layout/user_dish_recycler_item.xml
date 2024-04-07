@@ -17,7 +17,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="8dp">
-
+        <TextView
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:id="@+id/recDishName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dish_name"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"/>
         <!-- Image -->
         <ImageView
             android:id="@+id/recImage"

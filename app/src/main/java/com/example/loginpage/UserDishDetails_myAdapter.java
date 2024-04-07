@@ -39,6 +39,7 @@ public class UserDishDetails_myAdapter extends RecyclerView.Adapter<UserDishDeta
     public void onBindViewHolder(@NonNull UserDishDetails_MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         Glide.with(context).load(dataList.get(position).getDish_image_url()).into(holder.recImage);
+        holder.recDishName.setText(dataList.get(position).getDish_name());
         String priceText = "Price:Rs " + dataList.get(position).getDish_price();
         holder.recDishPrice.setText(priceText);
         String descriptionText = "Description: " + dataList.get(position).getDish_description();
@@ -60,6 +61,7 @@ class UserDishDetails_MyViewHolder extends RecyclerView.ViewHolder{
 
     ImageView recImage ;
     CardView recCard ;
+    TextView recDishName;
     TextView recDishPrice;
     TextView recDishDescription;
     Button addToCart ;
@@ -67,6 +69,7 @@ class UserDishDetails_MyViewHolder extends RecyclerView.ViewHolder{
         super(itemView);
         recImage = itemView.findViewById(R.id.recImage);
         recCard = itemView.findViewById(R.id.recCard);
+        recDishName = itemView.findViewById(R.id.recDishName);
         recDishPrice = itemView.findViewById(R.id.recDishPrice);
         recDishDescription = itemView.findViewById(R.id.recDishDescription);
         addToCart = itemView.findViewById(R.id.addToCartButton);
