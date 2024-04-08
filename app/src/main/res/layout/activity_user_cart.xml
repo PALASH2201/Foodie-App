@@ -4,22 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:background="@color/white"
     tools:context=".User_cart">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="61dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginBottom="52dp"
+        android:background="@color/orange"
+        android:gravity="center"
         android:text="YOUR CART"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -36,20 +38,23 @@
 
     <Button
         android:id="@+id/cartCheckoutBtn"
-        android:layout_width="match_parent"
-        android:layout_height="61dp"
+        android:layout_width="366dp"
+        android:layout_height="54dp"
         android:layout_margin="12dp"
-        android:background="@drawable/btn_rounded_corner"
+        android:background="@color/orange"
         android:gravity="center"
         android:text="Proceed to select timeslot"
         android:textAlignment="center"
-        android:textColor="@color/orange"
+        android:textColor="@color/white"
+        android:textColorLink="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.944" />
+        app:layout_constraintVertical_bias="0.921" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
