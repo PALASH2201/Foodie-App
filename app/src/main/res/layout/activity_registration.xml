@@ -1,74 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     android:layout_height="match_parent"
-    android:padding="15dp"
-    tools:context=".Registration"
-    android:background="@drawable/gradient_background">
-
-    <TextView
-        android:layout_width="195dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="@color/yellow"
-        android:gravity="center"
-        android:text="@string/register"
-        android:textColor="#31290A"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        app:boxBackgroundColor="@color/yellow"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:textColor="#31290A"
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/email" />
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        app:boxBackgroundColor="@color/yellow"
-        android:layout_height="wrap_content"
-        app:endIconMode="password_toggle">
-        <com.google.android.material.textfield.TextInputEditText
-            android:textColor="#31290A"
-            android:id="@+id/password"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </com.google.android.material.textfield.TextInputLayout>
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    android:background="#FFFFFF"
+    tools:context=".Registration">
 
     <Button
-        android:textColor="#31290A"
         android:id="@+id/btn_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/register" />
+        android:layout_width="186dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="168dp"
+        android:backgroundTint="#FF5722"
+        android:shadowColor="#00FFFFFF"
+        android:shadowRadius="9"
+        android:text="@string/register"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textColorLink="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pass_reg"
+        app:layout_constraintVertical_bias="0.821" />
 
     <TextView
         android:id="@+id/loginNow"
-        android:layout_width="228dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/yellow"
+        android:layout_width="239dp"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center"
-        android:text="@string/click_to_login"
-        android:textColor="#31290A"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-</LinearLayout>
+        android:text="Click to Login!"
+        android:textColor="#121010"
+        android:textColorHighlight="#000000"
+        android:textColorHint="#000000"
+        android:textColorLink="#000000"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_register"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="HardcodedText,TextSizeCheck" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_reg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="380dp"
+        android:isScrollContainer="false"
+        android:nestedScrollingEnabled="false"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:textColorHint="#000000"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#000000"
+        app:cursorColor="#000000"
+        app:helperTextTextColor="#000000"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:hintTextColor="#FF4900"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:placeholderTextColor="#070707"
+        app:prefixTextColor="#F30606"
+        app:suffixTextColor="#000000"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/baseline_person_24"
+            android:drawablePadding="10dp"
+            android:hint="@string/email"
+            android:inputType="text|textEmailAddress|textAutoComplete|textAutoCorrect"
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:scrollHorizontally="false"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:textColor="#000000"
+            android:textColorHighlight="#FDD835"
+            android:textColorHint="#757575"
+            android:textColorLink="#4CFF00"
+            android:textSize="18sp"
+            tools:ignore="TextContrastCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/pass_reg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="300dp"
+        android:isScrollContainer="false"
+        android:nestedScrollingEnabled="false"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:textColorHint="#000000"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#000000"
+        app:cursorColor="#000000"
+        app:endIconTint="#090909"
+        app:helperTextTextColor="#000000"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:hintTextColor="#FF4900"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_reg"
+        app:layout_constraintVertical_bias="0.0"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#191818"
+        app:passwordToggleTintMode="src_in"
+        app:placeholderTextColor="#070707"
+        app:prefixTextColor="#F30606"
+        app:startIconScaleType="fitStart"
+        app:startIconTint="#000000"
+        app:suffixTextColor="#000000"
+        tools:ignore="DuplicateIds,MissingConstraints">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/lock_icon"
+            android:drawablePadding="10dp"
+            android:drawingCacheQuality="low"
+            android:foregroundTint="#000000"
+            android:hint="@string/password"
+            android:inputType="text|textPassword|textNoSuggestions"
+            android:password="true"
+            android:phoneNumber="false"
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:scrollHorizontally="false"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:textColor="#000000"
+            android:textColorHighlight="#FDD835"
+            android:textColorHint="#757575"
+            android:textColorLink="#4CFF00"
+            android:textSize="18sp"
+            tools:ignore="Deprecated" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="286dp"
+        android:layout_height="72dp"
+        android:layout_marginBottom="36dp"
+        android:background="#FFFFFF"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:rotationY="16"
+        android:shadowColor="#E4AC350F"
+        android:shadowDy="9"
+        android:text="@string/appname"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#F44336"
+        android:textColorHighlight="#F40B5B"
+        android:textColorHint="#000000"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/email_reg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.688"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.983"
+        tools:ignore="MissingConstraints,TextSizeCheck" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="10dp"
+        android:layout_height="43dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btn_register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pass_reg" />
+
+    <FrameLayout
+        android:layout_width="414dp"
+        android:layout_height="70dp"
+        android:background="@color/orange"
+        android:foregroundGravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Registration!!"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp" />
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
