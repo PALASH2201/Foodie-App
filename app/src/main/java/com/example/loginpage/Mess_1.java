@@ -149,6 +149,16 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
                     startActivity(intent);
                 }
             }
+
+            @Override
+            public void onEditClick(int position) {
+
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+
+            }
         });
     }
 

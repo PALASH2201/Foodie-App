@@ -98,8 +98,9 @@ public class Vendor_category_upload extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String restaurantId = snapshot.child("key").getValue(String.class);
+                    String restaurantName = snapshot.child("restaurant_name").getValue(String.class);
                     if (restaurantId != null) {
-                        saveData(restaurantId);
+                        saveData(restaurantId,restaurantName);
                     } else {
                         Toast.makeText(Vendor_category_upload.this, "Restaurant ID not found for vendor", Toast.LENGTH_SHORT).show();
                     }
@@ -116,11 +117,11 @@ public class Vendor_category_upload extends AppCompatActivity {
     }
 
 
-    private void saveData(String restaurantId) {
+    private void saveData(String restaurantId,String restaurantName) {
         String categoryName = uploadName.getText().toString();
         String categoryId = FirebaseDatabase.getInstance().getReference("categories").push().getKey();
 
-        StorageReference restaurantRef = FirebaseStorage.getInstance().getReference().child("vendors");
+        StorageReference restaurantRef = FirebaseStorage.getInstance().getReference().child("vendors").child(restaurantName);
         StorageReference categoryRef = restaurantRef.child(categoryName);
         assert categoryId != null;
         StorageReference imageRef = categoryRef.child(categoryId);

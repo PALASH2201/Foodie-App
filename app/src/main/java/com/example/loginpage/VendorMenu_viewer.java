@@ -153,6 +153,16 @@ public class VendorMenu_viewer extends AppCompatActivity {
                     }
                 }
             }
+
+            @Override
+            public void onEditClick(int position) {
+
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+
+            }
         });
     }
 }
