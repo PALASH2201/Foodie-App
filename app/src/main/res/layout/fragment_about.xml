@@ -58,13 +58,6 @@
                 android:textStyle="bold" />
 
             <!-- App Logo or Icon -->
-            <ImageView
-                android:id="@+id/image_app_logo"
-                android:layout_width="227dp"
-                android:layout_height="137dp"
-                android:layout_marginBottom="16dp"
-                android:src="@drawable/logo2"
-                android:contentDescription="@string/appLogo" />
 
             <!-- Team Member 1 -->
             <TextView
