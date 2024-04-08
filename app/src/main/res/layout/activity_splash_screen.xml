@@ -1,37 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background">
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="180dp"
-        android:layout_height="94dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="236dp"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/logo2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.549"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/appLogo" />
+    android:background="@color/orange">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="247dp"
         android:layout_height="72dp"
+        android:layout_marginTop="280dp"
+        android:background="#FF0000"
         android:fontFamily="@font/andika_new_basic_bold_italic"
         android:gravity="center"
         android:text="@string/app_name"
         android:textAlignment="center"
-        android:textColor="#6B4343"
+        android:textColor="@color/white"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextSizeCheck" />
 
     <TextView
         android:id="@+id/slogan"
@@ -40,9 +30,12 @@
         android:fontFamily="@font/akaya_telivigala"
         android:text="@string/tagline"
         android:textAlignment="center"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintVertical_bias="0.867" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,7 +15,6 @@ public class SplashScreen extends AppCompatActivity {
      private static int SPLASH_SCREEN = 2500;
     //variables
     Animation topAnim , bottomAnim;
-    ImageView logo;
     TextView title, slogan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +27,10 @@ public class SplashScreen extends AppCompatActivity {
         bottomAnim = AnimationUtils.loadAnimation(this,R.anim.top_animation);
 
         //hooks
-        logo = findViewById(R.id.logo);
         title = findViewById(R.id.title);
         slogan = findViewById(R.id.slogan);
 
-        logo.setAnimation(topAnim);
         title.setAnimation(bottomAnim);
-        slogan.setAnimation(bottomAnim);
 
         new Handler().postDelayed(new Runnable() {
             @Override
