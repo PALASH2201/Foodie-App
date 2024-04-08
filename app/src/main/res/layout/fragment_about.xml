@@ -3,12 +3,150 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     tools:context=".About">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/text_app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:letterSpacing="0.2"
+                android:text="@string/app_name"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <!-- App Version -->
+            <TextView
+                android:id="@+id/text_app_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="@string/versionInfo"
+                android:textSize="16sp" />
+
+            <!-- App Description -->
+            <TextView
+                android:id="@+id/text_app_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:letterSpacing="0.1"
+                android:text="@string/app_description"
+                android:fontFamily="@font/andika_new_basic_bold_italic"
+                android:textSize="16sp" />
+
+            <!-- Developer/Organization Information -->
+            <TextView
+                android:id="@+id/text_developer_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/developer_information"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- App Logo or Icon -->
+            <ImageView
+                android:id="@+id/image_app_logo"
+                android:layout_width="227dp"
+                android:layout_height="137dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/logo2"
+                android:contentDescription="@string/appLogo" />
+
+            <!-- Team Member 1 -->
+            <TextView
+                android:id="@+id/text_team_member1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/developerName"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_team_member1_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/roleNum1"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/text_team_member1_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="@string/DevEmail"
+                android:textSize="16sp" />
+
+
+            <!-- Team Member 2 -->
+            <TextView
+                android:id="@+id/text_team_member2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/designerName1"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_team_member2_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/role2"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/text_team_member2_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Email: yashkambli@example.com"
+                android:textSize="16sp" />
+
+
+            <!-- Team Member 3 -->
+            <TextView
+                android:id="@+id/text_team_member3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/designerName2"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_team_member3_role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/role2"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/text_team_member3_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Email: aaditjha@example.com"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
