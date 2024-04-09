@@ -8,7 +8,9 @@
     android:gravity="center"
     android:layout_margin="20dp"
     android:weightSum="100"
+
     tools:context=".VendorLogin">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,11 +50,11 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_width="150dp"
+        android:layout_width="149dp"
         android:layout_height="150dp"
+        android:layout_weight="20"
         android:src="@drawable/phone_icon"
-        app:tint="@color/black"
-        android:layout_weight="20" />
+        app:tint="@color/black" />
 
     <TextView
         android:layout_width="match_parent"
