@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/orange">
+    android:background="@color/beige">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="247dp"
         android:layout_height="72dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="284dp"
         android:background="#FF0000"
         android:fontFamily="@font/andika_new_basic_bold_italic"
         android:gravity="center"
@@ -30,12 +30,23 @@
         android:fontFamily="@font/akaya_telivigala"
         android:text="@string/tagline"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:textColor="@color/dark_orange"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:layout_constraintVertical_bias="0.867" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="411dp"
+        android:layout_height="504dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/foodease" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
