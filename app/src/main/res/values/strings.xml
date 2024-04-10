@@ -3,9 +3,9 @@
     <string name="login">Login</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="register">REGISTER HERE</string>
+    <string name="register">REGISTER</string>
     <string name="click_to_login">Click here to log in</string>
-    <string name="click_to_register"> Not registered ? Click to here to register</string>
+    <string name="click_to_register"> Not registered ? Click here to register</string>
     <string name="logout">Logout</string>
     <string name="tagline">Ordering Food became easy</string>
     <string name="open_nav">Open Navigation Drawer</string>
@@ -32,4 +32,11 @@
     <string name="role2">Role: Designer</string>
     <string name="designerName2">Aadit Jha</string>
     <string name="versionInfo">Version 1.0</string>
+    <string name="owner_text">Owner</string>
+    <string name="customer_text">Customer</string>
+    <string name="todo">TODO</string>
+    <string name="todo1">TODO1</string>
+    <string name="submit">Login</string>
+    <string name="appname">FoodEase</string>
+
 </resources>
