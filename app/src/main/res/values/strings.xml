@@ -38,5 +38,7 @@
     <string name="todo1">TODO1</string>
     <string name="submit">Login</string>
     <string name="appname">FoodEase</string>
+    <string name="view_cart_option">View Cart</string>
+    <string name="remove_dish_from_cart">remove dish</string>
 
 </resources>

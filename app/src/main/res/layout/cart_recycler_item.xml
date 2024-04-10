@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:layout_marginHorizontal="8dp"/>
 
             <!-- Plus Button -->
@@ -80,4 +80,11 @@
 
         </LinearLayout>
     </LinearLayout>
+    <ImageView
+        android:id="@+id/removeDish"
+        android:layout_marginStart="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/remove_dish_from_cart"
+        android:src="@drawable/close"/>
 </LinearLayout>
