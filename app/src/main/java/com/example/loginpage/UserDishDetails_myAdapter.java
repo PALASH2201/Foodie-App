@@ -91,6 +91,8 @@ public class UserDishDetails_myAdapter extends RecyclerView.Adapter<UserDishDeta
                 userCartRef.child("restaurant_name").setValue(restaurant_name);
                 userCartRef.child("category_id").setValue(dataList.get(position).getCategory_id());
                 userCartRef.child("restaurant_id").setValue(dataList.get(position).getRestaurant_id());
+                double total_price = Double.parseDouble(dataList.get(position).getDish_price()) * Double.parseDouble(holder.recQuantity.getText().toString());
+                userCartRef.child("total_price").setValue(String.valueOf(total_price));
 
                Toast.makeText(context,"Dish Successfully added in cart",Toast.LENGTH_SHORT).show();
             }

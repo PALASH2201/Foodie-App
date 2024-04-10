@@ -26,10 +26,15 @@ import java.util.List;
 public class Cart_myAdapter extends RecyclerView.Adapter<Cart_MyViewHolder> {
     private final Context context ;
     private final List<CartDataClass> dataList;
+    private double subTotal , total_bill ;
+    private final  double platform_fees = 8;
+    TextView subtotal , totalBill;
 
-    public Cart_myAdapter(Context context, List<CartDataClass> dataList) {
+    public Cart_myAdapter(Context context, List<CartDataClass> dataList,TextView subtotal , TextView totalBill) {
         this.context = context;
         this.dataList = dataList;
+        this.subtotal = subtotal;
+        this.totalBill = totalBill;
     }
 
     @NonNull
@@ -42,6 +47,8 @@ public class Cart_myAdapter extends RecyclerView.Adapter<Cart_MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull Cart_MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String dishId = dataList.get(position).getKey();
         final double single_price = Double.parseDouble(dataList.get(position).getSingleDish_price());
         final double[] total_price = {Double.parseDouble(dataList.get(position).getTotalDish_price())};
         Glide.with(context).load(dataList.get(position).getDish_image_url()).into(holder.item_image);
@@ -50,6 +57,7 @@ public class Cart_myAdapter extends RecyclerView.Adapter<Cart_MyViewHolder> {
         holder.dish_price.setText(price);
         holder.dish_quantity.setText(String.valueOf(dataList.get(position).getQuantity()));
 
+        getSubTotal(dataList);
         holder.plus_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +67,23 @@ public class Cart_myAdapter extends RecyclerView.Adapter<Cart_MyViewHolder> {
                  total_price[0] = newQuantity * single_price;
                  String price = "Price: "+ total_price[0];
                  holder.dish_price.setText(price);
+                CartDataClass new_dataList = new CartDataClass(
+                        dataList.get(position).getDish_name()
+                        ,String.valueOf(single_price)
+                        ,String.valueOf(total_price[0])
+                        ,dataList.get(position).getDish_image_url()
+                        ,dataList.get(position).getRestaurant_id()
+                        ,dataList.get(position).getCategory_id()
+                        ,dishId
+                        ,newQuantity
+                        ,dataList.get(position).getRestaurant_name()
+                        ,dataList.get(position).getCategory_name());
+                dataList.set(position,new_dataList);
+                 updatePrice(dishId,userId,String.valueOf(total_price[0]),String.valueOf(newQuantity));
+                 subTotal += (newQuantity - currentQuantity) * single_price;
+                 total_bill = subTotal + platform_fees;
+                 subtotal.setText("Rs: "+subTotal);
+                 totalBill.setText("Rs: "+total_bill);
             }
         });
         holder.minus_btn.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +96,23 @@ public class Cart_myAdapter extends RecyclerView.Adapter<Cart_MyViewHolder> {
                     total_price[0] = newQuantity * single_price;
                     String price = "Price: "+ total_price[0];
                     holder.dish_price.setText(price);
+                    CartDataClass new_dataList = new CartDataClass(
+                            dataList.get(position).getDish_name()
+                            ,String.valueOf(single_price)
+                            ,String.valueOf(total_price[0])
+                            ,dataList.get(position).getDish_image_url()
+                            ,dataList.get(position).getRestaurant_id()
+                             ,dataList.get(position).getCategory_id()
+                             ,dishId
+                             ,newQuantity
+                             ,dataList.get(position).getRestaurant_name()
+                             ,dataList.get(position).getCategory_name());
+                    dataList.set(position,new_dataList);
+                    updatePrice(dishId,userId,String.valueOf(total_price[0]),String.valueOf(newQuantity));
+                    subTotal -= (currentQuantity - newQuantity) * single_price;
+                    total_bill = subTotal + platform_fees;
+                    subtotal.setText("Rs: "+subTotal);
+                    totalBill.setText("Rs: "+total_bill);
                 } else {
                     Toast.makeText(context, "Quantity cannot be less than 1", Toast.LENGTH_SHORT).show();
                 }
@@ -81,6 +123,11 @@ public class Cart_myAdapter extends RecyclerView.Adapter<Cart_MyViewHolder> {
             public void onClick(View v) {
                 String dishId = dataList.get(position).getKey();
                 String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String total_price_dish = dataList.get(position).getTotalDish_price();
+                subTotal-= Double.parseDouble(total_price_dish) ;
+                total_bill = subTotal + platform_fees;
+                subtotal.setText("Rs: "+subTotal);
+                totalBill.setText("Rs: "+total_bill);
                 deleteFromCart(dishId,userId);
                 dataList.remove(position);
                 notifyDataSetChanged();
@@ -107,6 +154,22 @@ public class Cart_myAdapter extends RecyclerView.Adapter<Cart_MyViewHolder> {
             }
         });
     }
+    public void updatePrice(String dishId , String userId , String totalPrice , String new_quantity){
+          DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("cart");
+          DatabaseReference dishRef = cartRef.child(dishId);
+          dishRef.child("quantity").setValue(new_quantity);
+          dishRef.child("total_price").setValue(totalPrice);
+          Toast.makeText(context,"Price updated",Toast.LENGTH_SHORT).show();
+    }
+    public void getSubTotal(List<CartDataClass> dataList){
+        subTotal = 0;
+        for(int i =0 ;i < dataList.size();i++){
+            subTotal += Double.parseDouble(dataList.get(i).getTotalDish_price());
+        }
+        total_bill = subTotal + platform_fees;
+        subtotal.setText("Rs: "+subTotal);
+        totalBill.setText("Rs: "+total_bill);
+    }
 }
 class Cart_MyViewHolder extends RecyclerView.ViewHolder{
 
@@ -119,6 +182,7 @@ class Cart_MyViewHolder extends RecyclerView.ViewHolder{
     ImageView remove_btn;
     TextView dish_quantity;
     LinearLayout cart_item;
+
     public Cart_MyViewHolder(@NonNull View itemView){
         super(itemView);
         item_image = itemView.findViewById(R.id.item_image);

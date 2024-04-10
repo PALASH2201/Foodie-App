@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -17,6 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +31,14 @@ public class User_cart extends AppCompatActivity {
     private AlertDialog dialog;
     List<CartDataClass> dataList ;
     String userId  ;
+    double subTotal ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_cart);
+
+        TextView subtotal= findViewById(R.id.subTotal);
+        TextView totalBill = findViewById(R.id.totalBill);
 
         Intent intent = getIntent();
         userId = intent.getStringExtra("User Id");
@@ -46,7 +53,7 @@ public class User_cart extends AppCompatActivity {
         dialog.show();
 
         dataList = new ArrayList<>();
-        cartMyAdapter = new Cart_myAdapter(User_cart.this , dataList);
+        cartMyAdapter = new Cart_myAdapter(User_cart.this , dataList,subtotal,totalBill);
         recyclerView.setAdapter(cartMyAdapter);
 
         getCartDetails(userId);
@@ -66,7 +73,7 @@ public class User_cart extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dishSnapshot) {
                                 if (dishSnapshot.exists()) {
-                                    Log.d("Dish exits",dishId);
+                                    Log.d("Dish exists",dishId);
                                     String dishName = dishSnapshot.child("dish_name").getValue(String.class);
                                     String dishPrice = dishSnapshot.child("dish_price").getValue(String.class);
                                     String restaurantName = dishSnapshot.child("restaurant_name").getValue(String.class);
@@ -100,6 +107,5 @@ public class User_cart extends AppCompatActivity {
                 Toast.makeText(User_cart.this,"Database error. Try again",Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }
