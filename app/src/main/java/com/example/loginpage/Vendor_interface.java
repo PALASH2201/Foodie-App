@@ -26,6 +26,7 @@ public class Vendor_interface extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private String restaurant_name;
+    private String restaurant_id ;
     TextView viewCategories;
 
     public static final String EXTRA_NAME = "com.example.VendorMenu_viewer.extra.NAME";
@@ -37,6 +38,7 @@ public class Vendor_interface extends AppCompatActivity {
 
         TextView registerNow = findViewById(R.id.registerNow);
         Button logout = findViewById(R.id.logout_btn);
+        TextView addTimeSlots = findViewById(R.id.addTimeSlots);
         mAuth = FirebaseAuth.getInstance();
 
         String userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
@@ -48,6 +50,7 @@ public class Vendor_interface extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     restaurant_name = snapshot.child("restaurant_name").getValue(String.class);
+                    restaurant_id = snapshot.child("key").getValue(String.class);
                     if (restaurant_name == null) {
                          Toast.makeText(Vendor_interface.this , "No restaurant name found for given vendorID",Toast.LENGTH_SHORT).show();
                     }else{
@@ -67,6 +70,18 @@ public class Vendor_interface extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(Vendor_interface.this,Vendor_registration.class);
+                startActivity(intent);
+            }
+        });
+
+        addTimeSlots.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Vendor_interface.this,Vendor_addTimeSlot.class);
+                intent.putExtra("restaurant_name",restaurant_name);
+                Log.d("sending rest name",restaurant_name);
+                intent.putExtra("restaurant_id",restaurant_id);
+                Log.d("sending rest id",restaurant_name);
                 startActivity(intent);
             }
         });
