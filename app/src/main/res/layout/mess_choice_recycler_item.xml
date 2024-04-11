@@ -15,36 +15,40 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="200dp"
+        android:background="@color/orange">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/recImage"
-            android:layout_width="136dp"
-            android:layout_height="148dp"
+            android:layout_width="166dp"
+            android:layout_height="153dp"
             android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="37dp"
-            android:layout_marginBottom="31dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginBottom="26dp"
+            android:outlineProvider="background"
             android:padding="8dp"
             android:scaleType="centerCrop"
             android:src="@drawable/img" />
 
         <TextView
             android:id="@+id/recName"
-            android:layout_width="152dp"
-            android:layout_height="32dp"
+            android:layout_width="123dp"
+            android:layout_height="69dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="31dp"
-            android:layout_marginTop="85dp"
-            android:layout_marginEnd="31dp"
-            android:layout_marginBottom="83dp"
+            android:layout_marginTop="67dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="64dp"
             android:layout_toEndOf="@id/recImage"
             android:gravity="center"
             android:text="Mess name"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold" />
 
