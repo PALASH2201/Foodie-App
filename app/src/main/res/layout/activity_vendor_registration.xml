@@ -1,99 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/orange"
     android:orientation="vertical"
-    tools:context=".Vendor_registration"
-    android:background="@drawable/gradient_background">
+    tools:context=".Vendor_registration">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="643dp"
             android:layout_gravity="center_horizontal"
-            android:padding="20dp"
-            android:background="@drawable/orange_border">
+            android:background="@drawable/orange_border"
+            android:orientation="vertical"
+            android:padding="20dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Vendor Registration"
-                android:textSize="30sp"
                 android:textAlignment="center"
-                android:textColor="@color/orange"/>
+                android:textColor="@color/red"
+                android:textSize="30sp" />
+
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:src="@drawable/uploading"
                 android:id="@+id/uploadImage"
-                android:layout_marginTop="10dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="134dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/uploading" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/orange"
                 android:layout_marginTop="20dp"
+                android:textColorHint="@color/orange"
+                app:boxBackgroundMode="outline"
+                app:hintAnimationEnabled="true"
+                app:hintTextAppearance="@style/MyHintTextAppearance"
                 app:hintTextColor="@color/orange"
-                app:hintTextAppearance="@style/MyHintTextAppearance">
+                app:suffixTextColor="@color/red">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/uploadName"
-                    android:background="@drawable/rounded_corner_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
 
-                    android:padding="16dp"
+                    android:gravity="start|center_vertical"
                     android:hint="Enter mess/canteen name"
-                    android:gravity="start|center_vertical"
-                    android:textColor="@color/orange"/>
+                    android:outlineProvider="none"
+                    android:padding="16dp"
+                    android:shadowColor="@color/black"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:textColorHint="@color/orange">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/uploadOwnerName"
-                    android:background="@drawable/rounded_corner_background"
-
-                    android:padding="16dp"
-                    android:hint="Enter owner name"
-                    android:gravity="start|center_vertical"
-                    android:textColor="@color/orange"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:textColorHint="@color/orange"
-                android:layout_marginTop="20dp">
+                app:hintAnimationEnabled="true"
+                app:hintTextAppearance="@style/MyHintTextAppearance"
+                app:hintTextColor="@color/orange"
+                app:suffixTextColor="@color/red">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/uploadOwnerName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/uploadLocation"
-                    android:background="@drawable/rounded_corner_background"
-                    android:padding="16dp"
-                    android:inputType="textMultiLine"
-                    android:hint="Enter your location"
+
                     android:gravity="start|center_vertical"
-                    android:textColor="@color/orange"/>
+                    android:hint="Enter owner name"
+                    android:outlineProvider="none"
+                    android:padding="16dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -101,31 +93,58 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:textColorHint="@color/orange">
+                android:textColorHint="@color/orange"
+                app:hintAnimationEnabled="true"
+                app:hintTextAppearance="@style/MyHintTextAppearance"
+                app:hintTextColor="@color/orange"
+                app:suffixTextColor="@color/red">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/uploadLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/uploadContact"
-                    android:background="@drawable/rounded_corner_background"
-
-                    android:padding="16dp"
-                    android:inputType="phone"
-                    android:hint="Enter your contact"
                     android:gravity="start|center_vertical"
-                    android:textColor="@color/orange"/>
+                    android:hint="Enter your location"
+                    android:inputType="textMultiLine"
+                    android:padding="16dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColorHint="@color/orange"
+                app:hintAnimationEnabled="true"
+                app:hintTextAppearance="@style/MyHintTextAppearance"
+                app:hintTextColor="@color/orange"
+                app:suffixTextColor="@color/red">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/uploadContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="start|center_vertical"
+                    android:hint="Enter your contact"
+                    android:inputType="phone"
+                    android:padding="16dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <Button
+                android:id="@+id/saveButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="Save"
-                android:textSize="18sp"
-                android:id="@+id/saveButton"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/orange"
-                app:cornerRadius = "20dp"/>
+                android:text="Save"
+                android:textSize="24sp"
+                app:cornerRadius="20dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

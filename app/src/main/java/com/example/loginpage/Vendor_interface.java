@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ public class Vendor_interface extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_interface);
 
-        TextView registerNow = findViewById(R.id.registerNow);
+        ImageButton registerNow = findViewById(R.id.registerNow);
         Button logout = findViewById(R.id.logout_btn);
         mAuth = FirebaseAuth.getInstance();
 
@@ -90,7 +91,7 @@ public class Vendor_interface extends AppCompatActivity {
     }
     public void startVendorMenuViewerActivity(){
 
-        viewCategories = findViewById(R.id.viewCategories);
+        ImageButton viewCategories = findViewById(R.id.viewCategories);
         viewCategories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

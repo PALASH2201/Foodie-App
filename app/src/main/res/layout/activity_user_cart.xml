@@ -8,7 +8,7 @@
     tools:context=".User_cart">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="408dp"
         android:layout_height="61dp"
         android:layout_marginBottom="52dp"
         android:background="@color/orange"
@@ -21,7 +21,8 @@
         app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -38,23 +39,16 @@
 
     <Button
         android:id="@+id/cartCheckoutBtn"
-        android:layout_width="366dp"
-        android:layout_height="54dp"
-        android:layout_margin="12dp"
-        android:background="@color/orange"
-        android:gravity="center"
+        android:layout_width="283dp"
+        android:layout_height="63dp"
+        android:backgroundTint="@color/orange"
         android:text="Proceed to select timeslot"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textColorLink="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.921" />
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view"
+        app:layout_constraintVertical_bias="0.906" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

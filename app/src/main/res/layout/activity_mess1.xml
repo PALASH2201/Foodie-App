@@ -9,7 +9,7 @@
     tools:openDrawer="start"
     android:id="@+id/drawer_layout"
     style="@style/Theme.Material3.Light.NoActionBar"
-    android:background="@drawable/gradient_background">
+    android:background="@color/orange">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,11 +17,11 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:id="@+id/toolbar"
+            android:background="@color/orange"
             android:elevation="4dp"
-            android:background="@color/yellow"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
@@ -29,30 +29,34 @@
             android:id="@+id/mess_name"
             android:layout_width="match_parent"
             android:layout_height="61dp"
+            android:background="@color/orange"
             android:textAlignment="center"
             android:textSize="35sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/orange">
+
             <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="visible" />
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible" />
         </FrameLayout>
     </LinearLayout>
+
     <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:backgroundTint="@color/white"
-        android:layout_height="match_parent"
         android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:backgroundTint="@color/white"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_menu"
         app:itemIconTint="@color/orange"
-        app:itemTextColor="@color/orange"/>
+        app:itemTextColor="@color/black"
+        app:menu="@menu/nav_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

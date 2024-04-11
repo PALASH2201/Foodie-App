@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/recCard"
-    android:layout_marginStart="12dp"
-    android:layout_marginEnd="12dp"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="10dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:background="@color/orange"
     app:cardCornerRadius="20dp"
     app:cardElevation="8dp">
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="372dp"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_marginTop="5dp"
             android:id="@+id/recImage"
             android:layout_width="156dp"
             android:layout_height="131dp"
@@ -27,6 +27,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
             android:src="@drawable/uploading"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -37,22 +38,23 @@
 
         <TextView
             android:id="@+id/recName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="96dp"
+            android:layout_height="39dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
+            android:gravity="center"
             android:text="Dish Name"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.342"
+            app:layout_constraintHorizontal_bias="0.259"
             app:layout_constraintStart_toEndOf="@+id/recImage"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.441" />
+            app:layout_constraintVertical_bias="0.403" />
 
         <ImageView
             android:id="@+id/arrowIcon"
@@ -64,7 +66,7 @@
             android:src="@drawable/arrow_drop_down_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.953"
+            app:layout_constraintHorizontal_bias="0.898"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recName"
             app:layout_constraintVertical_bias="0.0" />
@@ -120,22 +122,22 @@
 
                 <Button
                     android:id="@+id/editButton"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
+                    android:backgroundTint="@color/orange"
                     android:text="Edit"
-                    android:backgroundTint="@color/yellow"
-                    android:textColor="@color/orange"
-                    style="?android:attr/buttonBarButtonStyle" />
+                    android:textColor="@color/white" />
 
                 <Button
                     android:id="@+id/deleteButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
+                    android:backgroundTint="@color/orange"
                     android:text="Delete"
-                    android:backgroundTint="@color/yellow"
-                    android:textColor="@color/orange" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

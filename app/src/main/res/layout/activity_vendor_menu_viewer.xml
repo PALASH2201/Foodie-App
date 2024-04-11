@@ -1,24 +1,27 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:background="@color/white"
     tools:context=".VendorMenu_viewer">
 
     <TextView
         android:id="@+id/mess_name"
-        android:layout_width="match_parent"
-        android:layout_height="61dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="409dp"
+        android:layout_height="70dp"
+        android:background="@color/orange"
+        android:gravity="center"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="35sp"
         android:textStyle="bold"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -29,23 +32,24 @@
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/addCategories"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mess_name" />
+        app:layout_constraintTop_toBottomOf="@+id/mess_name"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
+    <Button
         android:id="@+id/addCategories"
-        android:layout_width="0dp"
-        android:layout_height="61dp"
-        android:layout_margin="12dp"
-        android:background="@drawable/btn_rounded_corner"
-        android:gravity="center"
+        android:layout_width="332dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/orange"
         android:text="@string/addCategories"
-        android:textAlignment="center"
-        android:textColor="@color/orange"
-        android:textSize="25sp"
-        android:textStyle="bold"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/mess_name"
+        app:layout_constraintVertical_bias="0.967" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
