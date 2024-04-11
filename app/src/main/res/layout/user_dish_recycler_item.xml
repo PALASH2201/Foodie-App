@@ -16,21 +16,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/orange"
         android:orientation="vertical"
         android:padding="8dp">
 
+        <!-- Image -->
         <TextView
             android:id="@+id/recDishName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="372dp"
+            android:layout_height="58dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:background="@color/orange"
+            android:background="@color/white"
+            android:capitalize="none"
+            android:gravity="center"
             android:padding="10dp"
             android:text="@string/dish_name"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-        <!-- Image -->
+            android:textAllCaps="true"
+            android:textColor="@color/red"
+            android:textSize="34sp" />
+
         <ImageView
             android:id="@+id/recImage"
             android:layout_width="match_parent"
@@ -46,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="10dp"
+            android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -86,24 +92,24 @@
         <TextView
             android:id="@+id/recDishDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="115dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:padding="10dp"
             android:text="@string/dish_description"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textColor="@color/white"
+            android:textSize="24sp" />
         <!-- Add to Cart Button -->
         <Button
             android:id="@+id/addToCartButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:background="@color/white"
-            android:backgroundTint="@color/orange"
+            android:backgroundTint="@color/yellow"
             android:text="@string/addtoCart"
             android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:textColor="@color/orange"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
