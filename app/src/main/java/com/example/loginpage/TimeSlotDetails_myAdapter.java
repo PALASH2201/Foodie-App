@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,8 @@ public class TimeSlotDetails_myAdapter extends RecyclerView.Adapter<TimeSlot_MyV
     private final Context context;
     private final List<TimeSlotDataClass> dataList;
     private TimeSlotDetails_myAdapter.OnItemClickListener mListener;
+    private final TextView timeSlotCheckoutBtn;
+    String selected_timeSlot, day , available_slots,restaurant_id , restaurant_name,total_bill;
 
     private final boolean isVendor;
     public interface OnItemClickListener {
@@ -40,10 +43,12 @@ public class TimeSlotDetails_myAdapter extends RecyclerView.Adapter<TimeSlot_MyV
         mListener = listener;
     }
 
-    public TimeSlotDetails_myAdapter(Context context, List<TimeSlotDataClass> dataList,boolean isVendor) {
+    public TimeSlotDetails_myAdapter(Context context, List<TimeSlotDataClass> dataList,boolean isVendor,TextView timeSlotCheckoutBtn,String total_bill) {
         this.context = context;
         this.dataList = dataList;
         this.isVendor = isVendor;
+        this.timeSlotCheckoutBtn=timeSlotCheckoutBtn;
+        this.total_bill = total_bill;
     }
     @NonNull
     @Override
@@ -62,6 +67,36 @@ public class TimeSlotDetails_myAdapter extends RecyclerView.Adapter<TimeSlot_MyV
                 holder.deleteButton.setVisibility(View.GONE);
                 String numSlotsAvailable = "Available slots: "+dataList.get(position).getAvailable_slots();
                 holder.available_slot_info.setText(numSlotsAvailable);
+                holder.selectedTimeSlot_checkBox.setTag(position);
+
+            holder.selectedTimeSlot_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    day = null;selected_timeSlot=null;available_slots=null;
+
+                    int checkboxPosition = (int) buttonView.getTag();
+                    TimeSlotDataClass selectedItem = dataList.get(checkboxPosition);
+                    day = selectedItem.getDay();
+                    selected_timeSlot = selectedItem.getTime_slot();
+                    available_slots = selectedItem.getAvailable_slots();
+                    restaurant_name=selectedItem.getRestaurant_name();
+                    restaurant_id=selectedItem.getRestaurant_id();
+                }
+            });
+
+            timeSlotCheckoutBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, User_review_order.class);
+                    intent.putExtra("day", day);
+                    intent.putExtra("Selected time slot", selected_timeSlot);
+                    intent.putExtra("Available slots",available_slots);
+                    intent.putExtra("restaurant_name",restaurant_name);
+                    intent.putExtra("restaurant_id",restaurant_id);
+                    intent.putExtra("total bill",total_bill);
+                    context.startActivity(intent);
+                }
+            });
         }
         else {
             String numSlotsAvailable = "Default slots: "+dataList.get(position).getDefault_available_slots();

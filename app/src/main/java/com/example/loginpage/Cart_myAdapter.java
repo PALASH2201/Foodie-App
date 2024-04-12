@@ -2,6 +2,7 @@ package com.example.loginpage;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -59,6 +59,7 @@ public class Cart_myAdapter extends RecyclerView.Adapter<Cart_MyViewHolder> {
 
         getSubTotal(dataList);
         holder.plus_btn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 int currentQuantity = Integer.parseInt(holder.dish_quantity.getText().toString());
@@ -87,6 +88,7 @@ public class Cart_myAdapter extends RecyclerView.Adapter<Cart_MyViewHolder> {
             }
         });
         holder.minus_btn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 int currentQuantity = Integer.parseInt(holder.dish_quantity.getText().toString());
@@ -119,6 +121,7 @@ public class Cart_myAdapter extends RecyclerView.Adapter<Cart_MyViewHolder> {
             }
         });
         holder.remove_btn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 String dishId = dataList.get(position).getKey();
@@ -161,6 +164,7 @@ public class Cart_myAdapter extends RecyclerView.Adapter<Cart_MyViewHolder> {
           dishRef.child("total_price").setValue(totalPrice);
           Toast.makeText(context,"Price updated",Toast.LENGTH_SHORT).show();
     }
+    @SuppressLint("SetTextI18n")
     public void getSubTotal(List<CartDataClass> dataList){
         subTotal = 0;
         for(int i =0 ;i < dataList.size();i++){

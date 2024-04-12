@@ -139,6 +139,13 @@ public class Vendor_addTimeSlot extends AppCompatActivity {
                 Toast.makeText(Vendor_addTimeSlot.this,timeSlot+" slot not added for "+day+", TRY AGAIN!",Toast.LENGTH_SHORT).show();
             }
         });
+        timeSlotRef.child("available_slots").setValue(default_available_slots).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                dialog.dismiss();
+                Toast.makeText(Vendor_addTimeSlot.this,timeSlot+" slot not added for "+day+", TRY AGAIN!",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     public void addTimeSlotEveryDay(String[] days,String timeSlot , String default_available_slots,String restaurant_id,String restaurant_name){
         for (String day : days) {

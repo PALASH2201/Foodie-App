@@ -64,7 +64,7 @@ public class Vendor_view_timeslots extends AppCompatActivity {
         dialog.show();
 
         dataList = new ArrayList<>();
-        adapter = new TimeSlotDetails_myAdapter(Vendor_view_timeslots.this , dataList , true);
+        adapter = new TimeSlotDetails_myAdapter(Vendor_view_timeslots.this , dataList , true,null,null);
         recyclerView.setAdapter(adapter);
 
 

@@ -9,8 +9,6 @@ public class MidnightAlarmReceiver extends BroadcastReceiver {
     private static final String TAG = "MidnightAlarmReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO: This method is called when the BroadcastReceiver is receiving
-        // an Intent broadcast.
         Log.d(TAG, "Alarm received, starting service...");
         Intent serviceIntent = new Intent(context, MyBackgroundService.class);
         context.startService(serviceIntent);
