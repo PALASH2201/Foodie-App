@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class User_cart extends AppCompatActivity {
     private Cart_myAdapter cartMyAdapter;
     private AlertDialog dialog;
     List<CartDataClass> dataList ;
-    String userId  ;
+    String userId,restaurant_name , restaurant_id;
     double subTotal ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class User_cart extends AppCompatActivity {
 
         Intent intent = getIntent();
         userId = intent.getStringExtra("User Id");
+        restaurant_name = intent.getStringExtra("restaurant_name");
+        restaurant_id = intent.getStringExtra("restaurant_id");
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -57,6 +60,17 @@ public class User_cart extends AppCompatActivity {
         recyclerView.setAdapter(cartMyAdapter);
 
         getCartDetails(userId);
+
+        TextView cartCheckoutBtn = findViewById(R.id.cartCheckoutBtn);
+        cartCheckoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(User_cart.this,User_time_slot_viewer.class);
+                intent.putExtra("restaurant_name",restaurant_name);
+                intent.putExtra("restaurant_id",restaurant_id);
+                startActivity(intent);
+            }
+        });
     }
     public void getCartDetails(String userId){
         DatabaseReference userCartRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("cart");

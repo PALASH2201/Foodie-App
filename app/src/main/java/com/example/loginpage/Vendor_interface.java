@@ -47,7 +47,7 @@ public class Vendor_interface extends AppCompatActivity {
 
         TextView registerNow = findViewById(R.id.registerNow);
         Button logout = findViewById(R.id.logout_btn);
-        TextView addTimeSlots = findViewById(R.id.addTimeSlots);
+        TextView viewSlots = findViewById(R.id.viewSlots);
         mAuth = FirebaseAuth.getInstance();
 
         String userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
@@ -85,15 +85,15 @@ public class Vendor_interface extends AppCompatActivity {
             }
         });
 
-            addTimeSlots.setOnClickListener(new View.OnClickListener() {
+            viewSlots.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(isDataRetrieved){
-                        Intent intent = new Intent(Vendor_interface.this,Vendor_addTimeSlot.class);
+                        Intent intent = new Intent(Vendor_interface.this,Vendor_view_timeslots.class);
                         intent.putExtra("restaurant_name",restaurant_name);
                         Log.d("sending rest name",restaurant_name);
                         intent.putExtra("restaurant_id",restaurant_id);
-                        Log.d("sending rest id",restaurant_name);
+                        Log.d("sending rest id",restaurant_id);
                         startActivity(intent);
                     }
                 }

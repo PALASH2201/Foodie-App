@@ -151,6 +151,8 @@ public class User_menu_detail extends AppCompatActivity {
                                 Log.d("Check Cart successful" ,"user Clicked" );
                                 Intent intent = new Intent(User_menu_detail.this,User_cart.class);
                                 intent.putExtra("User Id",userId);
+                                intent.putExtra("restaurant_name",extra_restaurant_name);
+                                intent.putExtra("restaurant_id",extra_restaurant_id);
                                 startActivity(intent);
                             }
                         });

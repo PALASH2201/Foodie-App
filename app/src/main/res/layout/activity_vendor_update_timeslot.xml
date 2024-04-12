@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add Time Slots"
+                android:text="Update Time Slots"
                 android:textAlignment="center"
                 android:textColor="@color/orange"
                 android:textSize="30sp" />
@@ -42,7 +42,7 @@
                 android:textSize="18sp" />
 
             <Spinner
-                android:id="@+id/day_spinner"
+                android:id="@+id/updated_day_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp" />
@@ -55,7 +55,7 @@
                 android:textSize="18sp" />
 
             <Spinner
-                android:id="@+id/slot_spinner"
+                android:id="@+id/updated_slot_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp" />
@@ -68,7 +68,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/availableSlots"
+                android:id="@+id/updated_availableSlots"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter number of slots"
@@ -89,12 +89,12 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/add_slot_button"
+                    android:id="@+id/update_slot_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:backgroundTint="@color/orange"
-                    android:text="Add Slot"
+                    android:text="Update Slot"
                     android:textSize="25sp"
                     android:textColor="@color/black" />
             </LinearLayout>
