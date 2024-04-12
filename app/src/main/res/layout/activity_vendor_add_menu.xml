@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="bottom"
+    android:background="@color/orange"
+    android:foregroundGravity="bottom"
     android:orientation="vertical"
+    app:layout_anchorGravity="bottom"
     tools:context=".Vendor_category_upload">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
         android:background="@drawable/orange_border"
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="626dp"
             android:layout_gravity="center_horizontal"
             android:background="@color/white"
             android:orientation="vertical"
@@ -29,9 +32,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:drawableEnd="@drawable/add"
                 android:text="Add Menu Item"
                 android:textAlignment="center"
-                android:textColor="@color/orange"
+                android:textColor="@color/red"
                 android:textSize="30sp" />
 
             <ImageView
@@ -39,8 +44,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="10dp"
+                android:clickable="true"
                 android:src="@drawable/uploading"
-                android:textColorHint="@color/orange" />
+                android:textColorHint="@color/orange"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <EditText
                 android:id="@+id/uploadDishName"
@@ -51,35 +58,38 @@
                 android:gravity="start|center_vertical"
                 android:hint="Enter dish name"
                 android:padding="16dp"
-                android:textColor="@color/orange"
-                android:textColorHint="@color/orange" />
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+
             <EditText
                 android:id="@+id/uploadDishDesc"
-                android:inputType="textMultiLine"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/orange_border"
                 android:gravity="start|center_vertical"
                 android:hint="Enter dish description"
+                android:inputType="textMultiLine"
                 android:padding="16dp"
-                android:textColor="@color/orange"
-                android:textColorHint="@color/orange" />
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+
             <EditText
                 android:id="@+id/uploadDishPrice"
-                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/orange_border"
                 android:gravity="start|center_vertical"
                 android:hint="Enter dish price"
+                android:inputType="number"
                 android:padding="16dp"
-                android:textColor="@color/orange"
-                android:textColorHint="@color/orange" />
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+
             <Button
                 android:id="@+id/saveButton"
-                android:layout_width="match_parent"
+                android:layout_width="331dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/orange"

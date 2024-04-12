@@ -70,14 +70,6 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/text_team_member1_role"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text="@string/roleNum1"
-                android:textSize="16sp" />
-
-            <TextView
                 android:id="@+id/text_team_member1_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,14 +89,6 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/text_team_member2_role"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text="@string/role2"
-                android:textSize="16sp" />
-
-            <TextView
                 android:id="@+id/text_team_member2_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -122,14 +106,6 @@
                 android:text="@string/designerName2"
                 android:textSize="18sp"
                 android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/text_team_member3_role"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text="@string/role2"
-                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/text_team_member3_email"
