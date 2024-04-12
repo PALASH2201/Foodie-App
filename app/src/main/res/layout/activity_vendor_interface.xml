@@ -39,7 +39,7 @@
         android:id="@+id/addTimeSlots"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="416dp"
+        android:layout_marginBottom="244dp"
         android:text="ADD TIME SLOTS"
         android:textAlignment="center"
         android:textSize="25sp"
@@ -47,8 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/viewCategories" />
 
     <Button
         android:id="@+id/logout_btn"
