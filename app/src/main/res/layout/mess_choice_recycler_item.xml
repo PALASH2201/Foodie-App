@@ -16,39 +16,40 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/orange">
+        android:background="@color/white">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/recImage"
-            android:layout_width="166dp"
-            android:layout_height="153dp"
+            android:layout_width="142dp"
+            android:layout_height="146dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="37dp"
-            android:layout_marginTop="21dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="28dp"
             android:layout_marginBottom="26dp"
             android:outlineProvider="background"
             android:padding="8dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/img" />
+            android:src="@drawable/img"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
         <TextView
             android:id="@+id/recName"
-            android:layout_width="123dp"
-            android:layout_height="69dp"
+            android:layout_width="165dp"
+            android:layout_height="67dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="31dp"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="67dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="64dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginBottom="66dp"
             android:layout_toEndOf="@id/recImage"
             android:gravity="center"
             android:text="Mess name"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/orange"
             android:textSize="25sp"
             android:textStyle="bold" />
 

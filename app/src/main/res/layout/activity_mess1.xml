@@ -19,7 +19,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:background="@color/orange"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -29,8 +29,10 @@
             android:id="@+id/mess_name"
             android:layout_width="match_parent"
             android:layout_height="61dp"
-            android:background="@color/orange"
+            android:background="@color/white"
+            android:gravity="center"
             android:textAlignment="center"
+            android:textColor="@color/red"
             android:textSize="35sp"
             android:textStyle="bold" />
 
@@ -38,7 +40,7 @@
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/orange">
+            android:background="@color/white">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"

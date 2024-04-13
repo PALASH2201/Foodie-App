@@ -14,8 +14,8 @@
     app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="352dp"
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/recImage"
