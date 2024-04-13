@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -67,6 +69,9 @@ public class User_menu_detail extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         retrieveDishIdByName(extra_category_id);
+
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        checkCart(userId);
     }
 
     private void retrieveDishIdByName(String extra_category_id) {
@@ -80,6 +85,7 @@ public class User_menu_detail extends AppCompatActivity {
                     for (DataSnapshot dishSnapshot : dataSnapshot.getChildren()) {
                         String dishId = dishSnapshot.getValue(String.class);
                         dishIds.add(dishId);
+                        assert dishId != null;
                         Log.d("DishID(User-side)",dishId);
                     }
                     Log.d("List Length(User-side)" , dishIds.size()+"");
@@ -126,5 +132,43 @@ public class User_menu_detail extends AppCompatActivity {
             });
         }
         dialog.dismiss();
+    }
+    public void checkCart(String userId){
+        DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("cart");
+        View viewCartOption = findViewById(R.id.viewCartOption);
+
+        cartRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Log.d("inside check cart" , "cart exists for user"+userId);
+                    if (dataSnapshot.getChildrenCount() > 0) {
+                        Log.d("inside children count" , "cart exits for user"+userId);
+                        viewCartOption.setVisibility(View.VISIBLE);
+                        viewCartOption.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.d("Check Cart successful" ,"user Clicked" );
+                                Intent intent = new Intent(User_menu_detail.this,User_cart.class);
+                                intent.putExtra("User Id",userId);
+                                intent.putExtra("restaurant_name",extra_restaurant_name);
+                                intent.putExtra("restaurant_id",extra_restaurant_id);
+                                startActivity(intent);
+                            }
+                        });
+                    } else {
+                        viewCartOption.setVisibility(View.GONE);
+                    }
+                } else {
+                    Log.d("inside check cart" , "cart does not exists for user"+userId);
+                    viewCartOption.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(User_menu_detail.this,"Error in retrieving cart information",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

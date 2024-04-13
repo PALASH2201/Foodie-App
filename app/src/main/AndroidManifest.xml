@@ -4,6 +4,12 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+
+
+    <uses-permission android:name="android.permission.REQUEST_SCHEDULE_EXACT_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -16,14 +22,58 @@
         android:theme="@style/Base.Theme.LoginPage"
         tools:targetApi="31">
         <activity
-            android:name=".Vendor_update_category"
+            android:name=".User_review_order"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar"/>
+
+        <activity
+            android:name=".User_order_success"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar"/>
+
+        <receiver
+            android:name=".MidnightAlarmReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.ALARM"/>
+            </intent-filter>
+        </receiver>
+
+
+        <service
+            android:name=".MyBackgroundService"
+            android:enabled="true"
             android:exported="false" />
+
+        <activity
+            android:name=".User_time_slot_viewer"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar"/>
+        <activity
+            android:name=".Vendor_view_timeslots"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar"/>
+        <activity
+            android:name=".Vendor_update_timeslot"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar"/>
+        <activity
+            android:name=".Vendor_addTimeSlot"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar"/>
+        <activity
+            android:name=".Vendor_update_category"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".Vendor_update_dish"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".User_menu_detail"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".Vendor_menu_detail"
             android:exported="false"
@@ -50,7 +100,8 @@
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".Vendor_category_upload"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".Vendor_interface"
             android:exported="false"

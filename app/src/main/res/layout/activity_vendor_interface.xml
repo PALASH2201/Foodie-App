@@ -7,18 +7,19 @@
     tools:context=".Vendor_interface"
     android:background="@color/white">
 
-    <!--    <TextView-->
-<!--        android:id="@+id/addDishes"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="4dp"-->
-<!--        android:text="ADD DISHES"-->
-<!--        android:textAlignment="center"-->
-<!--        android:textSize="25sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.536" />-->
+    <TextView
+        android:id="@+id/viewSlots"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="VIEW TIME SLOTS"
+        android:background="@color/orange"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewCategories"
+        android:textSize="25sp"/>
 
     <Button
         android:id="@+id/logout_btn"
@@ -44,7 +45,7 @@
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.61"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,7 +83,6 @@
         android:layout_width="269dp"
         android:layout_height="60dp"
         android:background="@color/orange"
-        android:capitalize="none"
         android:gravity="center"
         android:text="Register Yourself"
         android:textAllCaps="true"
@@ -110,5 +110,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/viewCategories"
         app:layout_constraintVertical_bias="0.58" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

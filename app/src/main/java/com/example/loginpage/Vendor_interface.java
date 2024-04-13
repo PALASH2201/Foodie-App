@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,7 +28,8 @@ public class Vendor_interface extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private String restaurant_name;
-    TextView viewCategories;
+    private String restaurant_id ;
+    boolean isDataRetrieved=false;
 
     public static final String EXTRA_NAME = "com.example.VendorMenu_viewer.extra.NAME";
     @SuppressLint("MissingInflatedId")
@@ -36,8 +38,16 @@ public class Vendor_interface extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_interface);
 
+
         ImageButton registerNow = findViewById(R.id.registerNow);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(Vendor_interface.this);
+        builder.setCancelable(false);
+        builder.setView(R.layout.progress_layout);
+        AlertDialog dialog = builder.create();
+        dialog.show();
         Button logout = findViewById(R.id.logout_btn);
+        TextView viewSlots = findViewById(R.id.viewSlots);
         mAuth = FirebaseAuth.getInstance();
 
         String userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
@@ -49,9 +59,12 @@ public class Vendor_interface extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     restaurant_name = snapshot.child("restaurant_name").getValue(String.class);
+                    restaurant_id = snapshot.child("key").getValue(String.class);
                     if (restaurant_name == null) {
                          Toast.makeText(Vendor_interface.this , "No restaurant name found for given vendorID",Toast.LENGTH_SHORT).show();
                     }else{
+                        isDataRetrieved = true;
+                        dialog.dismiss();
                         startVendorMenuViewerActivity();
                     }
                 }else{
@@ -71,6 +84,21 @@ public class Vendor_interface extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+            viewSlots.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(isDataRetrieved){
+                        Intent intent = new Intent(Vendor_interface.this,Vendor_view_timeslots.class);
+                        intent.putExtra("restaurant_name",restaurant_name);
+                        Log.d("sending rest name",restaurant_name);
+                        intent.putExtra("restaurant_id",restaurant_id);
+                        Log.d("sending rest id",restaurant_id);
+                        startActivity(intent);
+                    }
+                }
+            });
+
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

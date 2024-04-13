@@ -54,31 +54,25 @@ public class UserDishDetails_myAdapter extends RecyclerView.Adapter<UserDishDeta
         holder.recDishPrice.setText(priceText);
         String descriptionText = "Description: " + dataList.get(position).getDish_description();
         holder.recDishDescription.setText(descriptionText);
-//        int quantity = dataList.get(position).getQuantity();
-//        holder.recQuantity.setText(quantity);
 
         findRestaurantName(dataList.get(position).getRestaurant_id());
         findCategoryName(dataList.get(position).getCategory_id());
 
 
-        holder.plus_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int currentQuantity = Integer.parseInt(holder.recQuantity.getText().toString());
-                int newQuantity = currentQuantity + 1;
-                holder.recQuantity.setText(String.valueOf(newQuantity));
-            }
+
+
+        holder.plus_btn.setOnClickListener(v -> {
+            int currentQuantity = Integer.parseInt(holder.recQuantity.getText().toString());
+            int newQuantity = currentQuantity + 1;
+            holder.recQuantity.setText(String.valueOf(newQuantity));
         });
-        holder.minus_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int currentQuantity = Integer.parseInt(holder.recQuantity.getText().toString());
-                if (currentQuantity > 1) {
-                    int newQuantity = currentQuantity - 1;
-                    holder.recQuantity.setText(String.valueOf(newQuantity));
-                } else {
-                    Toast.makeText(context, "Quantity cannot be less than 1", Toast.LENGTH_SHORT).show();
-                }
+        holder.minus_btn.setOnClickListener(v -> {
+            int currentQuantity = Integer.parseInt(holder.recQuantity.getText().toString());
+            if (currentQuantity > 1) {
+                int newQuantity = currentQuantity - 1;
+                holder.recQuantity.setText(String.valueOf(newQuantity));
+            } else {
+                Toast.makeText(context, "Quantity cannot be less than 1", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -91,11 +85,14 @@ public class UserDishDetails_myAdapter extends RecyclerView.Adapter<UserDishDeta
                 DatabaseReference userCartRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("cart").child(dishId);
                 userCartRef.child("dish_name").setValue(dataList.get(position).getDish_name());
                 userCartRef.child("dish_price").setValue(dataList.get(position).getDish_price());
+                userCartRef.child("dish_image_url").setValue(dataList.get(position).getDish_image_url());
                 userCartRef.child("quantity").setValue(holder.recQuantity.getText().toString());
                 userCartRef.child("category_name").setValue(category_name);
                 userCartRef.child("restaurant_name").setValue(restaurant_name);
                 userCartRef.child("category_id").setValue(dataList.get(position).getCategory_id());
                 userCartRef.child("restaurant_id").setValue(dataList.get(position).getRestaurant_id());
+                double total_price = Double.parseDouble(dataList.get(position).getDish_price()) * Double.parseDouble(holder.recQuantity.getText().toString());
+                userCartRef.child("total_price").setValue(String.valueOf(total_price));
 
                Toast.makeText(context,"Dish Successfully added in cart",Toast.LENGTH_SHORT).show();
             }
