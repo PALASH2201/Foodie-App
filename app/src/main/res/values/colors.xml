@@ -5,7 +5,9 @@
     <color name="yellow">#FFF95B</color>
     <color name="orange">#FB4A04</color>
     <color name="green">#AFE1AF</color>
-
+    <color name="light_orange">#FFE0B2</color>
     <color name="red">#F60505</color>
+    <color name="beige">#F9F7DF</color>
+    <color name="dark_orange">#B5462B</color>
 
 </resources>

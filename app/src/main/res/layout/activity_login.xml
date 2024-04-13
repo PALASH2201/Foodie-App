@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/beige"
     tools:context=".Login">
+
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="186dp"
         android:layout_height="66dp"
-        android:layout_marginTop="144dp"
-        android:backgroundTint="#FF5722"
+        android:layout_marginTop="84dp"
+        android:backgroundTint="@color/dark_orange"
         android:shadowColor="#00FFFFFF"
         android:shadowRadius="9"
         android:text="@string/submit"
@@ -26,19 +27,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_enter" />
 
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="494dp"
+        android:layout_height="326dp"
+        android:src="@drawable/foodease"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/registerNow"
-        android:layout_width="239dp"
-        android:layout_height="48dp"
+        android:layout_width="327dp"
+        android:layout_height="47dp"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
-        android:text="Click to Register!"
+        android:text="Don't have an account? Register here!"
         android:textColor="#121010"
         android:textColorHighlight="#000000"
         android:textColorHint="#000000"
         android:textColorLink="#000000"
-        android:textSize="26sp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +61,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="60dp"
         android:layout_marginEnd="16dp"
         android:isScrollContainer="false"
         android:nestedScrollingEnabled="false"
@@ -68,7 +77,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/imageLogo"
         app:placeholderTextColor="#070707"
         app:prefixTextColor="#F30606"
         app:suffixTextColor="#000000">
@@ -118,7 +127,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_enter"
-        app:layout_constraintVertical_bias="0.158"
+        app:layout_constraintVertical_bias="0.26"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="#191818"
         app:passwordToggleTintMode="src_in"
@@ -153,65 +162,25 @@
             tools:ignore="Deprecated" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="0dp"
-        android:layout_height="211dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/todo"
-        android:duplicateParentState="true"
-        android:fadeScrollbars="true"
-        android:isScrollContainer="true"
-        android:layoutDirection="inherit"
-        android:orientation="horizontal"
-        android:rotation="180"
-        android:scaleType="centerInside"
-        app:layout_constraintDimensionRatio="w,10:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_wrapBehaviorInParent="vertical_only"
-        app:srcCompat="@drawable/imgg"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="1dp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="286dp"
-        android:layout_height="72dp"
-        android:layout_marginStart="174dp"
-        android:layout_marginTop="230dp"
-        android:layout_marginEnd="179dp"
-        android:layout_marginBottom="110dp"
-        android:background="#FFFFFF"
-        android:fontFamily="casual"
-        android:gravity="center"
-        android:rotationY="16"
-        android:shadowColor="#E4AC350F"
-        android:shadowDy="9"
-        android:text="@string/appname"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#F44336"
-        android:textColorHighlight="#F40B5B"
-        android:textColorHint="#000000"
-        android:textSize="60sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.31"
-        tools:ignore="TextSizeCheck" />
-
     <ProgressBar
         android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="42dp"
+        android:layout_height="92dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        app:layout_constraintBottom_toBottomOf="@+id/pass_enter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pass_enter" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="552dp"
+        android:layout_height="218dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/loginheader" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
