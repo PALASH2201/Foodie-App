@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 public class User_review_order extends AppCompatActivity {
-    String updated_available_slots,restaurant_name ,time_slot,day,totalBill,availableSlots;
+    String updated_available_slots,restaurant_name ,time_slot,day,totalBill,availableSlots,restaurant_id;
     AlertDialog dialog;
     boolean isSlotAvailable=false;
 
@@ -47,6 +48,7 @@ public class User_review_order extends AppCompatActivity {
 
         Intent intent = getIntent();
          restaurant_name = intent.getStringExtra("restaurant_name");
+         restaurant_id = intent.getStringExtra("restaurant_id");
          time_slot = intent.getStringExtra("Selected time slot");
          day = intent.getStringExtra("day");
          totalBill = intent.getStringExtra("total bill");
@@ -97,7 +99,14 @@ public class User_review_order extends AppCompatActivity {
             payButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(User_review_order.this,"Order successfully placed! Thank you for using the app.... Enjoy your food",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(User_review_order.this,User_order_success.class);
+                    intent.putExtra("total bill",totalBill);
+                    intent.putExtra("restaurant_name",restaurant_name);
+                    intent.putExtra("restaurant_id",restaurant_id);
+                    intent.putExtra("time_slot_selected",time_slot);
+                    intent.putExtra("day",day);
+                    startActivity(intent);
+                    finish();
                 }
             });
         }
