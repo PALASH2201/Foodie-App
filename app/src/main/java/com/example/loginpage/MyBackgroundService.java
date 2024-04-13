@@ -21,35 +21,42 @@ public class MyBackgroundService extends Service {
         super.onCreate();
         Log.d(TAG, "Service onCreate");
     }
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "Service onStartCommand");
-        DatabaseReference timeSlotsRef = FirebaseDatabase.getInstance().getReference("time_slots");
-        timeSlotsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot daySnapshot : dataSnapshot.getChildren()) {
-                    for (DataSnapshot restaurantSnapshot : daySnapshot.getChildren()) {
-                        for (DataSnapshot timeSlotSnapshot : restaurantSnapshot.getChildren()) {
-                            String defaultSlots = timeSlotSnapshot.child("default_available_slots").getValue(String.class);
-                            timeSlotSnapshot.child("available_slots").getRef().setValue(defaultSlots);
+
+    private final Runnable myTask = new Runnable() {
+        @Override
+        public void run() {
+            Log.d("Background Service","Started");
+            DatabaseReference timeSlotsRef = FirebaseDatabase.getInstance().getReference("time_slots");
+            timeSlotsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot daySnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot restaurantSnapshot : daySnapshot.getChildren()) {
+                            for (DataSnapshot timeSlotSnapshot : restaurantSnapshot.getChildren()) {
+                                String defaultSlots = timeSlotSnapshot.child("default_available_slots").getValue(String.class);
+                                timeSlotSnapshot.child("available_slots").getRef().setValue(defaultSlots);
+                            }
                         }
                     }
                 }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "Database error: " + databaseError.getMessage());
-            }
-        });
-        stopSelf();
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e(TAG, "Database error: " + databaseError.getMessage());
+                }
+            });
+            stopSelf();
+        }
+    };
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(TAG, "Service onStartCommand");
+        myTask.run();
         return START_STICKY;
     }
 
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
       return null;
     }
     @Override
