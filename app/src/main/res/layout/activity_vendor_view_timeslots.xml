@@ -5,17 +5,18 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
+    android:background="@color/white"
     tools:context=".Vendor_view_timeslots">
 
     <TextView
         android:id="@+id/header_line"
         android:layout_width="match_parent"
         android:layout_height="61dp"
+        android:background="@color/orange"
+        android:gravity="center"
+        android:text="EXISTING TIME SLOTS"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:background="@color/orange"
-        android:text="EXISTING TIME SLOTS"
         android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +42,7 @@
         android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/recycler_view_scroll"
         app:layout_constraintTop_toBottomOf="@+id/secondHeader"
-        app:layout_constraintVertical_bias="0.021"
+        app:layout_constraintVertical_bias="1.0"
         tools:layout_editor_absoluteX="0dp" />
 
     <ScrollView
@@ -70,12 +71,17 @@
         android:id="@+id/addTimeSlot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="344dp"
+        android:layout_marginBottom="24dp"
+        android:background="@color/orange"
+        android:contentDescription="@string/btn_content_description"
         android:gravity="center"
         android:src="@drawable/add"
+        app:backgroundTint="@color/orange"
+        app:fab_progress_backgroundColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/btn_content_description"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
