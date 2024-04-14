@@ -66,11 +66,11 @@ public class User_review_order extends AppCompatActivity {
                    updated_available_slots  = snapshot.child("available_slots").getValue(String.class);
                    Log.d("Updated available slots",updated_available_slots);
                     assert updated_available_slots != null;
-                    if(Integer.parseInt(updated_available_slots) >= Integer.parseInt(availableSlots)){
+                    if(Integer.parseInt(updated_available_slots) > 0 ){
                        isSlotAvailable = true;
                         Log.d("Updated available slots",updated_available_slots);
-                        updateUI(isSlotAvailable);
                    }
+                    updateUI(isSlotAvailable);
                 }
             }
 

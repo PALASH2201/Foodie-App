@@ -30,6 +30,7 @@ public class TimeSlotDetails_myAdapter extends RecyclerView.Adapter<TimeSlot_MyV
     private final Context context;
     private final List<TimeSlotDataClass> dataList;
     private TimeSlotDetails_myAdapter.OnItemClickListener mListener;
+    int lastCheckedPosition;
     private final TextView timeSlotCheckoutBtn;
     String selected_timeSlot, day , available_slots,restaurant_id , restaurant_name,total_bill;
 
@@ -69,11 +70,21 @@ public class TimeSlotDetails_myAdapter extends RecyclerView.Adapter<TimeSlot_MyV
                 holder.available_slot_info.setText(numSlotsAvailable);
                 holder.selectedTimeSlot_checkBox.setTag(position);
 
+            if (position == lastCheckedPosition) {
+                holder.selectedTimeSlot_checkBox.setChecked(true);
+            } else {
+                holder.selectedTimeSlot_checkBox.setChecked(false);
+            }
+
             holder.selectedTimeSlot_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    day = null;selected_timeSlot=null;available_slots=null;
+                    if (lastCheckedPosition != -1 && lastCheckedPosition != position) {
+                        notifyItemChanged(lastCheckedPosition);
+                    }
+                    lastCheckedPosition = position;
 
+                    day = null;selected_timeSlot=null;available_slots=null;
                     int checkboxPosition = (int) buttonView.getTag();
                     TimeSlotDataClass selectedItem = dataList.get(checkboxPosition);
                     day = selectedItem.getDay();

@@ -42,5 +42,7 @@
     <string name="remove_dish_from_cart">remove dish</string>
     <string name="btn_content_description">btn</string>
     <string name="time_slot_header_line">Before proceeding to checkout, please select the time slot suitable to you</string>
+    <string name="add_btn_desc">addOnClick</string>
+    <string name="minus_btn_desc">minusOnClick</string>
 
 </resources>

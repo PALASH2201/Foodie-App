@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -50,7 +49,8 @@
                 android:id="@+id/imageButtonMinus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/minus_solid"/>
+                android:src="@drawable/minus_solid"
+                android:contentDescription="@string/minus_btn_desc" />
 
             <TextView
                 android:id="@+id/recQuantity"
@@ -65,7 +65,8 @@
                 android:id="@+id/imageButtonPlus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/add"/>
+                android:src="@drawable/add"
+                android:contentDescription="@string/add_btn_desc" />
 
             <!-- Price -->
             <TextView
@@ -95,8 +96,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:backgroundTint="@color/yellow"
-            android:background="@drawable/btn_rounded_corner"
+            android:backgroundTint="@color/orange"
+            android:textSize="20sp"
             android:text="@string/addtoCart"
             android:textAllCaps="false"
             android:textColor="@color/black" />
