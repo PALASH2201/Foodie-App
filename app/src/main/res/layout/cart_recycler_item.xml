@@ -3,7 +3,7 @@
     android:id="@+id/cart_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/orange"
+    android:background="@color/beige"
     android:orientation="horizontal"
     android:padding="16dp">
 
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_weight="1"
-        android:background="@color/orange"
+        android:background="@color/beige"
         android:orientation="vertical">
 
         <!-- Item Name -->

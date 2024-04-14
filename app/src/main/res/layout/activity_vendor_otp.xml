@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@color/beige"
     android:layout_margin="20dp"
     android:weightSum="100"
     tools:context=".VendorOTP">

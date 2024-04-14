@@ -36,7 +36,7 @@ public class AlarmScheduler {
 
         Calendar targetTime = Calendar.getInstance();
         try {
-            targetTime.set(Calendar.HOUR_OF_DAY, 2);
+            targetTime.set(Calendar.HOUR_OF_DAY, 9);
             targetTime.set(Calendar.MINUTE, 0);
             targetTime.set(Calendar.SECOND, 0);
             targetTime.set(Calendar.MILLISECOND, 0);

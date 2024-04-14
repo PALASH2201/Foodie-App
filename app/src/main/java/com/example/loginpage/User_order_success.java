@@ -3,39 +3,35 @@ package com.example.loginpage;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
 
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
-import java.util.Map;
+
 
 public class User_order_success extends AppCompatActivity {
 
@@ -89,7 +85,7 @@ public class User_order_success extends AppCompatActivity {
         DatabaseReference cartRef = rootRef.child("users").child(userId).child("cart");
         cartRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot cartSnapshot : dataSnapshot.getChildren()) {
                         DatabaseReference orderHistoryRef = rootRef.child("users").child(userId)
@@ -104,14 +100,11 @@ public class User_order_success extends AppCompatActivity {
                         day_ref.setValue(day);
                         DatabaseReference dishRef = orderHistoryRef.child(cartSnapshot.getKey());
                         dishRef.setValue(cartSnapshot.getValue())
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            cartSnapshot.getRef().removeValue();
-                                            updateSlots(day,restaurant_name,time_slot_selected);
-                                            dialog.dismiss();
-                                        }
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        updateLiveOrders(restaurant_id,curDate,userId);
+                                        updateSlots(day,restaurant_name,time_slot_selected);
+                                        dialog.dismiss();
                                     }
                                 });
                     }
@@ -131,6 +124,7 @@ public class User_order_success extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String old_slots = snapshot.child("available_slots").getValue(String.class);
+                assert old_slots != null;
                 int new_slots = Integer.parseInt(old_slots) - 1;
                 if(new_slots >= 0){
                     slotRef.child("available_slots").setValue(String.valueOf(new_slots));
@@ -139,7 +133,57 @@ public class User_order_success extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                 Toast.makeText(User_order_success.this,"Database error has occured",Toast.LENGTH_SHORT).show();
+                 Toast.makeText(User_order_success.this,"Database error has occurred",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public void updateLiveOrders(String restaurant_id,String curdate,String userId){
+         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users");
+         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                 parseUserData(snapshot,restaurant_id,curdate,userId);
+             }
+
+             @Override
+             public void onCancelled(@NonNull DatabaseError error) {
+                 Toast.makeText(User_order_success.this, "Could not retrieve user data to update live orders", Toast.LENGTH_SHORT).show();
+             }
+         });
+    }
+
+    private void parseUserData(DataSnapshot dataSnapshot,String restaurant_id,String curdate,String userId) {
+        String orderId,customerName,timeSlot,totalBill;
+        DataSnapshot userSnapshot = dataSnapshot.child(userId);
+            customerName = userSnapshot.child("customer_name").getValue(String.class);
+            DataSnapshot orderHistorySnapshot = userSnapshot.child("order_history");
+            DataSnapshot dateTimeSnapshot = orderHistorySnapshot.child(curdate);
+            orderId = dateTimeSnapshot.child("Order Id").getValue(String.class);
+            timeSlot = dateTimeSnapshot.child("Time Slot").getValue(String.class);
+            totalBill = dateTimeSnapshot.child("Total Bill").getValue(String.class);
+
+        List<LiveOrderDishDataClass> dishes = new ArrayList<>();
+            DataSnapshot cartsnapshot = userSnapshot.child("cart");
+            for (DataSnapshot dishSnapshot : cartsnapshot.getChildren()) {
+                    String dishName = dishSnapshot.child("dish_name").getValue(String.class);
+                    String dishQuantity = dishSnapshot.child("quantity").getValue(String.class);
+                    String dishPrice = dishSnapshot.child("total_price").getValue(String.class);
+
+                    LiveOrderDishDataClass dish = new LiveOrderDishDataClass(dishQuantity, dishName, dishPrice);
+                    dishes.add(dish);
+            }
+        LiveOrderDataClass liveOrder = new LiveOrderDataClass(timeSlot,"Pending",customerName,orderId,totalBill,dishes);
+        DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id).child("Live Orders").child(orderId);
+        ordersRef.setValue(liveOrder).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(User_order_success.this,"Could not update live orders",Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("cart");
+                cartRef.removeValue();
             }
         });
     }

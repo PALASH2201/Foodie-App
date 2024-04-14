@@ -29,7 +29,7 @@
             android:id="@+id/mess_name"
             android:layout_width="match_parent"
             android:layout_height="61dp"
-            android:background="@color/white"
+            android:background="@color/beige"
             android:gravity="center"
             android:textAlignment="center"
             android:textColor="@color/red"
@@ -40,7 +40,7 @@
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="@color/beige">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
