@@ -15,18 +15,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Map;
 
 public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOrder_myViewHolder> {
 
     private final Context context;
     private final List<LiveOrderDataClass> dataList;
-    private final List<LiveOrderDishDataClass> DishdataList;
     private final SparseBooleanArray expandedItems;
+    private final Map<String, List<LiveOrderDishDataClass>> dishMap;
 
-    public VendorLiveOrder_myAdapter(Context context, List<LiveOrderDataClass> dataList,List<LiveOrderDishDataClass> DishdataList) {
+    public VendorLiveOrder_myAdapter(Context context, List<LiveOrderDataClass> dataList,Map<String, List<LiveOrderDishDataClass>> dishMap) {
         this.context = context;
         this.dataList = dataList;
-        this.DishdataList = DishdataList;
+        this.dishMap = dishMap;
         this.expandedItems = new SparseBooleanArray();
     }
 
@@ -49,8 +50,10 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
          temp_var = "Total Bill: "+dataList.get(position).getCustomerBill();
          holder.customerBill.setText(temp_var);
 
+        List<LiveOrderDishDataClass> dishList = dishMap.get(dataList.get(position).getOrderId());
+
         holder.dish_details_recycler_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-         VendorLiveOrderDish_myAdapter adapter = new VendorLiveOrderDish_myAdapter(context,DishdataList);
+         VendorLiveOrderDish_myAdapter adapter = new VendorLiveOrderDish_myAdapter(context,dishList);
          holder.dish_details_recycler_view.setAdapter(adapter);
 
 
@@ -58,14 +61,11 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
         holder.orderDetails.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         holder.arrowIcon.setRotation(isExpanded ? 180 : 0);
 
-        holder.arrowIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean isExpanded = expandedItems.get(position, false);
-                expandedItems.put(position, !isExpanded);
-                holder.arrowIcon.setRotation(isExpanded ? 0 : 180);
-                holder.orderDetails.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
-            }
+        holder.arrowIcon.setOnClickListener(view -> {
+            boolean isExpanded1 = expandedItems.get(position, false);
+            expandedItems.put(position, !isExpanded1);
+            holder.arrowIcon.setRotation(isExpanded1 ? 0 : 180);
+            holder.orderDetails.setVisibility(isExpanded1 ? View.GONE : View.VISIBLE);
         });
 
     }
