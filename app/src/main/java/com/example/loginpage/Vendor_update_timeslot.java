@@ -158,13 +158,6 @@ public class Vendor_update_timeslot extends AppCompatActivity {
                 Toast.makeText(Vendor_update_timeslot.this,timeSlot+" slot not updated for "+day+", TRY AGAIN!",Toast.LENGTH_SHORT).show();
             }
         });
-        timeSlotRef.child("available_slots").setValue(default_available_slots).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                dialog.dismiss();
-                Toast.makeText(Vendor_update_timeslot.this,timeSlot+" slot not updated for "+day+", TRY AGAIN!",Toast.LENGTH_SHORT).show();
-            }
-        });
     }
     public void updateTimeSlotEveryDay(String[] days,String timeSlot , String default_available_slots,String restaurant_id,String restaurant_name){
         for (String day : days) {
