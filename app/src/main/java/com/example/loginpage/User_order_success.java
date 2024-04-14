@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +34,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -110,6 +113,7 @@ public class User_order_success extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             cartSnapshot.getRef().removeValue();
                                             updateSlots(day,restaurant_name,time_slot_selected);
+                                            updateLiveOrders(restaurant_id);
                                             dialog.dismiss();
                                         }
                                     }
@@ -143,6 +147,58 @@ public class User_order_success extends AppCompatActivity {
             }
         });
     }
+    public void updateLiveOrders(String restaurant_id){
+         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users");
+         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                 parseUserData(snapshot,restaurant_id);
+             }
+
+             @Override
+             public void onCancelled(@NonNull DatabaseError error) {
+                 Toast.makeText(User_order_success.this, "Could not retrieve user data to update live orders", Toast.LENGTH_SHORT).show();
+             }
+         });
+    }
+
+    private void parseUserData(DataSnapshot dataSnapshot,String restaurant_id) {
+        for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+            String userId = userSnapshot.getKey();
+            String customerName = userSnapshot.child("customer_name").getValue(String.class);
+            DataSnapshot orderHistorySnapshot = userSnapshot.child("order_history");
+            for (DataSnapshot dateTimeSnapshot : orderHistorySnapshot.getChildren()) {
+                String orderId = dateTimeSnapshot.child("Order Id").getValue(String.class);
+                String timeSlot = dateTimeSnapshot.child("Time Slot").getValue(String.class);
+                String totalBill = dateTimeSnapshot.child("Total Bill").getValue(String.class);
+
+                List<LiveOrderDishDataClass> dishes = new ArrayList<>();
+                for (DataSnapshot dishSnapshot : dateTimeSnapshot.getChildren()) {
+                    if (!dishSnapshot.getKey().equals("Order Id") &&
+                            !dishSnapshot.getKey().equals("Time Slot") &&
+                            !dishSnapshot.getKey().equals("Total Bill")) {
+
+                        String dishName = dishSnapshot.child("dish_name").getValue(String.class);
+                        String dishQuantity = dishSnapshot.child("dish_quantity").getValue(String.class);
+                        String dishPrice = dishSnapshot.child("dish_price").getValue(String.class);
+
+                        LiveOrderDishDataClass dish = new LiveOrderDishDataClass(dishName, dishQuantity, dishPrice);
+                        dishes.add(dish);
+                    }
+                }
+                LiveOrderDataClass liveOrder = new LiveOrderDataClass(timeSlot,"Pending",customerName,orderId,totalBill,dishes);
+                DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id).child("Live Orders").child(orderId);
+                ordersRef.setValue(liveOrder).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(User_order_success.this,"Could not update live orders",Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
+    }
+
+
     private String getCurrentDateTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return sdf.format(new Date());
