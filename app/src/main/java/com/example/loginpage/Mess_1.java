@@ -117,7 +117,6 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
 
         fragmentMap = new HashMap<>();
         fragmentMap.put(R.id.my_orders, User_orderHistory.class);
-        fragmentMap.put(R.id.my_cart,User_cart.class);
         fragmentMap.put(R.id.feedback, Feedback.class);
         fragmentMap.put(R.id.about, About.class);
 
