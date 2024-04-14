@@ -48,6 +48,7 @@ public class Vendor_interface extends AppCompatActivity {
         TextView registerNow = findViewById(R.id.registerNow);
         Button logout = findViewById(R.id.logout_btn);
         TextView viewSlots = findViewById(R.id.viewSlots);
+        TextView viewLiveOrders = findViewById(R.id.viewLiveOrders);
         mAuth = FirebaseAuth.getInstance();
 
         String userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
@@ -94,6 +95,17 @@ public class Vendor_interface extends AppCompatActivity {
                         Log.d("sending rest name",restaurant_name);
                         intent.putExtra("restaurant_id",restaurant_id);
                         Log.d("sending rest id",restaurant_id);
+                        startActivity(intent);
+                    }
+                }
+            });
+
+            viewLiveOrders.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(isDataRetrieved){
+                        Intent intent = new Intent(Vendor_interface.this,Vendor_live_order_viewer.class);
+                        intent.putExtra("restaurant_id",restaurant_id);
                         startActivity(intent);
                     }
                 }

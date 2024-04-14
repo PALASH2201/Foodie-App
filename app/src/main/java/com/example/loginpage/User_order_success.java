@@ -111,9 +111,9 @@ public class User_order_success extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
+                                            updateLiveOrders(restaurant_id,curDate,userId);
                                             cartSnapshot.getRef().removeValue();
                                             updateSlots(day,restaurant_name,time_slot_selected);
-                                            updateLiveOrders(restaurant_id);
                                             dialog.dismiss();
                                         }
                                     }
@@ -147,12 +147,12 @@ public class User_order_success extends AppCompatActivity {
             }
         });
     }
-    public void updateLiveOrders(String restaurant_id){
+    public void updateLiveOrders(String restaurant_id,String curdate,String userId){
          DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users");
          userRef.addListenerForSingleValueEvent(new ValueEventListener() {
              @Override
              public void onDataChange(@NonNull DataSnapshot snapshot) {
-                 parseUserData(snapshot,restaurant_id);
+                 parseUserData(snapshot,restaurant_id,curdate,userId);
              }
 
              @Override
@@ -162,43 +162,35 @@ public class User_order_success extends AppCompatActivity {
          });
     }
 
-    private void parseUserData(DataSnapshot dataSnapshot,String restaurant_id) {
-        for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-            String userId = userSnapshot.getKey();
-            String customerName = userSnapshot.child("customer_name").getValue(String.class);
+    private void parseUserData(DataSnapshot dataSnapshot,String restaurant_id,String curdate,String userId) {
+        String orderId,customerName,timeSlot,totalBill;
+        DataSnapshot userSnapshot = dataSnapshot.child(userId);
+            customerName = userSnapshot.child("customer_name").getValue(String.class);
             DataSnapshot orderHistorySnapshot = userSnapshot.child("order_history");
-            for (DataSnapshot dateTimeSnapshot : orderHistorySnapshot.getChildren()) {
-                String orderId = dateTimeSnapshot.child("Order Id").getValue(String.class);
-                String timeSlot = dateTimeSnapshot.child("Time Slot").getValue(String.class);
-                String totalBill = dateTimeSnapshot.child("Total Bill").getValue(String.class);
+            DataSnapshot dateTimeSnapshot = orderHistorySnapshot.child(curdate);
+            orderId = dateTimeSnapshot.child("Order Id").getValue(String.class);
+            timeSlot = dateTimeSnapshot.child("Time Slot").getValue(String.class);
+            totalBill = dateTimeSnapshot.child("Total Bill").getValue(String.class);
 
-                List<LiveOrderDishDataClass> dishes = new ArrayList<>();
-                for (DataSnapshot dishSnapshot : dateTimeSnapshot.getChildren()) {
-                    if (!dishSnapshot.getKey().equals("Order Id") &&
-                            !dishSnapshot.getKey().equals("Time Slot") &&
-                            !dishSnapshot.getKey().equals("Total Bill")) {
+        List<LiveOrderDishDataClass> dishes = new ArrayList<>();
+            DataSnapshot cartsnapshot = userSnapshot.child("cart");
+            for (DataSnapshot dishSnapshot : cartsnapshot.getChildren()) {
+                    String dishName = dishSnapshot.child("dish_name").getValue(String.class);
+                    String dishQuantity = dishSnapshot.child("quantity").getValue(String.class);
+                    String dishPrice = dishSnapshot.child("total_price").getValue(String.class);
 
-                        String dishName = dishSnapshot.child("dish_name").getValue(String.class);
-                        String dishQuantity = dishSnapshot.child("dish_quantity").getValue(String.class);
-                        String dishPrice = dishSnapshot.child("dish_price").getValue(String.class);
-
-                        LiveOrderDishDataClass dish = new LiveOrderDishDataClass(dishName, dishQuantity, dishPrice);
-                        dishes.add(dish);
-                    }
-                }
-                LiveOrderDataClass liveOrder = new LiveOrderDataClass(timeSlot,"Pending",customerName,orderId,totalBill,dishes);
-                DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id).child("Live Orders").child(orderId);
-                ordersRef.setValue(liveOrder).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(User_order_success.this,"Could not update live orders",Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    LiveOrderDishDataClass dish = new LiveOrderDishDataClass(dishQuantity, dishName, dishPrice);
+                    dishes.add(dish);
             }
-        }
+        LiveOrderDataClass liveOrder = new LiveOrderDataClass(timeSlot,"Pending",customerName,orderId,totalBill,dishes);
+        DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id).child("Live Orders").child(orderId);
+        ordersRef.setValue(liveOrder).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(User_order_success.this,"Could not update live orders",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-
-
     private String getCurrentDateTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return sdf.format(new Date());

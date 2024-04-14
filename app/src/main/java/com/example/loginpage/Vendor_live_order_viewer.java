@@ -1,8 +1,12 @@
 package com.example.loginpage;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -10,6 +14,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +42,9 @@ public class Vendor_live_order_viewer extends AppCompatActivity {
             return insets;
         });
 
+        Intent intent = getIntent();
+        String restaurant_id = intent.getStringExtra("restaurant_id");
+
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
@@ -41,10 +55,49 @@ public class Vendor_live_order_viewer extends AppCompatActivity {
         dialog.show();
 
         liveOrderDataClassList = new ArrayList<>();
+        liveOrderDishDataClassList = new ArrayList<>();
         adapter = new VendorLiveOrder_myAdapter(Vendor_live_order_viewer.this,liveOrderDataClassList,liveOrderDishDataClassList);
         recyclerView.setAdapter(adapter);
 
+        retrieveLiveOrders(restaurant_id);
 
+    }
+    public void retrieveLiveOrders(String restaurant_id){
+        DatabaseReference liveOrderRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id).child("Live Orders");
+        liveOrderRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot liveOrderSnapshot: snapshot.getChildren()) {
+                      String chosen_time_slot = liveOrderSnapshot.child("chosen_time_slot").getValue(String.class);
+                      String customerBill = liveOrderSnapshot.child("customerBill").getValue(String.class);
+                      String customerName = liveOrderSnapshot.child("customerName").getValue(String.class);
+                      String orderId = liveOrderSnapshot.child("orderId").getValue(String.class);
+                      String orderStatus = liveOrderSnapshot.child("orderStatus").getValue(String.class);
 
+                      DataSnapshot dishSnapshot = liveOrderSnapshot.child("dishList");
+                    for (DataSnapshot dishinfo: dishSnapshot.getChildren()) {
+                        String dishName = dishinfo.child("dishName").getValue(String.class);
+                        String dishQ = dishinfo.child("dishQ").getValue(String.class);
+                        String totalPrice = dishinfo.child("totalPrice").getValue(String.class);
+
+                        LiveOrderDishDataClass liveOrderDishDataClass = new LiveOrderDishDataClass(dishQ,dishName,totalPrice);
+                        liveOrderDishDataClassList.add(liveOrderDishDataClass);
+                    }
+                    Log.d("Dish Data class list size",liveOrderDishDataClassList.size()+"");
+                    GenericTypeIndicator<List<LiveOrderDishDataClass>> t = new GenericTypeIndicator<List<LiveOrderDishDataClass>>() {};
+                    List<LiveOrderDishDataClass> list = liveOrderSnapshot.child("dishList").getValue(t);
+                    Log.d("dish list size:",list.size()+"");
+                      LiveOrderDataClass liveOrderDataClass = new LiveOrderDataClass(chosen_time_slot,orderStatus,customerName,orderId,customerBill,list);
+                      liveOrderDataClassList.add(liveOrderDataClass);
+                      adapter.notifyDataSetChanged();
+                      dialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Vendor_live_order_viewer.this,"Failed to retreive live orders. Try Again!!!",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

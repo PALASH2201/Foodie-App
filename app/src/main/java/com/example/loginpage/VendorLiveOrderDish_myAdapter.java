@@ -1,6 +1,7 @@
 package com.example.loginpage;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import java.util.List;
 public class VendorLiveOrderDish_myAdapter extends RecyclerView.Adapter<VendorLiveOrderDish_myViewHolder> {
 
     private final Context context ;
-    private List<LiveOrderDishDataClass> dataList;
+    private final List<LiveOrderDishDataClass> dataList;
 
     public VendorLiveOrderDish_myAdapter(Context context, List<LiveOrderDishDataClass> dataList) {
         this.context = context;
@@ -32,8 +33,11 @@ public class VendorLiveOrderDish_myAdapter extends RecyclerView.Adapter<VendorLi
     @Override
     public void onBindViewHolder(@NonNull VendorLiveOrderDish_myViewHolder holder, int position) {
            String temp_var = dataList.get(position).getDishQ()+" X ";
+        Log.d("dishQ:",temp_var);
             holder.dish_quantity.setText(temp_var);
+        Log.d("dishName:",dataList.get(position).getDishName());
             holder.dish_name.setText(dataList.get(position).getDishName());
+        Log.d("dishPrice:",dataList.get(position).getTotalPrice());
             holder.dish_price.setText(dataList.get(position).getTotalPrice());
     }
     @Override
