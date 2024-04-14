@@ -29,7 +29,7 @@ public class Vendor_update_timeslot extends AppCompatActivity {
 
     String selectedDay ;
     String selectedTimeSlot;
-    String available_slots;
+    String default_available_slots;
     String restaurant_name ,restaurant_id;
     private boolean update_checkBoxSelected = false;
 
@@ -47,18 +47,18 @@ public class Vendor_update_timeslot extends AppCompatActivity {
 
         Spinner daySpinner = findViewById(R.id.updated_day_spinner);
         String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-        EditText availableSlots = findViewById(R.id.updated_availableSlots);
+        EditText default_availableSlots = findViewById(R.id.updated_availableSlots);
         Spinner slotSpinner = findViewById(R.id.updated_slot_spinner);
         String[] slots = {"8:00 - 9:00 am" , "10:30 - 11:30 am" , "1:00 - 2:00 pm" , "4:00 - 5:00 pm" , "7:00 - 8:00 pm" , "8:00 - 9:00 pm"};
 
         Intent intent = getIntent();
         selectedDay = intent.getStringExtra("Selected Day");
         selectedTimeSlot = intent.getStringExtra("Selected Time Slot");
-        available_slots = intent.getStringExtra("Available slots");
+        default_available_slots = intent.getStringExtra("Available slots");
         restaurant_id = intent.getStringExtra("restaurant_id");
         restaurant_name = intent.getStringExtra("restaurant_name");
 
-        availableSlots.setText(available_slots);
+        default_availableSlots.setText(default_available_slots);
 
         int dayIndex = -1;
         for (int i = 0; i < daysOfWeek.length; i++) {
@@ -119,19 +119,19 @@ public class Vendor_update_timeslot extends AppCompatActivity {
         update_slot_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                available_slots = availableSlots.getText().toString();
+                default_available_slots = default_availableSlots.getText().toString();
                 if(same_time_everyday_checkbox.isChecked() && update_checkBoxSelected){
                     Log.d("sending rest name",restaurant_name);
-                    updateTimeSlotEveryDay(daysOfWeek,selectedTimeSlot,available_slots,restaurant_id,restaurant_name);
+                    updateTimeSlotEveryDay(daysOfWeek,selectedTimeSlot,default_available_slots,restaurant_id,restaurant_name);
                 }
                 else{
                     Log.d("sending rest name",restaurant_name);
-                    updateTimeSlot(selectedDay,selectedTimeSlot,available_slots,restaurant_id,restaurant_name);
+                    updateTimeSlot(selectedDay,selectedTimeSlot,default_available_slots,restaurant_id,restaurant_name);
                 }
             }
         });
     }
-    public void updateTimeSlot(String day , String timeSlot , String available_slots,String restaurant_id,String restaurant_name){
+    public void updateTimeSlot(String day , String timeSlot , String default_available_slots,String restaurant_id,String restaurant_name){
         Log.d("Inside add func","day: "+day);
         Log.d("Inside add func","restaurant-name: "+restaurant_name);
         Log.d("Inside add func","time-slot: "+timeSlot);
@@ -145,11 +145,11 @@ public class Vendor_update_timeslot extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        timeSlotRef.child("available_slots").setValue(available_slots).addOnSuccessListener(new OnSuccessListener<Void>() {
+        timeSlotRef.child("default_available_slots").setValue(default_available_slots).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 dialog.dismiss();
-                Toast.makeText(Vendor_update_timeslot.this,available_slots+" slots updated for "+timeSlot+" for "+day,Toast.LENGTH_SHORT).show();
+                Toast.makeText(Vendor_update_timeslot.this,default_available_slots+" slots updated for "+timeSlot+" for "+day,Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -158,10 +158,17 @@ public class Vendor_update_timeslot extends AppCompatActivity {
                 Toast.makeText(Vendor_update_timeslot.this,timeSlot+" slot not updated for "+day+", TRY AGAIN!",Toast.LENGTH_SHORT).show();
             }
         });
+        timeSlotRef.child("available_slots").setValue(default_available_slots).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                dialog.dismiss();
+                Toast.makeText(Vendor_update_timeslot.this,timeSlot+" slot not updated for "+day+", TRY AGAIN!",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-    public void updateTimeSlotEveryDay(String[] days,String timeSlot , String available_slots,String restaurant_id,String restaurant_name){
+    public void updateTimeSlotEveryDay(String[] days,String timeSlot , String default_available_slots,String restaurant_id,String restaurant_name){
         for (String day : days) {
-            updateTimeSlot(day, timeSlot, available_slots, restaurant_id, restaurant_name);
+            updateTimeSlot(day, timeSlot, default_available_slots, restaurant_id, restaurant_name);
         }
     }
 }

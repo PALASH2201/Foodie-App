@@ -126,7 +126,7 @@ public class TimeSlotDetails_myAdapter extends RecyclerView.Adapter<TimeSlot_MyV
                     String restaurant_name = dataList.get(position).getRestaurant_name();
 
                     Log.d("to-be-deleted-timeslot",timeSlot);
-                    deleteDishFromFirebase(day,timeSlot,restaurant_name);
+                    deleteDishFromFirebase(day,restaurant_name,timeSlot);
                     dataList.remove(position);
                     notifyDataSetChanged();
                 }
