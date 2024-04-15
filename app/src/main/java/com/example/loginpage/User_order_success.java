@@ -56,8 +56,9 @@ public class User_order_success extends AppCompatActivity {
         String restaurant_id = intent.getStringExtra("restaurant_id");
         String time_slot_selected = intent.getStringExtra("time_slot_selected");
         String day = intent.getStringExtra("day");
+        String customerName = intent.getStringExtra("customer Name");
         String dateTime = getCurrentDateTime();
-        addToOrderHistory(total_bill,dateTime,time_slot_selected,day,restaurant_name,restaurant_id);
+        addToOrderHistory(total_bill,dateTime,time_slot_selected,day,restaurant_name,restaurant_id,customerName);
 
         topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
         bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
@@ -79,9 +80,11 @@ public class User_order_success extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public void addToOrderHistory(String totalbill , String curDate,String time_slot_selected,String day,String restaurant_name,String restaurant_id) {
+    public void addToOrderHistory(String totalbill , String curDate,String time_slot_selected,String day,String restaurant_name,String restaurant_id,String customerName) {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference nameSnapshot = rootRef.child("users").child(userId).child("customer_name");
+        nameSnapshot.setValue(customerName);
         DatabaseReference cartRef = rootRef.child("users").child(userId).child("cart");
         cartRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

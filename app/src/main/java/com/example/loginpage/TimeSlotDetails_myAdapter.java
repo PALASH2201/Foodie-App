@@ -70,19 +70,19 @@ public class TimeSlotDetails_myAdapter extends RecyclerView.Adapter<TimeSlot_MyV
                 holder.available_slot_info.setText(numSlotsAvailable);
                 holder.selectedTimeSlot_checkBox.setTag(position);
 
-            if (position == lastCheckedPosition) {
-                holder.selectedTimeSlot_checkBox.setChecked(true);
-            } else {
-                holder.selectedTimeSlot_checkBox.setChecked(false);
-            }
+//            if (position == lastCheckedPosition) {
+//                holder.selectedTimeSlot_checkBox.setChecked(true);
+//            } else {
+//                holder.selectedTimeSlot_checkBox.setChecked(false);
+//            }
 
             holder.selectedTimeSlot_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (lastCheckedPosition != -1 && lastCheckedPosition != position) {
-                        notifyItemChanged(lastCheckedPosition);
-                    }
-                    lastCheckedPosition = position;
+//                    if (lastCheckedPosition != -1 && lastCheckedPosition != position) {
+//                        notifyItemChanged(lastCheckedPosition);
+//                    }
+//                    lastCheckedPosition = position;
 
                     day = null;selected_timeSlot=null;available_slots=null;
                     int checkboxPosition = (int) buttonView.getTag();

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,8 @@ public class User_review_order extends AppCompatActivity {
     String updated_available_slots,restaurant_name ,time_slot,day,totalBill,availableSlots,restaurant_id;
     AlertDialog dialog;
     boolean isSlotAvailable=false;
+    EditText customerNameEditText;
+    String customerName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,9 @@ public class User_review_order extends AppCompatActivity {
          day = intent.getStringExtra("day");
          totalBill = intent.getStringExtra("total bill");
          availableSlots = intent.getStringExtra("Available slots");
+
+         customerNameEditText = findViewById(R.id.customerNameEditText);
+
 
         findSlots(day,restaurant_name,time_slot,availableSlots);
 
@@ -99,12 +105,15 @@ public class User_review_order extends AppCompatActivity {
             payButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    customerName = customerNameEditText.getText().toString();
+                    Log.d("name of customer:",customerName);
                     Intent intent = new Intent(User_review_order.this,User_order_success.class);
                     intent.putExtra("total bill",totalBill);
                     intent.putExtra("restaurant_name",restaurant_name);
                     intent.putExtra("restaurant_id",restaurant_id);
                     intent.putExtra("time_slot_selected",time_slot);
                     intent.putExtra("day",day);
+                    intent.putExtra("customer Name",customerName);
                     startActivity(intent);
                     finish();
                 }
