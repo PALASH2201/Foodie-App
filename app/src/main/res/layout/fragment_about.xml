@@ -24,6 +24,7 @@
                 android:layout_marginBottom="8dp"
                 android:letterSpacing="0.2"
                 android:text="@string/app_name"
+                android:textColor="@color/orange"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -54,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="@string/developer_information"
+                android:textColor="@color/red"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -66,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="@string/developerName"
+                android:textColor="@color/dark_orange"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -84,7 +87,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="@string/designerName1"
+                android:text="@string/designerName2"
+                android:textColor="@color/dark_orange"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -93,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="Email: yashkambli@example.com"
+                android:text="Email: aadit.jha22@spit.ac.in"
                 android:textSize="16sp" />
 
 
@@ -103,7 +107,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="@string/designerName2"
+                android:text="@string/designerName1"
+                android:textColor="@color/dark_orange"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -112,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="Email: aaditjha@example.com"
+                android:text="Email: yashkambli@example.com"
                 android:textSize="16sp" />
 
         </LinearLayout>

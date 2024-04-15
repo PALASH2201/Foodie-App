@@ -13,7 +13,8 @@
         android:layout_height="58dp"
         android:background="@color/orange"
         android:foregroundGravity="center"
-        android:gravity="center"
+        android:gravity="center|left"
+        android:paddingLeft="10dp"
         android:text="Vendor Home Page"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -25,18 +26,19 @@
 
     <ImageButton
         android:id="@+id/registerNow"
-        android:layout_width="270dp"
-        android:layout_height="156dp"
+        android:layout_width="419dp"
+        android:layout_height="173dp"
         android:alpha="0.6"
         app:circularflow_defaultRadius="@dimen/cardview_default_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.135"
+        app:layout_constraintVertical_bias="0.112"
         app:srcCompat="@drawable/canteen"
         tools:ignore="SpeakableTextPresentCheck" />
+
 
     <TextView
         android:id="@+id/textView7"
@@ -49,90 +51,115 @@
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/registerNow"
-        app:layout_constraintEnd_toEndOf="@+id/registerNow"
-        app:layout_constraintStart_toStartOf="@+id/registerNow"
-        app:layout_constraintTop_toTopOf="@+id/registerNow"
-        app:layout_constraintVertical_bias="0.903" />
+        app:layout_constraintBottom_toBottomOf="@+id/viewLiveOrders"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.281" />
 
     <ImageButton
         android:id="@+id/viewCategories"
-        android:layout_width="240dp"
-        android:layout_height="156dp"
+        android:layout_width="423dp"
+        android:layout_height="154dp"
         android:alpha="0.6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.906"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.431"
+        app:layout_constraintVertical_bias="0.411"
         app:srcCompat="@drawable/thali"
         tools:ignore="SpeakableTextPresentCheck" />
 
-
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="242dp"
+        android:layout_height="44dp"
         android:background="@color/orange"
         android:gravity="center"
         android:padding="5dp"
         android:text="VIEW CATEGORIES"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/viewCategories"
+        app:layout_constraintBottom_toBottomOf="@+id/viewLiveOrders"
         app:layout_constraintEnd_toEndOf="@+id/viewCategories"
-        app:layout_constraintHorizontal_bias="0.407"
-        app:layout_constraintStart_toStartOf="@+id/viewCategories"
-        app:layout_constraintTop_toTopOf="@+id/viewCategories"
-        app:layout_constraintVertical_bias="0.842" />
-
-    <TextView
-        android:id="@+id/viewSlots"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:padding="5dp"
-        android:background="@color/orange"
-        android:text="VIEW TIME SLOTS"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.121"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewCategories"
-        app:layout_constraintVertical_bias="0.038" />
-
-    <TextView
-        android:id="@+id/viewLiveOrders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/orange"
-        android:text="VIEW LIVE ORDERS"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:padding="5dp"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.824"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewSlots"
-        app:layout_constraintVertical_bias="0.242" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.506" />
 
     <Button
         android:id="@+id/logout_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
-        android:backgroundTint="@color/orange"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/yellow"
         android:text="Logout"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.949"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/viewSlots"
+        android:layout_width="418dp"
+        android:layout_height="159dp"
+        android:alpha="0.6"
+        app:layout_constraintBottom_toBottomOf="@+id/viewLiveOrders"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewCategories"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/time" />
+
+    <ImageButton
+        android:id="@+id/viewLiveOrders"
+        android:layout_width="417dp"
+        android:layout_height="179dp"
+        android:alpha="0.6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewCategories"
+        app:layout_constraintVertical_bias="0.987"
+        app:srcCompat="@drawable/live_orders_bg" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="242dp"
+        android:layout_height="44dp"
+        android:background="@color/orange"
+        android:gravity="center"
+        android:text="View TimeSlots"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView6"
+        app:layout_constraintVertical_bias="0.737" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="242dp"
+        android:layout_height="44dp"
+        android:background="@color/orange"
+        android:gravity="center"
+        android:text="View Orders"
+        android:textAllCaps="true"
+
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/viewLiveOrders"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

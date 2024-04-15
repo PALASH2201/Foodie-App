@@ -47,8 +47,8 @@ public class Vendor_interface extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
         Button logout = findViewById(R.id.logout_btn);
-        TextView viewSlots = findViewById(R.id.viewSlots);
-        TextView viewLiveOrders = findViewById(R.id.viewLiveOrders);
+        ImageButton viewSlots = findViewById(R.id.viewSlots);
+        ImageButton viewLiveOrders = findViewById(R.id.viewLiveOrders);
         mAuth = FirebaseAuth.getInstance();
 
         String userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();

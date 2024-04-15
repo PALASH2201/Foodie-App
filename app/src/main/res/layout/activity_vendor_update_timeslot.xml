@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="Update Time Slots"
                 android:textAlignment="center"
-                android:textColor="@color/orange"
+                android:textColor="@color/red"
                 android:textSize="30sp" />
 
             <TextView
@@ -96,8 +96,8 @@
                     android:layout_margin="8dp"
                     android:backgroundTint="@color/orange"
                     android:text="Update Slot"
-                    android:textSize="25sp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
             </LinearLayout>
 
         </LinearLayout>
