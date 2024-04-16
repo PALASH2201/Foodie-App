@@ -2,6 +2,8 @@ package com.example.loginpage;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOrder_myViewHolder> {
@@ -23,6 +29,7 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
     private final List<LiveOrderDataClass> dataList;
     private final SparseBooleanArray expandedItems;
     private final Map<String, List<LiveOrderDishDataClass>> dishMap;
+    private long startTimeMillis;
 
     public VendorLiveOrder_myAdapter(Context context, List<LiveOrderDataClass> dataList,Map<String, List<LiveOrderDishDataClass>> dishMap) {
         this.context = context;
@@ -41,7 +48,8 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
     }
     @Override
     public void onBindViewHolder(@NonNull VendorLiveOrder_myViewHolder holder, @SuppressLint("RecyclerView") int position) {
-         holder.chosen_time_slot.setText(dataList.get(position).getChosen_time_slot());
+         String slot_timing = dataList.get(position).getChosen_time_slot();
+         holder.chosen_time_slot.setText(slot_timing);
          holder.OrderStatus.setText(dataList.get(position).getOrderStatus());
          String temp_var = "Customer Name: "+dataList.get(position).getCustomerName();
          holder.customerName.setText(temp_var);
@@ -55,6 +63,36 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
         holder.dish_details_recycler_view.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
          VendorLiveOrderDish_myAdapter adapter = new VendorLiveOrderDish_myAdapter(context,dishList);
          holder.dish_details_recycler_view.setAdapter(adapter);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.getDefault());
+        try {
+            Date startTime = sdf.parse(slot_timing.split(" - ")[0]);
+            assert startTime != null;
+            startTimeMillis = startTime.getTime();
+        } catch (ParseException e) {
+            Log.d("Exception caught","Parse Exception");
+        }
+
+        long currentTimeMillis = System.currentTimeMillis();
+        long timeDiffMillis = startTimeMillis - currentTimeMillis;
+
+        CountDownTimer countDownTimer = new CountDownTimer(timeDiffMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long secondsUntilFinished = millisUntilFinished / 1000;
+                long minutes = secondsUntilFinished / 60;
+                long seconds = secondsUntilFinished % 60;
+                holder.timer.setText(String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds));
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onFinish() {
+                holder.timer.setText("00:00");
+            }
+        };
+
+        countDownTimer.start();
 
 
         boolean isExpanded = expandedItems.get(position, false);
@@ -75,13 +113,14 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
     }
 }
 class VendorLiveOrder_myViewHolder extends RecyclerView.ViewHolder{
-    TextView chosen_time_slot,OrderStatus;
+    TextView chosen_time_slot,OrderStatus,timer;
     TextView customerName,orderId,customerBill;
     RecyclerView dish_details_recycler_view;
     LinearLayout orderDetails;
     ImageView arrowIcon;
     public VendorLiveOrder_myViewHolder(@NonNull View itemView){
         super(itemView);
+        timer = itemView.findViewById(R.id.timer);
         chosen_time_slot = itemView.findViewById(R.id.chosen_time_slot);
         OrderStatus = itemView.findViewById(R.id.orderStatus);
         arrowIcon = itemView.findViewById(R.id.arrowIcon);
