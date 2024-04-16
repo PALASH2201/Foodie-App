@@ -30,10 +30,12 @@
             app:layout_constraintVertical_bias="0.037" />
 
         <TextView
+            android:background="@color/red"
             android:id="@+id/orderStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Order Status:"
+            android:padding="5dp"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
