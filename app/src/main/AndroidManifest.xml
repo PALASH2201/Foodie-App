@@ -24,7 +24,8 @@
         tools:targetApi="31">
         <activity
             android:name=".Vendor_live_order_viewer"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar"/>
         <activity
             android:name=".User_review_order"
             android:exported="false"
