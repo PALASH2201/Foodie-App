@@ -113,12 +113,14 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
             String[] startParts = startTime.split(":");
             int startHour = Integer.parseInt(startParts[0]);
             int startMinute = Integer.parseInt(startParts[1]);
-            String startMeridian = timeParts[4].toLowerCase();
+            String startMeridian = timeParts[3].toLowerCase();
 
-            if (startMeridian.equals(" pm") && startHour != 12) {
+            if (startMeridian.equals("pm") && startHour != 12) {
                 startHour += 12;
+
             }
 
+            Log.d("Start Hour",startHour+"");
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.HOUR_OF_DAY, startHour);
             calendar.set(Calendar.MINUTE, startMinute);
