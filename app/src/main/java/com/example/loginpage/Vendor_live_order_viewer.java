@@ -67,6 +67,7 @@ public class Vendor_live_order_viewer extends AppCompatActivity {
 
                 Map<String, List<LiveOrderDishDataClass>> dishMap = new HashMap<>();
 
+                liveOrderDataClassList.clear();
                 for (DataSnapshot liveOrderSnapshot: snapshot.getChildren()) {
                       String chosen_time_slot = liveOrderSnapshot.child("chosen_time_slot").getValue(String.class);
                       String customerBill = liveOrderSnapshot.child("customerBill").getValue(String.class);

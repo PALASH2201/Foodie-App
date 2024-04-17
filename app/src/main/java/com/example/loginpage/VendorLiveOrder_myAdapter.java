@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,7 +31,6 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
     private final List<LiveOrderDataClass> dataList;
     private final SparseBooleanArray expandedItems;
     private final Map<String, List<LiveOrderDishDataClass>> dishMap;
-    private long startTimeMillis;
 
     public VendorLiveOrder_myAdapter(Context context, List<LiveOrderDataClass> dataList,Map<String, List<LiveOrderDishDataClass>> dishMap) {
         this.context = context;
@@ -47,6 +47,7 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
                 , parent, false);
         return new VendorLiveOrder_myViewHolder(view);
     }
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull VendorLiveOrder_myViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String slot_timing = dataList.get(position).getChosen_time_slot();
@@ -66,7 +67,11 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
         holder.dish_details_recycler_view.setAdapter(adapter);
 
         long currentTime = System.currentTimeMillis();
-        getTimeInMillis(slot_timing);
+        long startTimeMillis = getTimeInMillis(slot_timing);
+        if(startTimeMillis == -1){
+            Toast.makeText(context,"Wrong timer. Refresh Again!" , Toast.LENGTH_SHORT).show();
+            return;
+        }
         Log.d("Start time",startTimeMillis+"");
         Log.d("Current time",currentTime+"");
 
@@ -74,11 +79,13 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
 
         if (remainingTime < 0) {
             holder.timer.setText("Time slot has passed");
-        } else {
+        }
+        else {
             new CountDownTimer(remainingTime, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    holder.timer.setText(getRemainingTimeFormatted(millisUntilFinished));
+                    String temp_var = "Remaining Time: "+getRemainingTimeFormatted(millisUntilFinished);
+                    holder.timer.setText(temp_var);
                 }
                 @Override
                 public void onFinish() {
@@ -105,7 +112,8 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
         return dataList.size();
     }
 
-    private void getTimeInMillis(String timeSlotString) {
+    private long getTimeInMillis(String timeSlotString) {
+        long startTimeMillis = -1;
         try {
             String[] timeParts = timeSlotString.split(" ");
             String startTime = timeParts[0];
@@ -117,7 +125,6 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
 
             if (startMeridian.equals("pm") && startHour != 12) {
                 startHour += 12;
-
             }
 
             Log.d("Start Hour",startHour+"");
@@ -130,6 +137,7 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             Log.d("Exception caught",e.getMessage());
         }
+        return startTimeMillis;
     }
     private String getRemainingTimeFormatted(long millisUntilFinished) {
         long seconds = (millisUntilFinished / 1000) % 60;
@@ -155,5 +163,4 @@ class VendorLiveOrder_myViewHolder extends RecyclerView.ViewHolder{
         customerBill = itemView.findViewById(R.id.customerBill);
         dish_details_recycler_view = itemView.findViewById(R.id.dish_details_recycler_view);
     }
-
 }
