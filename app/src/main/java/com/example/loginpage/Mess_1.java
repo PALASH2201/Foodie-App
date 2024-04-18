@@ -46,6 +46,7 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
     private HashMap<Integer, Class<?>> activityMap;
     TextView mess_name;
     RecyclerView recyclerView;
+    String user_id,restaurant_name,restaurant_id;
     List<CategoriesDataClass> dataList ;
     DatabaseReference databaseReference;
     ValueEventListener eventListener;
@@ -91,6 +92,7 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
       });
 
         mAuth = FirebaseAuth.getInstance();
+        user_id = mAuth.getCurrentUser().getUid();
         mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -140,11 +142,14 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
             @Override
             public void onItemClick(int position, boolean isVendor) {
                 if(!isVendor){
+                    restaurant_name = mess_name.getText().toString();
+                    restaurant_id = dataList.get(position).getRestaurant_id();
+
                     Intent intent = new Intent(Mess_1.this,User_menu_detail.class);
                     intent.putExtra(EXTRA_CAT_NAME,dataList.get(position).getName());
-                    intent.putExtra(EXTRA_REST_NAME,mess_name.getText().toString());
+                    intent.putExtra(EXTRA_REST_NAME,restaurant_name);
                     intent.putExtra(EXTRA_CAT_ID,dataList.get(position).getKey());
-                    intent.putExtra(EXTRA_REST_ID,dataList.get(position).getRestaurant_id());
+                    intent.putExtra(EXTRA_REST_ID,restaurant_id);
                     startActivity(intent);
                 }
             }
@@ -175,15 +180,41 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
             }
             return true;
         }
-        Class<?> activityClass = activityMap.get(item.getItemId());
-        if (activityClass != null) {
-            intent = new Intent(Mess_1.this, activityClass);
-            startActivity(intent);
+        if (item.getItemId() == R.id.my_cart) {
+            checkCartAndNavigate(item);
+        } else {
+            Class<?> activityClass = activityMap.get(item.getItemId());
+            if (activityClass != null) {
+                intent = new Intent(Mess_1.this, activityClass);
+                startActivity(intent);
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
         }
-        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    private void checkCartAndNavigate(MenuItem item) {
+        DatabaseReference userCartRef = FirebaseDatabase.getInstance().getReference("users").child(user_id).child("cart");
+        userCartRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Intent intent = new Intent(Mess_1.this, User_cart.class);
+                    intent.putExtra("User Id",user_id);
+                    intent.putExtra("restaurant_name",restaurant_name);
+                    intent.putExtra("restaurant_id",restaurant_id);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(Mess_1.this, "Your cart is empty!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Mess_1.this, "Failed to check cart: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     private void retrieveRestaurantIdByName() {
         DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference("restaurants");
         restaurantRef.orderByChild("restaurant_name").equalTo(mess_name.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {

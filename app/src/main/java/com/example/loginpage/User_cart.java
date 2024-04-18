@@ -74,53 +74,60 @@ public class User_cart extends AppCompatActivity {
         });
     }
     public void getCartDetails(String userId){
-        DatabaseReference userCartRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("cart");
-        userCartRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    for (DataSnapshot cartItem : dataSnapshot.getChildren()) {
-                        String dishId = cartItem.getKey();
-                        assert dishId != null;
-                        Log.d("DishId",dishId);
-                        DatabaseReference dishRef = userCartRef.child(dishId);
-                        dishRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dishSnapshot) {
-                                if (dishSnapshot.exists()) {
-                                    Log.d("Dish exists",dishId);
-                                    String dishName = dishSnapshot.child("dish_name").getValue(String.class);
-                                    String dishPrice = dishSnapshot.child("dish_price").getValue(String.class);
-                                    String restaurantName = dishSnapshot.child("restaurant_name").getValue(String.class);
-                                    String categoryName = dishSnapshot.child("category_name").getValue(String.class);
-                                    String dishImageUrl = dishSnapshot.child("dish_image_url").getValue(String.class);
-                                    String restaurant_id = dishSnapshot.child("restaurant_id").getValue(String.class);
-                                    String category_id = dishSnapshot.child("category_id").getValue(String.class);
-                                    int quantity = Integer.parseInt(Objects.requireNonNull(dishSnapshot.child("quantity").getValue(String.class)));
-                                    assert dishPrice != null;
-                                    String total_price_dish = String.valueOf( Double.parseDouble(dishPrice) * quantity);
-                                    CartDataClass cartItem = new CartDataClass(dishName, dishPrice,total_price_dish ,dishImageUrl,restaurant_id,category_id,dishId,quantity,restaurantName,categoryName);
-                                    dataList.add(cartItem);
-                                    cartMyAdapter.notifyDataSetChanged();
-                                    dialog.dismiss();
+                    if (dataSnapshot.hasChild("cart")) {
+                        DataSnapshot cartSnapshot = dataSnapshot.child("cart");
+                        for (DataSnapshot cartItem : cartSnapshot.getChildren()) {
+                            String dishId = cartItem.getKey();
+                            DatabaseReference dishRef = userRef.child("cart").child(dishId);
+                            dishRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dishSnapshot) {
+                                    if (dishSnapshot.exists()) {
+                                        Log.d("Dish exists",dishId);
+                                        String dishName = dishSnapshot.child("dish_name").getValue(String.class);
+                                        String dishPrice = dishSnapshot.child("dish_price").getValue(String.class);
+                                        String restaurantName = dishSnapshot.child("restaurant_name").getValue(String.class);
+                                        String categoryName = dishSnapshot.child("category_name").getValue(String.class);
+                                        String dishImageUrl = dishSnapshot.child("dish_image_url").getValue(String.class);
+                                        String restaurant_id = dishSnapshot.child("restaurant_id").getValue(String.class);
+                                        String category_id = dishSnapshot.child("category_id").getValue(String.class);
+                                        int quantity = Integer.parseInt(Objects.requireNonNull(dishSnapshot.child("quantity").getValue(String.class)));
+                                        assert dishPrice != null;
+                                        String total_price_dish = String.valueOf( Double.parseDouble(dishPrice) * quantity);
+                                        CartDataClass cartItem = new CartDataClass(dishName, dishPrice,total_price_dish ,dishImageUrl,restaurant_id,category_id,dishId,quantity,restaurantName,categoryName);
+                                        dataList.add(cartItem);
+                                        cartMyAdapter.notifyDataSetChanged();
+                                        dialog.dismiss();
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Toast.makeText(User_cart.this,"Could not fetch the cart properly",Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Toast.makeText(User_cart.this, "Could not fetch the cart properly", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    } else {
+                        Toast.makeText(User_cart.this, "Cart is empty!", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
                 } else {
-                    Toast.makeText(User_cart.this,"Cart is empty!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(User_cart.this, "User or cart does not exist", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(User_cart.this,"Database error. Try again",Toast.LENGTH_SHORT).show();
+                Toast.makeText(User_cart.this, "Database error. Try again", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
     }
+
 }
