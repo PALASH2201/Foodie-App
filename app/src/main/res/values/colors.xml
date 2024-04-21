@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    //standard
+    <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="yellow">#FFF95B</color>
-    <color name="orange">#FB4A04</color>
-    <color name="green">#AFE1AF</color>
-    <color name="light_orange">#FFE0B2</color>
     <color name="red">#F60505</color>
-    <color name="beige">#F9F7DF</color>
-    <color name="dark_orange">#B5462B</color>
+    <color name="green">#AFE1AF</color>
 
+    <color name="yellow">#FFF95B</color>
+    <color name="yellow_card_bg">#FBFCD8</color>
+    <color name="light_yellow">#FBFF86</color>
+    <color name="beige">#F9F7DF</color>
+
+    <color name="dark_orange">#B5462B</color>
+    <color name="orange">#FA8007</color>
+    <color name="orange_btn_color">#FFC183</color>
+    <color name="light_orange">#FFE9D3</color>
+
+    //blue shades
+    <color name="light_blue">#ACC8E5</color>
+    <color name="navy_blue">#112A46</color>
+    <color name="card_bg">#D4E0EE</color>
 </resources>

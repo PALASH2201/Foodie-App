@@ -8,7 +8,7 @@
         <item
             android:id="@+id/my_orders"
             android:icon="@drawable/order_history"
-            android:title="My Order "/>
+            android:title="My Order History"/>
         <item
             android:id="@+id/favourite"
             android:icon="@drawable/favorite"
@@ -16,10 +16,7 @@
         <item
             android:id="@+id/my_cart"
             android:icon="@drawable/shopping_cart"
-            android:title="Cart"/>
-        <item
-            android:id="@+id/theme"
-            android:title="Theme"/>
+            android:title="My Cart"/>
         <item
             android:id="@+id/feedback"
             android:icon="@drawable/feedback"

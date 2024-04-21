@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+import soup.neumorphism.NeumorphCardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -74,11 +74,9 @@ class Mess_MyViewHolder extends RecyclerView.ViewHolder{
 
     ImageView recImage ;
     TextView recName;
-    CardView recCard ;
     public Mess_MyViewHolder(@NonNull View itemView){
         super(itemView);
         recImage = itemView.findViewById(R.id.recImage);
         recName = itemView.findViewById(R.id.recName);
-        recCard = itemView.findViewById(R.id.recCard);
     }
 }

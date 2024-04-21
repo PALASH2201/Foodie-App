@@ -15,22 +15,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 public class User_review_order extends AppCompatActivity {
     String updated_available_slots,restaurant_name ,time_slot,day,totalBill,availableSlots,restaurant_id;
     AlertDialog dialog;
     boolean isSlotAvailable=false;
-    EditText customerNameEditText;
-    String customerName;
+    String customerName,customerContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,20 +54,37 @@ public class User_review_order extends AppCompatActivity {
          totalBill = intent.getStringExtra("total bill");
          availableSlots = intent.getStringExtra("Available slots");
 
-         customerNameEditText = findViewById(R.id.customerNameEditText);
+         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-
-        findSlots(day,restaurant_name,time_slot,availableSlots);
+         findCustomerDetails(userId);
+         findSlots(day,restaurant_name,time_slot);
 
     }
-    public void findSlots(String day , String restaurant_name ,String timeSlot,String availableSlots){
+
+    public void findCustomerDetails(String userId){
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+              customerName = snapshot.child("customer_name").getValue(String.class);
+              customerContact = snapshot.child("contact_number").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+              Toast.makeText(User_review_order.this,"Database error! TRY AGAIN",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public void findSlots(String day , String restaurant_name ,String timeSlot){
         DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("time_slots").child(day).child(restaurant_name).child(timeSlot);
         cartRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                    updated_available_slots  = snapshot.child("available_slots").getValue(String.class);
-                   Log.d("Updated available slots",updated_available_slots);
+                    assert updated_available_slots != null;
+                    Log.d("Updated available slots",updated_available_slots);
                     assert updated_available_slots != null;
                     if(Integer.parseInt(updated_available_slots) > 0 ){
                        isSlotAvailable = true;
@@ -105,8 +119,6 @@ public class User_review_order extends AppCompatActivity {
             payButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    customerName = customerNameEditText.getText().toString();
-                    Log.d("name of customer:",customerName);
                     Intent intent = new Intent(User_review_order.this,User_order_success.class);
                     intent.putExtra("total bill",totalBill);
                     intent.putExtra("restaurant_name",restaurant_name);
@@ -114,6 +126,7 @@ public class User_review_order extends AppCompatActivity {
                     intent.putExtra("time_slot_selected",time_slot);
                     intent.putExtra("day",day);
                     intent.putExtra("customer Name",customerName);
+                    intent.putExtra("customer Contact",customerContact);
                     startActivity(intent);
                     finish();
                 }

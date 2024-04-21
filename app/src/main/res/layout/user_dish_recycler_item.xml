@@ -2,36 +2,33 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/recCard"
+    style="@style/Widget.Neumorph.CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="80dp"
     android:layout_marginStart="12dp"
     android:layout_marginEnd="12dp"
-    android:background="@color/beige"
     app:cardElevation="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="580dp"
-        android:background="@color/white"
+        android:layout_height="600dp"
+        android:background="@color/light_orange"
         android:orientation="vertical"
         android:padding="8dp">
 
         <!-- Image -->
 
-        <TextView
-            android:id="@+id/recDishName"
-            android:layout_width="381dp"
-            android:layout_height="wrap_content"
+        <soup.neumorphism.NeumorphTextView
             android:layout_gravity="center"
-            android:layout_marginTop="0dp"
-            android:background="@color/orange"
+            android:id="@+id/recDishName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="10dp"
             android:text="@string/dish_name"
-            android:textAllCaps="true"
-            android:textColor="@color/beige"
+            android:fontFamily="@font/bangers"
+            android:textColor="@color/black"
             android:textSize="34sp" />
 
         <ImageView
@@ -49,7 +46,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@color/light_orange"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -84,6 +80,7 @@
                 android:gravity="end"
                 android:text="@string/dishPrice"
                 android:textSize="20sp"
+                android:fontFamily="@font/bubblegum_sans"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -91,26 +88,23 @@
         <TextView
             android:id="@+id/recDishDescription"
             android:layout_width="361dp"
-            android:layout_height="115dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@color/light_orange"
+            android:layout_height="wrap_content"
             android:padding="20dp"
             android:text="@string/dish_description"
-            android:textColor="@color/orange"
+            android:fontFamily="@font/andika_new_basic_bold_italic"
+            android:textColor="@color/black"
             android:textSize="20sp" />
         <!-- Add to Cart Button -->
         <Button
             android:id="@+id/addToCartButton"
+            android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/orange"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/orange_btn_color"
             android:text="@string/addtoCart"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20sp" />
-
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

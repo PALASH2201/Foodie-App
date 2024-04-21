@@ -44,5 +44,8 @@
     <string name="time_slot_header_line">Before proceeding to checkout, please select the time slot suitable to you</string>
     <string name="add_btn_desc">addOnClick</string>
     <string name="minus_btn_desc">minusOnClick</string>
+    <string name="contact_input">Enter your contact number</string>
+    <string name="name_input">Enter your name</string>
+    <string name="register_header">Registration</string>
 
 </resources>

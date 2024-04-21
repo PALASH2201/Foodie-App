@@ -14,7 +14,8 @@
     app:cardElevation="8dp">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/light_orange">
 
         <TextView
             android:id="@+id/chosen_time_slot"
@@ -30,16 +31,15 @@
             app:layout_constraintVertical_bias="0.037" />
 
         <TextView
-            android:background="@color/red"
             android:id="@+id/orderStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Order Status:"
             android:padding="5dp"
+            android:text="Order Status:"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.788"
+            app:layout_constraintHorizontal_bias="0.873"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.036" />
@@ -94,6 +94,20 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
+                android:id="@+id/contact_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Contact Number :"
+                android:padding="5dp"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
                 android:id="@+id/orderId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -128,6 +142,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:textColor="@color/black"
+                android:backgroundTint="@color/orange_btn_color"
+                android:layout_margin="5dp"
+                android:layout_gravity="center"
+                android:id="@+id/updateStatusButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update Order Status" />
+
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,5 +3,9 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/akaya_telivigala</item>
         <item>@font/andika_new_basic_bold_italic</item>
+        <item>@font/bangers</item>
+        <item>@font/barlow_thin</item>
+        <item>@font/bubblegum_sans</item>
+        <item>@font/cinzel_decorative_bold</item>
     </array>
 </resources>

@@ -7,6 +7,7 @@
     android:background="@color/beige"
     tools:context=".Registration">
 
+
     <Button
         android:id="@+id/btn_register"
         android:layout_width="186dp"
@@ -23,10 +24,10 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pass_reg"
-        app:layout_constraintVertical_bias="0.821" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/loginNow"
@@ -45,8 +46,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_register"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.151"
         tools:ignore="HardcodedText,TextSizeCheck" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="480dp"
+        android:isScrollContainer="false"
+        android:nestedScrollingEnabled="false"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:textColorHint="#000000"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#000000"
+        app:cursorColor="#000000"
+        app:helperTextTextColor="#000000"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:hintTextAppearance="@style/MyHintTextAppearance"
+        app:hintTextColor="#FF4900"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:suffixTextColor="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name_reg"
+            android:inputType="textPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:hint="@string/name_input"
+            android:drawableStart="@drawable/baseline_person_24"
+            android:drawablePadding="10dp"
+            android:outlineProvider="none"
+            android:padding="16dp"
+            android:shadowColor="@color/black"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -55,7 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="380dp"
+        android:layout_marginBottom="332dp"
         android:isScrollContainer="false"
         android:nestedScrollingEnabled="false"
         android:overScrollMode="ifContentScrolls"
@@ -70,8 +114,10 @@
         app:hintTextColor="#FF4900"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameLayout"
+        app:layout_constraintVertical_bias="0.094"
         app:placeholderTextColor="#070707"
         app:prefixTextColor="#F30606"
         app:suffixTextColor="#000000"
@@ -81,7 +127,7 @@
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/baseline_person_24"
+            android:drawableStart="@drawable/baseline_contact_mail_24"
             android:drawablePadding="10dp"
             android:hint="@string/email"
             android:inputType="text|textEmailAddress|textAutoComplete|textAutoCorrect"
@@ -98,13 +144,58 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/contactLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="300dp"
+        android:isScrollContainer="false"
+        android:nestedScrollingEnabled="false"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:textColorHint="#000000"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="#000000"
+        app:cursorColor="#000000"
+        app:helperTextTextColor="#000000"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:hintTextAppearance="@style/MyHintTextAppearance"
+        app:hintTextColor="#FF4900"
+        app:layout_constraintBottom_toTopOf="@id/pass_reg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/email_reg"
+        app:layout_constraintVertical_bias="0.0"
+        app:suffixTextColor="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/contact_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:hint="@string/contact_input"
+            android:outlineProvider="none"
+            android:padding="16dp"
+            android:inputType="phone|number"
+            android:drawableStart="@drawable/call_24"
+            android:drawablePadding="10dp"
+            android:shadowColor="@color/black"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/pass_reg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="9dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="300dp"
+        android:layout_marginBottom="264dp"
         android:isScrollContainer="false"
         android:nestedScrollingEnabled="false"
         android:overScrollMode="ifContentScrolls"
@@ -122,8 +213,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_reg"
-        app:layout_constraintVertical_bias="0.0"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="#191818"
         app:passwordToggleTintMode="src_in"
@@ -162,7 +251,7 @@
         android:id="@+id/textView3"
         android:layout_width="286dp"
         android:layout_height="72dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginTop="100dp"
         android:background="#FFFFFF"
         android:fontFamily="casual"
         android:gravity="center"
@@ -176,12 +265,10 @@
         android:textColorHint="#000000"
         android:textSize="60sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/email_reg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.688"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.983"
         tools:ignore="MissingConstraints,TextSizeCheck" />
 
     <ProgressBar
@@ -208,7 +295,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Registration!!"
+            android:text="@string/register_header"
             android:textColor="#FFFFFF"
             android:textSize="34sp" />
     </FrameLayout>

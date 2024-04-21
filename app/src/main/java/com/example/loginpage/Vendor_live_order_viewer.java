@@ -72,8 +72,13 @@ public class Vendor_live_order_viewer extends AppCompatActivity {
                       String chosen_time_slot = liveOrderSnapshot.child("chosen_time_slot").getValue(String.class);
                       String customerBill = liveOrderSnapshot.child("customerBill").getValue(String.class);
                       String customerName = liveOrderSnapshot.child("customerName").getValue(String.class);
+                      String customerContact = liveOrderSnapshot.child("contact_number").getValue(String.class);
                       String orderId = liveOrderSnapshot.child("orderId").getValue(String.class);
                       String orderStatus = liveOrderSnapshot.child("orderStatus").getValue(String.class);
+
+                      if(orderStatus != null && orderStatus.equals("Takeaway successful")){
+                          continue;
+                      }
 
                       DataSnapshot dishSnapshot = liveOrderSnapshot.child("dishList");
                     List<LiveOrderDishDataClass> dishList = new ArrayList<>();
@@ -87,14 +92,14 @@ public class Vendor_live_order_viewer extends AppCompatActivity {
                     }
                       dishMap.put(orderId, dishList);
 
-                      LiveOrderDataClass liveOrderDataClass = new LiveOrderDataClass(chosen_time_slot,orderStatus,customerName,orderId,customerBill,dishList);
+                      LiveOrderDataClass liveOrderDataClass = new LiveOrderDataClass(chosen_time_slot,orderStatus,customerName,customerContact,orderId,customerBill,dishList);
                       liveOrderDataClassList.add(liveOrderDataClass);
 
                 }
 
                 RecyclerView recyclerView = findViewById(R.id.recycler_view);
                 recyclerView.setLayoutManager(new LinearLayoutManager(Vendor_live_order_viewer.this, LinearLayoutManager.VERTICAL, false));
-                adapter = new VendorLiveOrder_myAdapter(Vendor_live_order_viewer.this, liveOrderDataClassList, dishMap);
+                adapter = new VendorLiveOrder_myAdapter(Vendor_live_order_viewer.this, liveOrderDataClassList, dishMap,restaurant_id);
                 recyclerView.setAdapter(adapter);
 
                 adapter.notifyDataSetChanged();

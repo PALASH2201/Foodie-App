@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    style="@style/AppTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/beige"
+    android:background="@color/light_orange"
     tools:context=".User_menu_detail">
 
     <TextView
@@ -13,13 +14,14 @@
         android:layout_width="409dp"
         android:layout_height="60dp"
         android:layout_marginBottom="672dp"
-        android:background="@color/orange"
+        android:background="@color/orange_btn_color"
         android:gravity="center"
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:fontFamily="@font/cinzel_decorative_bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,17 +39,28 @@
         app:layout_constraintVertical_bias="0.438"
         tools:layout_editor_absoluteX="0dp" />
 
-    <include
-        android:id="@+id/viewCartOption"
-        layout="@layout/view_cart_option_layout"
+    <soup.neumorphism.NeumorphButton
+        android:visibility="gone"
+        style="@style/Widget.Neumorph.Button"
+        android:id="@+id/view_cart_option"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        app:neumorph_backgroundColor="@color/orange_btn_color"
+        android:drawablePadding="8dp"
+        app:neumorph_shadowColorDark="@color/orange"
+        android:fontFamily="@font/bubblegum_sans"
+        android:text="@string/view_cart_option"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:drawableLeftCompat="@drawable/cart"
+        app:drawableTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.543"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintVertical_bias="0.975"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

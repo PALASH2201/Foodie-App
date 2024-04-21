@@ -10,18 +10,24 @@ public class UserOrderHistoryDataClass {
     private String orderTime;
     private String timeSlot;
     private String totalBill;
+    private String rest_id ;
     private Map<String, List<UserOrderHistoryDishDataClass>> dishes;
 
-    public UserOrderHistoryDataClass(String day, String orderId, String orderTime, String timeSlot, String totalBill, Map<String,List<UserOrderHistoryDishDataClass> > dishes) {
+    public UserOrderHistoryDataClass(String day, String orderId, String orderTime, String timeSlot, String totalBill, String rest_id,Map<String,List<UserOrderHistoryDishDataClass> > dishes) {
         this.day = day;
         this.orderId = orderId;
         this.orderTime = orderTime;
         this.timeSlot = timeSlot;
         this.totalBill = totalBill;
+        this.rest_id = rest_id;
         this.dishes = dishes;
     }
 
     public UserOrderHistoryDataClass() {
+    }
+
+    public String getRest_id() {
+        return rest_id;
     }
 
     public String getDay() {

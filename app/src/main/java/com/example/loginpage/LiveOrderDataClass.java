@@ -6,14 +6,16 @@ public class LiveOrderDataClass {
     private String chosen_time_slot;
     private String OrderStatus;
     private String customerName ;
+    private String customerContact;
     private String orderId ;
     private String customerBill;
     private List<LiveOrderDishDataClass> dishList ;
 
-    public LiveOrderDataClass(String chosen_time_slot,String OrderStatus,String customerName, String orderId, String customerBill,List<LiveOrderDishDataClass> dishList ) {
+    public LiveOrderDataClass(String chosen_time_slot,String OrderStatus,String customerName,String customerContact,String orderId, String customerBill,List<LiveOrderDishDataClass> dishList ) {
         this.chosen_time_slot = chosen_time_slot;
         this.OrderStatus = OrderStatus;
         this.customerName = customerName;
+        this.customerContact = customerContact;
         this.orderId = orderId;
         this.customerBill = customerBill;
         this.dishList = dishList;
@@ -29,6 +31,10 @@ public class LiveOrderDataClass {
 
     public String getOrderStatus() {
         return OrderStatus;
+    }
+
+    public String getCustomerContact() {
+        return customerContact;
     }
 
     public LiveOrderDataClass() {

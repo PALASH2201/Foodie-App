@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<soup.neumorphism.NeumorphCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/recCard"
+    style="@style/Widget.Neumorph.CardView"
+    app:neumorph_shadowColorDark="@color/orange"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="10dp"
     android:layout_marginStart="12dp"
     android:layout_marginEnd="12dp"
-    android:backgroundTint="@color/white"
-    app:cardBackgroundColor="@color/orange"
+    app:neumorph_shapeType="basin"
     app:cardCornerRadius="20dp"
     app:cardElevation="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/white">
+        android:background="@color/light_orange">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/recImage"
@@ -25,7 +27,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="41dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="28dp"
             android:layout_marginBottom="26dp"
             android:outlineProvider="background"
@@ -46,12 +48,14 @@
             android:layout_marginEnd="7dp"
             android:layout_marginBottom="66dp"
             android:layout_toEndOf="@id/recImage"
+            android:letterSpacing="0.06"
+            android:fontFamily="@font/bubblegum_sans"
             android:gravity="center"
             android:text="Mess name"
             android:textAlignment="center"
-            android:textColor="@color/orange"
+            android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
-</androidx.cardview.widget.CardView>
+</soup.neumorphism.NeumorphCardView>

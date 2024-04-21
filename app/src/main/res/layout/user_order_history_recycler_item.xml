@@ -4,54 +4,57 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         app:neumorph_shapeType="flat"
-        app:neumorph_shadowColorDark="#112A46"
+    style="@style/Widget.Neumorph.CardView"
+        app:neumorph_shadowColorDark="@color/orange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/beige">
 
 
-            <ImageView
-                android:id="@+id/arrowIcon"
-                android:layout_width="41dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/arrow_drop_down_24"
+            <TextView
+                android:id="@+id/orderStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Order Status:"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.956"
+                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.007" />
 
             <TextView
                 android:id="@+id/orderDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:text="Day:"
-                android:layout_marginTop="10dp"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/orderTime"
-                app:layout_constraintHorizontal_bias="0.446"
+                app:layout_constraintHorizontal_bias="0.418"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.047" />
+                app:layout_constraintVertical_bias="0.068" />
 
             <TextView
                 android:id="@+id/orderTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:text="Order Time:"
                 android:textSize="20sp"
-                android:layout_marginTop="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.663"
+                app:layout_constraintHorizontal_bias="0.716"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.047" />
+                app:layout_constraintVertical_bias="0.068" />
 
             <LinearLayout
                 android:id="@+id/orderDetails"
@@ -60,12 +63,13 @@
                 android:orientation="vertical"
                 android:visibility="visible"
                 android:layout_marginTop="15dp"
-                android:layout_marginStart="10dp"
+                android:background="@color/light_orange"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/orderTime">
 
                 <TextView
                     android:id="@+id/chosen_time_slot"
+                    android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Time Slot:"
@@ -90,8 +94,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
+                    android:layout_marginStart="5dp"
                     android:text="Total Bill :"
                     android:textSize="18sp" />
+
+                <Button
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/orange_btn_color"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/updateStatusButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Update Order Status"
+                    android:onClick="onUpdateStatusButtonClick" />
 
             </LinearLayout>
 

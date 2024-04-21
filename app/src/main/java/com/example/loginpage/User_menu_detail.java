@@ -29,6 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import soup.neumorphism.NeumorphButton;
+
 public class User_menu_detail extends AppCompatActivity {
 
     private UserDishDetails_myAdapter adapter;
@@ -135,9 +137,9 @@ public class User_menu_detail extends AppCompatActivity {
     }
     public void checkCart(String userId){
         DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("cart");
-        View viewCartOption = findViewById(R.id.viewCartOption);
+        NeumorphButton viewCartOption = findViewById(R.id.view_cart_option);
 
-        cartRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        cartRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {

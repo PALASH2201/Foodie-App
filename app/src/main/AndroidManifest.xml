@@ -80,7 +80,7 @@
         <activity
             android:name=".Vendor_menu_detail"
             android:exported="false"
-            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".VendorMenu_viewer"
             android:exported="false"

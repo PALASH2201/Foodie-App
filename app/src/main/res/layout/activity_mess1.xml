@@ -9,7 +9,7 @@
     tools:openDrawer="start"
     android:id="@+id/drawer_layout"
     style="@style/Theme.Material3.Light.NoActionBar"
-    android:background="@color/orange">
+    android:background="@color/light_orange">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,27 +20,29 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/orange"
+            android:background="@color/orange_btn_color"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <TextView
+        <soup.neumorphism.NeumorphTextView
+            style="@style/Widget.Neumorph.TextView"
             android:id="@+id/mess_name"
-            android:layout_width="match_parent"
-            android:layout_height="61dp"
-            android:background="@color/beige"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:textAlignment="center"
-            android:textColor="@color/red"
+            android:textColor="@color/black"
             android:textSize="35sp"
+            android:fontFamily="@font/bubblegum_sans"
             android:textStyle="bold" />
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/beige">
+            android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -58,7 +60,6 @@
         android:layout_gravity="start"
         android:backgroundTint="@color/white"
         app:headerLayout="@layout/nav_header"
-        app:itemIconTint="@color/orange"
         app:itemTextColor="@color/black"
         app:menu="@menu/nav_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

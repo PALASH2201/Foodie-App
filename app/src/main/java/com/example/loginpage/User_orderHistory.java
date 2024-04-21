@@ -64,6 +64,7 @@ public class User_orderHistory extends Fragment {
                     String customerBill = orderHistorySnapshot.child("Total Bill").getValue(String.class);
                     String Day = orderHistorySnapshot.child("Day").getValue(String.class);
                     String orderId = orderHistorySnapshot.child("Order Id").getValue(String.class);
+                    String rest_id = orderHistorySnapshot.child("Restaurant_id").getValue(String.class);
 
                     List<UserOrderHistoryDishDataClass> dishList = new ArrayList<>();
                     for (DataSnapshot dishInfo: orderHistorySnapshot.getChildren()) {
@@ -72,13 +73,15 @@ public class User_orderHistory extends Fragment {
                             String dishQ = dishInfo.child("quantity").getValue(String.class);
                             String totalPrice = dishInfo.child("total_price").getValue(String.class);
 
-                            UserOrderHistoryDishDataClass userOrderHistoryDishDataClass = new UserOrderHistoryDishDataClass(dishName,dishQ,totalPrice);
-                            dishList.add(userOrderHistoryDishDataClass);
+                            if (dishName != null && dishQ != null && totalPrice != null) {
+                                UserOrderHistoryDishDataClass userOrderHistoryDishDataClass = new UserOrderHistoryDishDataClass(dishName, dishQ, totalPrice);
+                                dishList.add(userOrderHistoryDishDataClass);
+                            }
                         }
                     }
                     dishMap.put(orderId, dishList);
 
-                    UserOrderHistoryDataClass userOrderHistoryDataClass = new UserOrderHistoryDataClass(Day,orderId,order_time,chosen_time_slot,customerBill,dishMap);
+                    UserOrderHistoryDataClass userOrderHistoryDataClass = new UserOrderHistoryDataClass(Day,orderId,order_time,chosen_time_slot,customerBill,rest_id,dishMap);
                     userOrderHistoryDataClassList.add(userOrderHistoryDataClass);
 
                 }

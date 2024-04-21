@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 
 public class User_order_success extends AppCompatActivity {
@@ -57,8 +58,9 @@ public class User_order_success extends AppCompatActivity {
         String time_slot_selected = intent.getStringExtra("time_slot_selected");
         String day = intent.getStringExtra("day");
         String customerName = intent.getStringExtra("customer Name");
+        String customerContact = intent.getStringExtra("customer Contact");
         String dateTime = getCurrentDateTime();
-        addToOrderHistory(total_bill,dateTime,time_slot_selected,day,restaurant_name,restaurant_id,customerName);
+        addToOrderHistory(total_bill,dateTime,time_slot_selected,day,restaurant_name,restaurant_id,customerName,customerContact);
 
         topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
         bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
@@ -80,12 +82,15 @@ public class User_order_success extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public void addToOrderHistory(String totalbill , String curDate,String time_slot_selected,String day,String restaurant_name,String restaurant_id,String customerName) {
+    public void addToOrderHistory(String totalbill , String curDate,String time_slot_selected,String day,String restaurant_name,String restaurant_id,String customerName,String customerContact) {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference nameSnapshot = rootRef.child("users").child(userId).child("customer_name");
-        nameSnapshot.setValue(customerName);
-        DatabaseReference cartRef = rootRef.child("users").child(userId).child("cart");
+        DatabaseReference userRef = rootRef.child("users").child(userId);
+        DatabaseReference contactRef = userRef.child("contact_number");
+        contactRef.setValue(customerContact);
+        DatabaseReference nameRef = userRef.child("customer_name");
+        nameRef.setValue(customerName);
+        DatabaseReference cartRef = userRef.child("cart");
         cartRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -101,7 +106,9 @@ public class User_order_success extends AppCompatActivity {
                         time_slot_ref.setValue(time_slot_selected);
                         DatabaseReference day_ref = orderHistoryRef.child("Day");
                         day_ref.setValue(day);
-                        DatabaseReference dishRef = orderHistoryRef.child(cartSnapshot.getKey());
+                        DatabaseReference rest_id = orderHistoryRef.child("Restaurant_id");
+                        rest_id.setValue(restaurant_id);
+                        DatabaseReference dishRef = orderHistoryRef.child(Objects.requireNonNull(cartSnapshot.getKey()));
                         dishRef.setValue(cartSnapshot.getValue())
                                 .addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
@@ -156,9 +163,10 @@ public class User_order_success extends AppCompatActivity {
     }
 
     private void parseUserData(DataSnapshot dataSnapshot,String restaurant_id,String curdate,String userId) {
-        String orderId,customerName,timeSlot,totalBill;
+        String orderId,customerName,timeSlot,totalBill,customerContact;
         DataSnapshot userSnapshot = dataSnapshot.child(userId);
             customerName = userSnapshot.child("customer_name").getValue(String.class);
+            customerContact = userSnapshot.child("contact_number").getValue(String.class);
             DataSnapshot orderHistorySnapshot = userSnapshot.child("order_history");
             DataSnapshot dateTimeSnapshot = orderHistorySnapshot.child(curdate);
             orderId = dateTimeSnapshot.child("Order Id").getValue(String.class);
@@ -175,7 +183,7 @@ public class User_order_success extends AppCompatActivity {
                     LiveOrderDishDataClass dish = new LiveOrderDishDataClass(dishQuantity, dishName, dishPrice);
                     dishes.add(dish);
             }
-        LiveOrderDataClass liveOrder = new LiveOrderDataClass(timeSlot,"Pending",customerName,orderId,totalBill,dishes);
+        LiveOrderDataClass liveOrder = new LiveOrderDataClass(timeSlot,"Pending",customerName,customerContact,orderId,totalBill,dishes);
         DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id).child("Live Orders").child(orderId);
         ordersRef.setValue(liveOrder).addOnFailureListener(new OnFailureListener() {
             @Override

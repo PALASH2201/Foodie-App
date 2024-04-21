@@ -30,6 +30,8 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import soup.neumorphism.NeumorphCardView;
+
 public class Categories_myAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private final Context context ;
     private final List<CategoriesDataClass> dataList;
@@ -197,7 +199,8 @@ class MyViewHolder extends RecyclerView.ViewHolder{
     ImageView recImage ;
     Button editButton , deleteButton;
     TextView recName;
-    CardView recCard ;
+    NeumorphCardView recCard ;
+
     public MyViewHolder(@NonNull View itemView){
         super(itemView);
         recImage = itemView.findViewById(R.id.recImage);
