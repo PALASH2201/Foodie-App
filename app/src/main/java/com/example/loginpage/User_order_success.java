@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -163,10 +164,11 @@ public class User_order_success extends AppCompatActivity {
     }
 
     private void parseUserData(DataSnapshot dataSnapshot,String restaurant_id,String curdate,String userId) {
-        String orderId,customerName,timeSlot,totalBill,customerContact;
+        String orderId,customerName,timeSlot,totalBill,customerContact,customerToken;
         DataSnapshot userSnapshot = dataSnapshot.child(userId);
             customerName = userSnapshot.child("customer_name").getValue(String.class);
             customerContact = userSnapshot.child("contact_number").getValue(String.class);
+            customerToken = userSnapshot.child("userToken").getValue(String.class);
             DataSnapshot orderHistorySnapshot = userSnapshot.child("order_history");
             DataSnapshot dateTimeSnapshot = orderHistorySnapshot.child(curdate);
             orderId = dateTimeSnapshot.child("Order Id").getValue(String.class);
@@ -183,7 +185,8 @@ public class User_order_success extends AppCompatActivity {
                     LiveOrderDishDataClass dish = new LiveOrderDishDataClass(dishQuantity, dishName, dishPrice);
                     dishes.add(dish);
             }
-        LiveOrderDataClass liveOrder = new LiveOrderDataClass(timeSlot,"Pending",customerName,customerContact,orderId,totalBill,dishes);
+        Log.d("Token in order success",customerToken);
+        LiveOrderDataClass liveOrder = new LiveOrderDataClass(timeSlot,"Pending",customerName,customerContact,customerToken,orderId,totalBill,dishes);
         DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id).child("Live Orders").child(orderId);
         ordersRef.setValue(liveOrder).addOnFailureListener(new OnFailureListener() {
             @Override

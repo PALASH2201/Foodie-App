@@ -52,4 +52,5 @@ dependencies {
     implementation("com.github.clans:fab:1.6.4")
     implementation ("com.hbb20:ccp:2.5.0")
     implementation("com.github.fornewid:neumorphism:0.3.2")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 }

@@ -82,7 +82,7 @@ public class User_orderHistory extends Fragment {
                     dishMap.put(orderId, dishList);
 
                     UserOrderHistoryDataClass userOrderHistoryDataClass = new UserOrderHistoryDataClass(Day,orderId,order_time,chosen_time_slot,customerBill,rest_id,dishMap);
-                    userOrderHistoryDataClassList.add(userOrderHistoryDataClass);
+                    userOrderHistoryDataClassList.add(0,userOrderHistoryDataClass);
 
                 }
 

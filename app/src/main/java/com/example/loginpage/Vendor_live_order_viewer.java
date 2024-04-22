@@ -2,6 +2,7 @@ package com.example.loginpage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -72,11 +73,14 @@ public class Vendor_live_order_viewer extends AppCompatActivity {
                       String chosen_time_slot = liveOrderSnapshot.child("chosen_time_slot").getValue(String.class);
                       String customerBill = liveOrderSnapshot.child("customerBill").getValue(String.class);
                       String customerName = liveOrderSnapshot.child("customerName").getValue(String.class);
-                      String customerContact = liveOrderSnapshot.child("contact_number").getValue(String.class);
+                      String customerContact = liveOrderSnapshot.child("customerContact").getValue(String.class);
+                      String customerToken = liveOrderSnapshot.child("customerToken").getValue(String.class);
                       String orderId = liveOrderSnapshot.child("orderId").getValue(String.class);
                       String orderStatus = liveOrderSnapshot.child("orderStatus").getValue(String.class);
 
                       if(orderStatus != null && orderStatus.equals("Takeaway successful")){
+                          DatabaseReference orderRef = liveOrderRef.child(orderId);
+                          orderRef.removeValue();
                           continue;
                       }
 
@@ -91,8 +95,8 @@ public class Vendor_live_order_viewer extends AppCompatActivity {
                         dishList.add(liveOrderDishDataClass);
                     }
                       dishMap.put(orderId, dishList);
-
-                      LiveOrderDataClass liveOrderDataClass = new LiveOrderDataClass(chosen_time_slot,orderStatus,customerName,customerContact,orderId,customerBill,dishList);
+                    Log.d("Token in order viewer",customerToken);
+                      LiveOrderDataClass liveOrderDataClass = new LiveOrderDataClass(chosen_time_slot,orderStatus,customerName,customerContact,customerToken,orderId,customerBill,dishList);
                       liveOrderDataClassList.add(liveOrderDataClass);
 
                 }

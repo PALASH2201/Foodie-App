@@ -25,10 +25,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOrder_myViewHolder> {
 
@@ -37,6 +48,7 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
     private final SparseBooleanArray expandedItems;
     private final Map<String, List<LiveOrderDishDataClass>> dishMap;
     private final String restaurant_id;
+    private String customerToken;
 
     public VendorLiveOrder_myAdapter(Context context, List<LiveOrderDataClass> dataList,Map<String, List<LiveOrderDishDataClass>> dishMap,String restaurant_id) {
         this.context = context;
@@ -57,7 +69,8 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull VendorLiveOrder_myViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        boolean flag = false;
+        customerToken = dataList.get(position).getCustomerToken();
+        //Log.d("Token",customerToken);
         String slot_timing = dataList.get(position).getChosen_time_slot();
         holder.chosen_time_slot.setText(slot_timing);
         holder.OrderStatus.setText(dataList.get(position).getOrderStatus());
@@ -82,11 +95,11 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
             Toast.makeText(context,"Wrong timer. Refresh Again!" , Toast.LENGTH_SHORT).show();
             return;
         }
-        Log.d("Start time",startTimeMillis+"");
-        Log.d("Current time",currentTime+"");
+      //  Log.d("Start time",startTimeMillis+"");
+       // Log.d("Current time",currentTime+"");
 
         long remainingTime = startTimeMillis - currentTime;
-        Log.d("Remaining time:",remainingTime+"");
+       // Log.d("Remaining time:",remainingTime+"");
 
         if (remainingTime < 0) {
             holder.timer.setText("Time slot has started");
@@ -127,6 +140,7 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){
                             order.setValue("Ready for Pickup");
+                            sendNotification(dataList.get(position).getCustomerName(),customerToken);
                         }
                     }
 
@@ -152,7 +166,49 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
         return dataList.size();
     }
 
+    public void sendNotification(String name,String token){
+        try{
+            Log.d("Notification", "Sending notification to token: " + token);
+            JSONObject jsonObject = new JSONObject();
 
+            JSONObject notifyObj = new JSONObject();
+            notifyObj.put("title","Hey,"+name+"!");
+            notifyObj.put("body","Your order is ready for takeaway");
+
+            jsonObject.put("notification",notifyObj);
+            jsonObject.put("to",token);
+
+            callApi(jsonObject);
+        }catch (Exception e){
+            Log.e("Notification", "Error creating JSON object: " + e.getMessage());
+            Toast.makeText(context, "Error in JSON object", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void callApi(JSONObject jsonObject){
+        Log.d("Notification", "Making API call to send notification");
+        MediaType JSON = MediaType.get("application/json");
+
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://fcm.googleapis.com/fcm/send";
+        RequestBody body = RequestBody.create(jsonObject.toString(),JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .header("Authorization","Bearer AAAASYKkVyw:APA91bH180JJb910Wotscg33f_5_tatxly4MZof3CcnZWhDUhHXYoAQiyFZDd4g6_E3RxnbNB2EhcqlJLzlKXSM4blco5BICyLEvh3rAVRH8TECGQAyGRbx4gyjGaMdH0A5NQwIiBMyk")
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.e("Notification", "Failed to send notification: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String responseBody = response.body().string();
+                Log.d("Notification", "Notification response: " + responseBody);
+            }
+        });
+    }
     private long getTimeInMillis(String timeSlotString) {
         long startTimeMillis = -1;
         try {
@@ -168,7 +224,7 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
                 startHour += 12;
             }
 
-            Log.d("Start Hour",startHour+"");
+            //Log.d("Start Hour",startHour+"");
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.HOUR_OF_DAY, startHour);
             calendar.set(Calendar.MINUTE, startMinute);
