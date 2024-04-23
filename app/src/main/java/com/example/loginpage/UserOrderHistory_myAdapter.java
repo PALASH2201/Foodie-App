@@ -110,6 +110,40 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
             order_status = "Takeaway successful";
             orderRef.child("orderStatus").setValue(order_status);
             holder.orderStatus.setText(order_status);
+
+            DatabaseReference restRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id);
+            DatabaseReference pendingOrderRef = restRef.child("Pending Orders");
+            DatabaseReference completedOrderRef = restRef.child("Completed Orders");
+
+            pendingOrderRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String curValue = snapshot.getValue(String.class);
+                    String newValue = String.valueOf(Integer.parseInt(curValue) - 1);
+                    pendingOrderRef.setValue(newValue);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            completedOrderRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()){
+                        String curValue = snapshot.getValue(String.class);
+                        String newValue = String.valueOf(Integer.parseInt(curValue) + 1);
+                        completedOrderRef.setValue(newValue);
+                    }else{
+                        completedOrderRef.setValue(String.valueOf(1));
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }else{
             Toast.makeText(context,"Order is still being prepared",Toast.LENGTH_SHORT).show();
         }

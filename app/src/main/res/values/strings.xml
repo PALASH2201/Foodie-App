@@ -47,5 +47,9 @@
     <string name="contact_input">Enter your contact number</string>
     <string name="name_input">Enter your name</string>
     <string name="register_header">Registration</string>
+    <string name="vendor_home_page">Vendor Home Page</string>
+    <string name="logout_btn">Logout</string>
+    <string name="vendor_analytics">Your analytics</string>
+    <string name="vendor_pending_orders">Pending Orders</string>
 
 </resources>

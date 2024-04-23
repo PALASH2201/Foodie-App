@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class Vendor_interface extends AppCompatActivity {
     private String restaurant_id ;
     boolean isDataRetrieved=false;
 
+    String countMoneyEarned;
     public static final String EXTRA_NAME = "com.example.VendorMenu_viewer.extra.NAME";
     @SuppressLint("MissingInflatedId")
     @Override
@@ -39,7 +41,7 @@ public class Vendor_interface extends AppCompatActivity {
         setContentView(R.layout.activity_vendor_interface);
 
 
-        ImageButton registerNow = findViewById(R.id.registerNow);
+        ImageView registerNow = findViewById(R.id.registerNow);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Vendor_interface.this);
         builder.setCancelable(false);
@@ -47,8 +49,8 @@ public class Vendor_interface extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
         Button logout = findViewById(R.id.logout_btn);
-        ImageButton viewSlots = findViewById(R.id.viewSlots);
-        ImageButton viewLiveOrders = findViewById(R.id.viewLiveOrders);
+        ImageView viewSlots = findViewById(R.id.viewSlots);
+        ImageView viewLiveOrders = findViewById(R.id.viewLiveOrders);
         mAuth = FirebaseAuth.getInstance();
 
         String userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
@@ -65,11 +67,13 @@ public class Vendor_interface extends AppCompatActivity {
                          Toast.makeText(Vendor_interface.this , "No restaurant name found for given vendorID",Toast.LENGTH_SHORT).show();
                     }else{
                         isDataRetrieved = true;
+                        getAnalytics();
                         dialog.dismiss();
                         startVendorMenuViewerActivity();
                     }
                 }else{
-                    Toast.makeText(Vendor_interface.this , "No vendor found for given vendorID",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Vendor_interface.this , "Oops! We could not find you. Please register first",Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                 }
             }
 
@@ -78,6 +82,7 @@ public class Vendor_interface extends AppCompatActivity {
                 Toast.makeText(Vendor_interface.this , "Error in retrieving vendor information",Toast.LENGTH_SHORT).show();
             }
         });
+
         registerNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,21 +91,19 @@ public class Vendor_interface extends AppCompatActivity {
             }
         });
 
-            viewSlots.setOnClickListener(new View.OnClickListener() {
+        viewSlots.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(isDataRetrieved){
                         Intent intent = new Intent(Vendor_interface.this,Vendor_view_timeslots.class);
                         intent.putExtra("restaurant_name",restaurant_name);
-                        Log.d("sending rest name",restaurant_name);
                         intent.putExtra("restaurant_id",restaurant_id);
-                        Log.d("sending rest id",restaurant_id);
                         startActivity(intent);
                     }
                 }
-            });
+        });
 
-            viewLiveOrders.setOnClickListener(new View.OnClickListener() {
+        viewLiveOrders.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(isDataRetrieved){
@@ -109,7 +112,7 @@ public class Vendor_interface extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }
-            });
+        });
 
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -128,10 +131,35 @@ public class Vendor_interface extends AppCompatActivity {
                 }
             }
         });
+
+
+    }
+
+    public void getAnalytics(){
+        TextView pendingOrdersNum,completedOrdersNum,moneyEarned;
+        pendingOrdersNum = findViewById(R.id.pendingOrdersNum);
+        completedOrdersNum = findViewById(R.id.completedOrdersNum);
+        moneyEarned = findViewById(R.id.moneyEarned);
+
+        DatabaseReference restRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id);
+        restRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+               pendingOrdersNum.setText(snapshot.child("Pending Orders").getValue(String.class));
+               completedOrdersNum.setText(snapshot.child("Completed Orders").getValue(String.class));
+               countMoneyEarned = "Rs: "+snapshot.child("Money Earned").getValue(String.class);
+               moneyEarned.setText(countMoneyEarned);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Vendor_interface.this,"Oops! Could not get your analytics. Try Again",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     public void startVendorMenuViewerActivity(){
 
-        ImageButton viewCategories = findViewById(R.id.viewCategories);
+        ImageView viewCategories = findViewById(R.id.viewCategories);
         viewCategories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

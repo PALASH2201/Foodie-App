@@ -95,11 +95,8 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
             Toast.makeText(context,"Wrong timer. Refresh Again!" , Toast.LENGTH_SHORT).show();
             return;
         }
-      //  Log.d("Start time",startTimeMillis+"");
-       // Log.d("Current time",currentTime+"");
 
         long remainingTime = startTimeMillis - currentTime;
-       // Log.d("Remaining time:",remainingTime+"");
 
         if (remainingTime < 0) {
             holder.timer.setText("Time slot has started");

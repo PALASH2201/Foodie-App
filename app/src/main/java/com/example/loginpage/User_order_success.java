@@ -61,6 +61,7 @@ public class User_order_success extends AppCompatActivity {
         String customerName = intent.getStringExtra("customer Name");
         String customerContact = intent.getStringExtra("customer Contact");
         String dateTime = getCurrentDateTime();
+        updateVendorAnalytics(total_bill,restaurant_id);
         addToOrderHistory(total_bill,dateTime,time_slot_selected,day,restaurant_name,restaurant_id,customerName,customerContact);
 
         topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
@@ -125,6 +126,48 @@ public class User_order_success extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(User_order_success.this,"Database error",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void updateVendorAnalytics(String totalPrice,String restaurant_id){
+        String priceParts[] = totalPrice.split("\\s");
+
+        DatabaseReference restRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id);
+        DatabaseReference pendingOrderRef = restRef.child("Pending Orders");
+        pendingOrderRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String curValue = snapshot.getValue(String.class);
+                    String newValue = String.valueOf(Integer.parseInt(curValue) + 1);
+                    pendingOrderRef.setValue(newValue);
+                }else{
+                    pendingOrderRef.setValue(String.valueOf(1));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        DatabaseReference earningRef = restRef.child("Money Earned");
+        earningRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String curValue = snapshot.getValue(String.class);
+                    String newValue = String.valueOf(Double.parseDouble(curValue) + Double.parseDouble(priceParts[1]));
+                    earningRef.setValue(newValue);
+                }else{
+                    earningRef.setValue(totalPrice);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
