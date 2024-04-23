@@ -23,6 +23,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class Login extends AppCompatActivity {
     TextInputEditText editTextEmail , editTextPassword;
     Button buttonLogin;
@@ -33,7 +35,6 @@ public class Login extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null) {
             if (currentUser.isEmailVerified()) {
@@ -76,11 +77,11 @@ public class Login extends AppCompatActivity {
                 password = String.valueOf(editTextPassword.getText());
 
                 if(TextUtils.isEmpty(email)){
-                    Toast.makeText(Login.this,"Enter email",Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(Login.this,"Please enter your email!",Toast.LENGTH_LONG,R.style.warningToast).show();
                     return;
                 }
                 if(TextUtils.isEmpty(password)){
-                    Toast.makeText(Login.this,"Enter password",Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(Login.this,"Please enter your password!",Toast.LENGTH_LONG,R.style.warningToast).show();
                     return;
                 }
 
@@ -91,21 +92,19 @@ public class Login extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
                                     if(mAuth.getCurrentUser().isEmailVerified()){
-                                        Toast.makeText(Login.this, "Successfully logged in.",
-                                                Toast.LENGTH_SHORT).show();
+                                        StyleableToast.makeText(Login.this, "Successfully logged in.",
+                                                Toast.LENGTH_SHORT,R.style.successToast).show();
                                         Intent intent  = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
                                     else{
-                                        Toast.makeText(Login.this, "Please verify your email id.",
-                                                Toast.LENGTH_SHORT).show();
+                                        StyleableToast.makeText(Login.this, "Please verify your email id.",
+                                                Toast.LENGTH_SHORT,R.style.warningToast).show();
                                     }
-                                    // Sign in success, update UI with the signed-in user's information
                                 } else {
-                                    // If sign in fails, display a message to the user.
-                                    Toast.makeText(Login.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    StyleableToast.makeText(Login.this, "Authentication failed!",
+                                            Toast.LENGTH_SHORT,R.style.failureToast).show();
                                 }
                             }
                         });

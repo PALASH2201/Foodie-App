@@ -11,11 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
@@ -59,9 +55,7 @@ public class VendorOTP extends AppCompatActivity {
             signIn(credential);
         });
 
-        resendOtpTextView.setOnClickListener((v)->{
-            sendOtp(phoneNumber,true);
-        });
+        resendOtpTextView.setOnClickListener((v)-> sendOtp(phoneNumber,true));
     }
 
     void sendOtp(String phoneNumber,boolean isResend){
@@ -113,19 +107,15 @@ public class VendorOTP extends AppCompatActivity {
     }
 
     void signIn(PhoneAuthCredential phoneAuthCredential) {
-        //login and go to next activity
         setInProgress(true);
-        mAuth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                setInProgress(false);
-                if (task.isSuccessful()) {
-                    Intent intent = new Intent(VendorOTP.this, Vendor_interface.class);
-                    intent.putExtra("phone", phoneNumber);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(VendorOTP.this,"OTP verification failed",Toast.LENGTH_SHORT).show();
-                }
+        mAuth.signInWithCredential(phoneAuthCredential).addOnCompleteListener(task -> {
+            setInProgress(false);
+            if (task.isSuccessful()) {
+                Intent intent = new Intent(VendorOTP.this, Vendor_interface.class);
+                intent.putExtra("phone", phoneNumber);
+                startActivity(intent);
+            } else {
+                Toast.makeText(VendorOTP.this,"OTP verification failed",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -143,9 +133,7 @@ public class VendorOTP extends AppCompatActivity {
                     if(timeoutSeconds<=0){
                         timeoutSeconds =60L;
                         timer.cancel();
-                        runOnUiThread(() -> {
-                            resendOtpTextView.setEnabled(true);
-                        });
+                        runOnUiThread(() -> resendOtpTextView.setEnabled(true));
                     }
                 }
             },0,1000);

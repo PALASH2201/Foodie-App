@@ -28,7 +28,6 @@ import java.util.List;
 public class User_time_slot_viewer extends AppCompatActivity {
     private TimeSlotDetails_myAdapter adapter;
     private AlertDialog dialog;
-    private TextView timeSlotCheckoutBtn;
 
     List<TimeSlotDataClass> dataList ;
     @Override
@@ -45,7 +44,7 @@ public class User_time_slot_viewer extends AppCompatActivity {
         Intent intent = getIntent();
         String restaurant_name = intent.getStringExtra("restaurant_name");
         String restaurant_id = intent.getStringExtra("restaurant_id");
-        String totalbill = intent.getStringExtra("total bill");
+        String totalBill = intent.getStringExtra("total bill");
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -56,10 +55,10 @@ public class User_time_slot_viewer extends AppCompatActivity {
         dialog = builder.create();
         dialog.show();
 
-        timeSlotCheckoutBtn = findViewById(R.id.timeSlotCheckoutBtn);
+        TextView timeSlotCheckoutBtn = findViewById(R.id.timeSlotCheckoutBtn);
 
         dataList = new ArrayList<>();
-        adapter = new TimeSlotDetails_myAdapter(User_time_slot_viewer.this , dataList , false,timeSlotCheckoutBtn,totalbill);
+        adapter = new TimeSlotDetails_myAdapter(User_time_slot_viewer.this , dataList , false, timeSlotCheckoutBtn,totalBill);
         recyclerView.setAdapter(adapter);
 
         String day = findDay();
@@ -72,10 +71,8 @@ public class User_time_slot_viewer extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot timeSlotSnapshot : dataSnapshot.getChildren()) {
                     String timeSlot = timeSlotSnapshot.getKey();
-                    Log.d("Time Slot", timeSlot);
                     String default_availableSlots = timeSlotSnapshot.child("default_available_slots").getValue(String.class);
                     String availableSlots = timeSlotSnapshot.child("available_slots").getValue(String.class);
-                    Log.d("Available Slots", availableSlots);
                     TimeSlotDataClass timeSlotDataClass = new TimeSlotDataClass(day,timeSlot,availableSlots,restaurant_id,restaurant_name,default_availableSlots);
                     dataList.add(timeSlotDataClass);
                     adapter.notifyDataSetChanged();

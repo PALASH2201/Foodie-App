@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import io.github.muddz.styleabletoast.StyleableToast;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -70,7 +71,6 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
     @Override
     public void onBindViewHolder(@NonNull VendorLiveOrder_myViewHolder holder, @SuppressLint("RecyclerView") int position) {
         customerToken = dataList.get(position).getCustomerToken();
-        //Log.d("Token",customerToken);
         String slot_timing = dataList.get(position).getChosen_time_slot();
         holder.chosen_time_slot.setText(slot_timing);
         holder.OrderStatus.setText(dataList.get(position).getOrderStatus());
@@ -92,7 +92,7 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
         long currentTime = System.currentTimeMillis();
         long startTimeMillis = getTimeInMillis(slot_timing);
         if(startTimeMillis == -1){
-            Toast.makeText(context,"Wrong timer. Refresh Again!" , Toast.LENGTH_SHORT).show();
+            StyleableToast.makeText(context,"Wrong timer. Refresh Again!" , Toast.LENGTH_SHORT,R.style.warningToast).show();
             return;
         }
 
@@ -115,7 +115,6 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
             }.start();
         }
 
-
         boolean isExpanded = expandedItems.get(position, false);
         holder.orderDetails.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         holder.arrowIcon.setRotation(isExpanded ? 180 : 0);
@@ -127,26 +126,23 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
             holder.orderDetails.setVisibility(isExpanded1 ? View.GONE : View.VISIBLE);
         });
 
-        holder.updateStatusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String orderId = dataList.get(position).getOrderId();
-                DatabaseReference order = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id).child("Live Orders").child(orderId).child("orderStatus");
-                order.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
-                            order.setValue("Ready for Pickup");
-                            sendNotification(dataList.get(position).getCustomerName(),customerToken);
-                        }
+        holder.updateStatusButton.setOnClickListener(v -> {
+            String orderId = dataList.get(position).getOrderId();
+            DatabaseReference order = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id).child("Live Orders").child(orderId).child("orderStatus");
+            order.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()){
+                        order.setValue("Ready for Pickup");
+                        sendNotification(dataList.get(position).getCustomerName(),customerToken);
                     }
+                }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                       Toast.makeText(context,error.toString(),Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                   Toast.makeText(context,error.toString(),Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
         if(holder.OrderStatus.getText().toString().equals("Ready for Pickup")){
@@ -201,6 +197,7 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                assert response.body() != null;
                 String responseBody = response.body().string();
                 Log.d("Notification", "Notification response: " + responseBody);
             }

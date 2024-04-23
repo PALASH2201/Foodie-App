@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class User_cart extends AppCompatActivity {
 
     private Cart_myAdapter cartMyAdapter;
@@ -108,23 +110,23 @@ public class User_cart extends AppCompatActivity {
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
-                                    Toast.makeText(User_cart.this, "Could not fetch the cart properly", Toast.LENGTH_SHORT).show();
+                                    StyleableToast.makeText(User_cart.this, "Could not fetch the cart properly", Toast.LENGTH_LONG,R.style.failureToast).show();
                                 }
                             });
                         }
                     } else {
-                        Toast.makeText(User_cart.this, "Cart is empty!", Toast.LENGTH_SHORT).show();
+                        StyleableToast.makeText(User_cart.this, "Cart is empty!", Toast.LENGTH_LONG,R.style.warningToast).show();
                         dialog.dismiss();
                     }
                 } else {
-                    Toast.makeText(User_cart.this, "User or cart does not exist", Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(User_cart.this, "User does not exist", Toast.LENGTH_LONG,R.style.warningToast).show();
                     dialog.dismiss();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(User_cart.this, "Database error. Try again", Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(User_cart.this, "Database error. Try again", Toast.LENGTH_SHORT,R.style.failureToast).show();
                 dialog.dismiss();
             }
         });

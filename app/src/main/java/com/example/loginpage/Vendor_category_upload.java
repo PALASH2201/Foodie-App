@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class Vendor_category_upload extends AppCompatActivity {
 
     ImageView uploadImage ;
@@ -58,34 +60,23 @@ public class Vendor_category_upload extends AppCompatActivity {
 
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            Intent data = result.getData();
-                            assert data != null;
-                            uri = data.getData();
-                            uploadImage.setImageURI(uri);
-                        } else {
-                            Toast.makeText(Vendor_category_upload.this, "No Image Selection", Toast.LENGTH_SHORT).show();
-                        }
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        assert data != null;
+                        uri = data.getData();
+                        uploadImage.setImageURI(uri);
+                    } else {
+                        StyleableToast.makeText(Vendor_category_upload.this, "No Image Selection", Toast.LENGTH_SHORT,R.style.warningToast).show();
                     }
                 }
         );
-        uploadImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent photocopier = new Intent(Intent.ACTION_PICK);
-                photocopier.setType("image/*");
-                activityResultLauncher.launch(photocopier);
-            }
+        uploadImage.setOnClickListener(v -> {
+            Intent photocopier = new Intent(Intent.ACTION_PICK);
+            photocopier.setType("image/*");
+            activityResultLauncher.launch(photocopier);
         });
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fetchRestaurantDetails();
-            }
-        });
+        saveButton.setOnClickListener(v -> fetchRestaurantDetails());
     }
 
     private void fetchRestaurantDetails() {
@@ -102,16 +93,16 @@ public class Vendor_category_upload extends AppCompatActivity {
                     if (restaurantId != null) {
                         saveData(restaurantId,restaurantName);
                     } else {
-                        Toast.makeText(Vendor_category_upload.this, "Restaurant ID not found for vendor", Toast.LENGTH_SHORT).show();
+                        StyleableToast.makeText(Vendor_category_upload.this, "Restaurant ID not found for vendor", Toast.LENGTH_SHORT,R.style.failureToast).show();
                     }
                 } else {
-                    Toast.makeText(Vendor_category_upload.this, "Vendor details not found", Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(Vendor_category_upload.this, "Vendor details not found", Toast.LENGTH_SHORT,R.style.failureToast).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Vendor_category_upload.this, "Failed to fetch restaurant details: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(Vendor_category_upload.this, "Failed to fetch restaurant details: " + error.getMessage(), Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }
@@ -132,33 +123,19 @@ public class Vendor_category_upload extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        imageRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+        imageRef.putFile(uri).addOnSuccessListener(taskSnapshot -> {
 
-                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                uriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        imageURL = uri.toString();
-                        dialog.dismiss();
-                        uploadData(restaurantId,categoryName,categoryId);
-                        uploadImage.setImageResource(R.drawable.uploading);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        dialog.dismiss();
-                        Toast.makeText(Vendor_category_upload.this, "Failed to upload file: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+            uriTask.addOnSuccessListener(uri -> {
+                imageURL = uri.toString();
                 dialog.dismiss();
-            }
-        });
+                uploadData(restaurantId,categoryName,categoryId);
+                uploadImage.setImageResource(R.drawable.uploading);
+            }).addOnFailureListener(e -> {
+                dialog.dismiss();
+                StyleableToast.makeText(Vendor_category_upload.this, "Failed to upload file: " + e.getMessage(), Toast.LENGTH_SHORT,R.style.failureToast).show();
+            });
+        }).addOnFailureListener(e -> dialog.dismiss());
     }
     public void uploadData(String restaurantId , String categoryName, String categoryId){
         CategoriesDataClass dataClass = new CategoriesDataClass(categoryName,imageURL,restaurantId,categoryId);
@@ -166,21 +143,13 @@ public class Vendor_category_upload extends AppCompatActivity {
         appendCategoryToRestaurant(restaurantId,categoryId);
 
         FirebaseDatabase.getInstance().getReference("categories").child(categoryId)
-                .setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(Vendor_category_upload.this,"Saved",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Vendor_category_upload.this,Vendor_interface.class));
-                            finish();
-                        }
+                .setValue(dataClass).addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        StyleableToast.makeText(Vendor_category_upload.this,"Details saved!",Toast.LENGTH_SHORT,R.style.successToast).show();
+                        startActivity(new Intent(Vendor_category_upload.this,Vendor_interface.class));
+                        finish();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Vendor_category_upload.this, e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                });
+                }).addOnFailureListener(e -> StyleableToast.makeText(Vendor_category_upload.this, e.getMessage(),Toast.LENGTH_SHORT,R.style.failureToast).show());
     }
     private void appendCategoryToRestaurant(String restaurantId, String categoryId) {
         DatabaseReference restaurantRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurantId).child("categories");

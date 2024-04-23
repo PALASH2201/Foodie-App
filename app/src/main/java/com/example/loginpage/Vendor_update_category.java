@@ -30,6 +30,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class Vendor_update_category extends AppCompatActivity {
 
     Uri uri;
@@ -69,7 +71,7 @@ public class Vendor_update_category extends AppCompatActivity {
                                 uri =  data.getData();
                                 updatedImage.setImageURI(uri);
                             }else{
-                                Toast.makeText(Vendor_update_category.this,"No Image Selected" , Toast.LENGTH_SHORT).show();
+                                StyleableToast.makeText(Vendor_update_category.this,"No Image Selected" , Toast.LENGTH_SHORT,R.style.warningToast).show();
                             }
                         }
                     });
@@ -116,7 +118,7 @@ public class Vendor_update_category extends AppCompatActivity {
                                     DatabaseReference catRef = FirebaseDatabase.getInstance().getReference("categories").child(existingCategoryId);
                                     catRef.child("image_url").setValue(uri.toString());
                                     catRef.child("name").setValue(updatedCategoryName);
-                                    Toast.makeText(Vendor_update_category.this, "Category details updated successfully", Toast.LENGTH_SHORT).show();
+                                    StyleableToast.makeText(Vendor_update_category.this, "Category details updated successfully", Toast.LENGTH_SHORT,R.style.successToast).show();
                                     finish();
                                 }
                             });
@@ -125,8 +127,7 @@ public class Vendor_update_category extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            // Handle image upload failure
-                            Toast.makeText(Vendor_update_category.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            StyleableToast.makeText(Vendor_update_category.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT,R.style.failureToast).show();
                         }
                     });
         }
@@ -134,7 +135,7 @@ public class Vendor_update_category extends AppCompatActivity {
     private void updateDishWithoutImage(String updatedCategoryName,String categoryId) {
         DatabaseReference catRef = FirebaseDatabase.getInstance().getReference("dishes").child(categoryId);
         catRef.child("dish_name").setValue(updatedCategoryName);
-        Toast.makeText(Vendor_update_category.this, "Category details updated successfully", Toast.LENGTH_SHORT).show();
+        StyleableToast.makeText(Vendor_update_category.this, "Category details updated successfully", Toast.LENGTH_SHORT,R.style.successToast).show();
         finish();
     }
 

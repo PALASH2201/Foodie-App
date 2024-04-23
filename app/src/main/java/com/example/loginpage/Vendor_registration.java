@@ -33,6 +33,8 @@ import com.google.firebase.storage.UploadTask;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class Vendor_registration extends AppCompatActivity {
 
     ImageView uploadImage ;
@@ -68,7 +70,7 @@ public class Vendor_registration extends AppCompatActivity {
                             uri = data.getData();
                             uploadImage.setImageURI(uri);
                         } else {
-                            Toast.makeText(Vendor_registration.this, "No Image Selection", Toast.LENGTH_SHORT).show();
+                            StyleableToast.makeText(Vendor_registration.this, "No Image Selection", Toast.LENGTH_SHORT,R.style.warningToast).show();
                         }
                     }
                 }
@@ -148,7 +150,7 @@ public class Vendor_registration extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(Vendor_registration.this,"Saved",Toast.LENGTH_SHORT).show();
+                            StyleableToast.makeText(Vendor_registration.this,"Details saved",Toast.LENGTH_SHORT,R.style.successToast).show();
                             startActivity(new Intent(Vendor_registration.this, Vendor_interface.class));
                             finish();
                         }
@@ -156,7 +158,7 @@ public class Vendor_registration extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Vendor_registration.this, e.getMessage(),Toast.LENGTH_SHORT).show();
+                        StyleableToast.makeText(Vendor_registration.this, e.getMessage(),Toast.LENGTH_SHORT,R.style.failureToast).show();
                     }
                 });
     }

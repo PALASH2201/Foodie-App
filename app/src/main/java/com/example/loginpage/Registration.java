@@ -27,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class Registration extends AppCompatActivity {
     TextInputEditText editTextEmail , editTextPassword , editName , editContact;
     Button buttonReg;
@@ -51,12 +53,10 @@ public class Registration extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            // User's email is not verified, prompt them to verify
-                            Toast.makeText(Registration.this, "Please verify your email to login.", Toast.LENGTH_SHORT).show();
+                            StyleableToast.makeText(Registration.this, "Please verify your email to login.", Toast.LENGTH_SHORT,R.style.warningToast).show();
                         }
                     } else {
-                        // Error refreshing user data
-                        Toast.makeText(Registration.this, "Failed to check email verification status.", Toast.LENGTH_SHORT).show();
+                        StyleableToast.makeText(Registration.this, "Failed to check email verification status.", Toast.LENGTH_SHORT,R.style.failureToast).show();
                     }
                 }
             });
@@ -100,19 +100,19 @@ public class Registration extends AppCompatActivity {
                 contact = String.valueOf(editContact.getText());
 
                 if(TextUtils.isEmpty(email)){
-                    Toast.makeText(Registration.this,"Please enter your email",Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(Registration.this,"Please enter your email",Toast.LENGTH_SHORT,R.style.warningToast).show();
                     return;
                 }
                 if(TextUtils.isEmpty(password)){
-                    Toast.makeText(Registration.this,"Please enter a minimum 6 character password",Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(Registration.this,"Please enter a minimum 6 character password",Toast.LENGTH_SHORT,R.style.warningToast).show();
                     return;
                 }
                 if(TextUtils.isEmpty(name)){
-                    Toast.makeText(Registration.this,"Please enter your name",Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(Registration.this,"Please enter your name",Toast.LENGTH_SHORT,R.style.warningToast).show();
                     return;
                 }
                 if(TextUtils.isEmpty(contact)){
-                    Toast.makeText(Registration.this,"Please enter your contact",Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(Registration.this,"Please enter your contact",Toast.LENGTH_SHORT,R.style.warningToast).show();
                     return;
                 }
 
@@ -129,8 +129,8 @@ public class Registration extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
-                                                Toast.makeText(Registration.this, "Account created.Please verify your email id",
-                                                        Toast.LENGTH_SHORT).show();
+                                                StyleableToast.makeText(Registration.this, "Account created.Please verify your email id",
+                                                        Toast.LENGTH_SHORT,R.style.successToast).show();
                                                 SharedPreferences.Editor editor = getSharedPreferences("UserPrefs", MODE_PRIVATE).edit();
                                                 editor.putBoolean("isEmailVerified", false);
                                                 editor.apply();
@@ -147,16 +147,16 @@ public class Registration extends AppCompatActivity {
                                                 });
                                             }
                                             else{
-                                                Toast.makeText(Registration.this, "Authentication failed.",
-                                                        Toast.LENGTH_SHORT).show();
+                                                StyleableToast.makeText(Registration.this, "Authentication failed.",
+                                                        Toast.LENGTH_SHORT,R.style.failureToast).show();
                                             }
                                         }
                                     });
                                 }
                                 else {
                                     // If sign in fails, display a message to the user.
-                                    Toast.makeText(Registration.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    StyleableToast.makeText(Registration.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT,R.style.failureToast).show();
                                 }
                             }
                         });

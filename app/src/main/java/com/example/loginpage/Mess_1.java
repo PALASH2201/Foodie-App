@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class Mess_1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Categories_myAdapter adapter;
@@ -205,13 +207,13 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
                     intent.putExtra("restaurant_id",restaurant_id);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(Mess_1.this, "Your cart is empty!", Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(Mess_1.this, "Your cart is empty!", Toast.LENGTH_SHORT,R.style.warningToast).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Mess_1.this, "Failed to check cart: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(Mess_1.this, "Failed to check cart: " + error.getMessage(), Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }
@@ -227,13 +229,13 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
                         HandleDatabase(restaurantId);
                     }
                 } else {
-                    Toast.makeText(Mess_1.this, "No restaurant found with the specified name", Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(Mess_1.this, "No restaurant found with the specified name", Toast.LENGTH_SHORT,R.style.failureToast).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Mess_1.this, "Failed to fetch restaurant ID: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(Mess_1.this, "Failed to fetch restaurant ID: " + error.getMessage(), Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }

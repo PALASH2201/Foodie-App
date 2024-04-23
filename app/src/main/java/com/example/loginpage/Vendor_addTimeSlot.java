@@ -4,7 +4,6 @@ package com.example.loginpage;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,16 +14,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 public class Vendor_addTimeSlot extends AppCompatActivity {
 
@@ -47,9 +44,9 @@ public class Vendor_addTimeSlot extends AppCompatActivity {
         Spinner daySpinner = findViewById(R.id.day_spinner);
         String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
-        ArrayAdapter<String> Dayadapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, daysOfWeek);
-        Dayadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        daySpinner.setAdapter(Dayadapter);
+        ArrayAdapter<String> DayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, daysOfWeek);
+        DayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        daySpinner.setAdapter(DayAdapter);
 
         daySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -59,16 +56,16 @@ public class Vendor_addTimeSlot extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(Vendor_addTimeSlot.this,"Please select a day!", Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(Vendor_addTimeSlot.this,"Please select a day!", Toast.LENGTH_SHORT,R.style.warningToast).show();
             }
         });
 
         Spinner slotSpinner = findViewById(R.id.slot_spinner);
         String[] slots = {"8:00 - 9:00 am" , "10:30 - 11:30 am" , "1:00 - 2:00 pm" , "4:00 - 5:00 pm" , "7:00 - 8:00 pm" , "8:00 - 9:00 pm"};
 
-        ArrayAdapter<String> Slotadapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, slots);
-        Slotadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        slotSpinner.setAdapter(Slotadapter);
+        ArrayAdapter<String> SlotAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, slots);
+        SlotAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        slotSpinner.setAdapter(SlotAdapter);
 
         slotSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -78,44 +75,29 @@ public class Vendor_addTimeSlot extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(Vendor_addTimeSlot.this,"Please select a time slot!", Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(Vendor_addTimeSlot.this,"Please select a time slot!", Toast.LENGTH_SHORT,R.style.warningToast).show();
             }
         });
         CheckBox same_time_everyday_checkbox = findViewById(R.id.same_time_everyday_checkbox);
-        same_time_everyday_checkbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               checkBoxSelected = true;
-            }
-        });
+        same_time_everyday_checkbox.setOnClickListener(v -> checkBoxSelected = true);
 
         Intent intent = getIntent();
         restaurant_id = intent.getStringExtra("restaurant_id");
-        Log.d("Got rest id",restaurant_id);
         restaurant_name = intent.getStringExtra("restaurant_name");
-        Log.d("Got rest name",restaurant_name);
 
         Button add_slot_btn = findViewById(R.id.add_slot_button);
-        add_slot_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText default_availableSlots = findViewById(R.id.availableSlots);
-                default_available_slots = default_availableSlots.getText().toString();
-                if(same_time_everyday_checkbox.isChecked() && checkBoxSelected){
-                    Log.d("sending rest name",restaurant_name);
-                      addTimeSlotEveryDay(daysOfWeek,selectedTimeSlot,default_available_slots,restaurant_id,restaurant_name);
-                 }
-                 else{
-                    Log.d("sending rest name",restaurant_name);
-                     addTimeSlot(selectedDay,selectedTimeSlot,default_available_slots,restaurant_id,restaurant_name);
-                 }
-            }
+        add_slot_btn.setOnClickListener(v -> {
+            EditText default_availableSlots = findViewById(R.id.availableSlots);
+            default_available_slots = default_availableSlots.getText().toString();
+            if(same_time_everyday_checkbox.isChecked() && checkBoxSelected){
+                  addTimeSlotEveryDay(daysOfWeek,selectedTimeSlot,default_available_slots,restaurant_name);
+             }
+             else{
+                 addTimeSlot(selectedDay,selectedTimeSlot,default_available_slots,restaurant_name);
+             }
         });
     }
-    public void addTimeSlot(String day , String timeSlot , String default_available_slots,String restaurant_id,String restaurant_name){
-        Log.d("Inside add func","day: "+day);
-        Log.d("Inside add func","restaurant-name: "+restaurant_name);
-        Log.d("Inside add func","time-slot: "+timeSlot);
+    public void addTimeSlot(String day , String timeSlot , String default_available_slots,String restaurant_name){
 
         DatabaseReference dayRef = FirebaseDatabase.getInstance().getReference("time_slots").child(day).child(restaurant_name);
         DatabaseReference timeSlotRef = dayRef.child(timeSlot);
@@ -126,30 +108,21 @@ public class Vendor_addTimeSlot extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        timeSlotRef.child("default_available_slots").setValue(default_available_slots).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                dialog.dismiss();
-                Toast.makeText(Vendor_addTimeSlot.this,default_available_slots+" slots added for "+timeSlot+" for "+day,Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                dialog.dismiss();
-                Toast.makeText(Vendor_addTimeSlot.this,timeSlot+" slot not added for "+day+", TRY AGAIN!",Toast.LENGTH_SHORT).show();
-            }
+        timeSlotRef.child("default_available_slots").setValue(default_available_slots).addOnSuccessListener(unused -> {
+            dialog.dismiss();
+            StyleableToast.makeText(Vendor_addTimeSlot.this,default_available_slots+" slots added for "+timeSlot+" for "+day,Toast.LENGTH_LONG,R.style.successToast).show();
+        }).addOnFailureListener(e -> {
+            dialog.dismiss();
+            StyleableToast.makeText(Vendor_addTimeSlot.this,timeSlot+" slot not added for "+day+", TRY AGAIN!",Toast.LENGTH_LONG,R.style.failureToast).show();
         });
-        timeSlotRef.child("available_slots").setValue(default_available_slots).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                dialog.dismiss();
-                Toast.makeText(Vendor_addTimeSlot.this,timeSlot+" slot not added for "+day+", TRY AGAIN!",Toast.LENGTH_SHORT).show();
-            }
+        timeSlotRef.child("available_slots").setValue(default_available_slots).addOnFailureListener(e -> {
+            dialog.dismiss();
+            StyleableToast.makeText(Vendor_addTimeSlot.this,timeSlot+" slot not added for "+day+", TRY AGAIN!",Toast.LENGTH_LONG,R.style.failureToast).show();
         });
     }
-    public void addTimeSlotEveryDay(String[] days,String timeSlot , String default_available_slots,String restaurant_id,String restaurant_name){
+    public void addTimeSlotEveryDay(String[] days,String timeSlot , String default_available_slots,String restaurant_name){
         for (String day : days) {
-            addTimeSlot(day, timeSlot, default_available_slots, restaurant_id, restaurant_name);
+            addTimeSlot(day, timeSlot, default_available_slots,restaurant_name);
         }
     }
 }

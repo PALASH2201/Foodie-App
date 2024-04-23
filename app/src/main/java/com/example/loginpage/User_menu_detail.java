@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.muddz.styleabletoast.StyleableToast;
 import soup.neumorphism.NeumorphButton;
 
 public class User_menu_detail extends AppCompatActivity {
@@ -93,14 +94,14 @@ public class User_menu_detail extends AppCompatActivity {
                     Log.d("List Length(User-side)" , dishIds.size()+"");
                     fetchDishDetails(dishIds);
                 } else {
-                    Toast.makeText(User_menu_detail.this , "No dish present for given category",Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(User_menu_detail.this , "No dish present for given category",Toast.LENGTH_SHORT,R.style.warningToast).show();
                     dialog.dismiss();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(User_menu_detail.this , "Error in retrieving ids of dishes",Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(User_menu_detail.this , "Error in retrieving ids of dishes",Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }
@@ -123,13 +124,13 @@ public class User_menu_detail extends AppCompatActivity {
                         dataList.add(dataClass);
                         adapter.notifyDataSetChanged();
                     } else {
-                        Toast.makeText(User_menu_detail.this , "No dish present for given id",Toast.LENGTH_SHORT).show();
+                        StyleableToast.makeText(User_menu_detail.this , "No dish present for given id",Toast.LENGTH_SHORT,R.style.warningToast).show();
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(User_menu_detail.this , "Error in retrieving dish details",Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(User_menu_detail.this , "Error in retrieving dish details",Toast.LENGTH_SHORT,R.style.failureToast).show();
                 }
             });
         }
@@ -169,7 +170,7 @@ public class User_menu_detail extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(User_menu_detail.this,"Error in retrieving cart information",Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(User_menu_detail.this,"Error in retrieving cart information",Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }

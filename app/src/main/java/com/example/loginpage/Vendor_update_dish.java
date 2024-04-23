@@ -30,6 +30,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class Vendor_update_dish extends AppCompatActivity {
     Uri uri;
     @Override
@@ -74,7 +76,7 @@ public class Vendor_update_dish extends AppCompatActivity {
                                 uri =  data.getData();
                                 updatedImage.setImageURI(uri);
                             }else{
-                                Toast.makeText(Vendor_update_dish.this,"No Image Selected" , Toast.LENGTH_SHORT).show();
+                                StyleableToast.makeText(Vendor_update_dish.this,"No Image Selected" , Toast.LENGTH_SHORT,R.style.warningToast).show();
                             }
                         }
                     });
@@ -125,7 +127,7 @@ public class Vendor_update_dish extends AppCompatActivity {
                                     dishesRef.child("dish_name").setValue(updatedName);
                                     dishesRef.child("dish_price").setValue(updatedPrice);
                                     dishesRef.child("dish_description").setValue(updatedDescription);
-                                    Toast.makeText(Vendor_update_dish.this, "Dish details updated successfully", Toast.LENGTH_SHORT).show();
+                                    StyleableToast.makeText(Vendor_update_dish.this, "Dish details updated successfully", Toast.LENGTH_SHORT,R.style.successToast).show();
                                     finish();
                                 }
                             });
@@ -134,8 +136,7 @@ public class Vendor_update_dish extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            // Handle image upload failure
-                            Toast.makeText(Vendor_update_dish.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            StyleableToast.makeText(Vendor_update_dish.this, "Failed to upload image: " + e.getMessage(), Toast.LENGTH_SHORT,R.style.failureToast).show();
                         }
                     });
         }
@@ -145,7 +146,7 @@ public class Vendor_update_dish extends AppCompatActivity {
         dishesRef.child("dish_name").setValue(updatedName);
         dishesRef.child("dish_price").setValue(updatedPrice);
         dishesRef.child("dish_description").setValue(updatedDescription);
-        Toast.makeText(Vendor_update_dish.this, "Dish details updated successfully", Toast.LENGTH_SHORT).show();
+        StyleableToast.makeText(Vendor_update_dish.this, "Dish details updated successfully", Toast.LENGTH_SHORT,R.style.successToast).show();
         finish();
     }
 }

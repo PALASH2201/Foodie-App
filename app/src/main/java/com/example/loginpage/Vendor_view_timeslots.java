@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -27,9 +28,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 public class Vendor_view_timeslots extends AppCompatActivity {
 
@@ -71,9 +72,9 @@ public class Vendor_view_timeslots extends AppCompatActivity {
         Spinner daySpinner = findViewById(R.id.day_spinner);
         String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
-        ArrayAdapter<String> Dayadapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, daysOfWeek);
-        Dayadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        daySpinner.setAdapter(Dayadapter);
+        ArrayAdapter<String> DayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, daysOfWeek);
+        DayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        daySpinner.setAdapter(DayAdapter);
 
         daySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -85,23 +86,18 @@ public class Vendor_view_timeslots extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(Vendor_view_timeslots.this,"Please select a day!", Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(Vendor_view_timeslots.this,"Please select a day!", Toast.LENGTH_SHORT,R.style.warningToast).show();
             }
         });
 
         if(restaurant_name!=null && restaurant_id != null)
         {
             FloatingActionButton addTimeSlot = findViewById(R.id.addTimeSlot);
-            addTimeSlot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Vendor_view_timeslots.this,Vendor_addTimeSlot.class);
-                    intent.putExtra("restaurant_name",restaurant_name);
-                    Log.d("sending rest name",restaurant_name);
-                    intent.putExtra("restaurant_id",restaurant_id);
-                    Log.d("sending rest id",restaurant_name);
-                    startActivity(intent);
-                }
+            addTimeSlot.setOnClickListener(v -> {
+                Intent intent1 = new Intent(Vendor_view_timeslots.this,Vendor_addTimeSlot.class);
+                intent1.putExtra("restaurant_name",restaurant_name);
+                intent1.putExtra("restaurant_id",restaurant_id);
+                startActivity(intent1);
             });
         }
     }
@@ -110,14 +106,14 @@ public class Vendor_view_timeslots extends AppCompatActivity {
         DatabaseReference timeSlotsRef = FirebaseDatabase.getInstance().getReference("time_slots").child(day).child(restaurant_name);
         timeSlotsRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 dataList.clear();
                 for (DataSnapshot timeSlotSnapshot : dataSnapshot.getChildren()) {
                     String timeSlot = timeSlotSnapshot.getKey();
-                    Log.d("Time Slot", timeSlot);
+                    assert timeSlot != null;
                     String default_availableSlots = timeSlotSnapshot.child("default_available_slots").getValue(String.class);
                     String availableSlots = timeSlotSnapshot.child("available_slots").getValue(String.class);
-                    Log.d("Default Available Slots", default_availableSlots);
+                    assert default_availableSlots != null;
                     TimeSlotDataClass timeSlotDataClass = new TimeSlotDataClass(day,timeSlot,availableSlots,restaurant_id,restaurant_name,default_availableSlots);
                     dataList.add(timeSlotDataClass);
                     adapter.notifyDataSetChanged();
@@ -125,7 +121,7 @@ public class Vendor_view_timeslots extends AppCompatActivity {
                 dialog.dismiss();
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.w("Firebase", "loadPost:onCancelled", databaseError.toException());
             }
         });

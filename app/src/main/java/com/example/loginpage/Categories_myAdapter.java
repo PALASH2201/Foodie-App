@@ -30,6 +30,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.muddz.styleabletoast.StyleableToast;
 import soup.neumorphism.NeumorphCardView;
 
 public class Categories_myAdapter extends RecyclerView.Adapter<MyViewHolder> {
@@ -100,7 +101,7 @@ public class Categories_myAdapter extends RecyclerView.Adapter<MyViewHolder> {
                     String imageUrl = dataList.get(position).getImage_url();
                     String restaurantId = dataList.get(position).getRestaurant_id();
 
-                    Log.d("to-be-deleted-id",categoryId);
+                 //   Log.d("to-be-deleted-id",categoryId);
                     deleteDishFromFirebase(categoryId,imageUrl,restaurantId);
                     dataList.remove(position);
                     notifyDataSetChanged();
@@ -126,14 +127,13 @@ public class Categories_myAdapter extends RecyclerView.Adapter<MyViewHolder> {
             imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-
-                    Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
-                    Log.d("DeleteImage", "Image deleted successfully");
+                    StyleableToast.makeText(context, "Deleted", Toast.LENGTH_SHORT,R.style.successToast).show();
+                   // Log.d("DeleteImage", "Image deleted successfully");
                 }
             }).addOnFailureListener(e -> {
 
-                Toast.makeText(context, "Error deleting. Try Again", Toast.LENGTH_SHORT).show();
-                Log.e("DeleteImage", "Failed to delete image: " + e.getMessage());
+                StyleableToast.makeText(context, "Error deleting. Try Again", Toast.LENGTH_SHORT,R.style.failureToast).show();
+               // Log.e("DeleteImage", "Failed to delete image: " + e.getMessage());
             });
         }
         DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("restaurants")
@@ -186,7 +186,7 @@ public class Categories_myAdapter extends RecyclerView.Adapter<MyViewHolder> {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(context,"Database error in retrieving restaurant name",Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(context,"Database error in retrieving restaurant name",Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }

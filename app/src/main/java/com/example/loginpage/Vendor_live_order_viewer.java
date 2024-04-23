@@ -19,13 +19,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 public class Vendor_live_order_viewer extends AppCompatActivity {
 
@@ -79,6 +80,7 @@ public class Vendor_live_order_viewer extends AppCompatActivity {
                       String orderStatus = liveOrderSnapshot.child("orderStatus").getValue(String.class);
 
                       if(orderStatus != null && orderStatus.equals("Takeaway successful")){
+                          assert orderId != null;
                           DatabaseReference orderRef = liveOrderRef.child(orderId);
                           orderRef.removeValue();
                           continue;
@@ -86,15 +88,16 @@ public class Vendor_live_order_viewer extends AppCompatActivity {
 
                       DataSnapshot dishSnapshot = liveOrderSnapshot.child("dishList");
                     List<LiveOrderDishDataClass> dishList = new ArrayList<>();
-                    for (DataSnapshot dishinfo: dishSnapshot.getChildren()) {
-                        String dishName = dishinfo.child("dishName").getValue(String.class);
-                        String dishQ = dishinfo.child("dishQ").getValue(String.class);
-                        String totalPrice = dishinfo.child("totalPrice").getValue(String.class);
+                    for (DataSnapshot dishInfo: dishSnapshot.getChildren()) {
+                        String dishName = dishInfo.child("dishName").getValue(String.class);
+                        String dishQ = dishInfo.child("dishQ").getValue(String.class);
+                        String totalPrice = dishInfo.child("totalPrice").getValue(String.class);
 
                         LiveOrderDishDataClass liveOrderDishDataClass = new LiveOrderDishDataClass(dishQ,dishName,totalPrice);
                         dishList.add(liveOrderDishDataClass);
                     }
                       dishMap.put(orderId, dishList);
+                    assert customerToken != null;
                     Log.d("Token in order viewer",customerToken);
                       LiveOrderDataClass liveOrderDataClass = new LiveOrderDataClass(chosen_time_slot,orderStatus,customerName,customerContact,customerToken,orderId,customerBill,dishList);
                       liveOrderDataClassList.add(liveOrderDataClass);
@@ -112,7 +115,7 @@ public class Vendor_live_order_viewer extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Vendor_live_order_viewer.this,"Failed to retreive live orders. Try Again!!!",Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(Vendor_live_order_viewer.this,"Failed to retrieve live orders. Try Again!!!",Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }

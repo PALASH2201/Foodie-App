@@ -2,14 +2,11 @@ package com.example.loginpage;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.CountDownTimer;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 import java.util.Map;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHistory_myViewHolder> {
     private final List<UserOrderHistoryDataClass> orderHistoryList;
@@ -66,12 +65,7 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
         UserOrderHistoryDishes_myAdapter adapter = new UserOrderHistoryDishes_myAdapter(dishList,context);
         holder.dish_details_recycler_view.setAdapter(adapter);
 
-        holder.updateStatusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateStatus(orderHistoryList.get(position).getRest_id(),orderHistoryList.get(position).getOrderId(),holder);
-            }
-        });
+        holder.updateStatusButton.setOnClickListener(v -> updateStatus(orderHistoryList.get(position).getRest_id(),orderHistoryList.get(position).getOrderId(),holder));
     }
 
     @Override
@@ -100,7 +94,7 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(context,"Database error! Try Again",Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(context,"Database error! Try Again",Toast.LENGTH_LONG,R.style.failureToast).show();
             }
         });
     }
@@ -119,6 +113,7 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String curValue = snapshot.getValue(String.class);
+                    assert curValue != null;
                     String newValue = String.valueOf(Integer.parseInt(curValue) - 1);
                     pendingOrderRef.setValue(newValue);
                 }
@@ -133,6 +128,7 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
                         String curValue = snapshot.getValue(String.class);
+                        assert curValue != null;
                         String newValue = String.valueOf(Integer.parseInt(curValue) + 1);
                         completedOrderRef.setValue(newValue);
                     }else{
@@ -145,7 +141,7 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
                 }
             });
         }else{
-            Toast.makeText(context,"Order is still being prepared",Toast.LENGTH_SHORT).show();
+            StyleableToast.makeText(context,"Order is still being prepared!",Toast.LENGTH_LONG,R.style.warningToast).show();
         }
     }
 }

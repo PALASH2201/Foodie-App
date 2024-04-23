@@ -33,6 +33,8 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDishDetails_MyViewHolder> {
 
     private final Context context ;
@@ -99,7 +101,6 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
                 String dishId = dataList.get(position).getKey();
                 String imageUrl = dataList.get(position).getDish_image_url();
                 String categoryId = dataList.get(position).getCategory_id();
-                Log.d("to-be-deleted-id",dishId);
                 deleteDishFromFirebase(dishId,imageUrl,categoryId);
                 dataList.remove(position);
                 notifyDataSetChanged();
@@ -120,14 +121,11 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
             imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-
-                    Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
-                    Log.d("DeleteImage", "Image deleted successfully");
+                    StyleableToast.makeText(context, "Image deleted!", Toast.LENGTH_SHORT,R.style.successToast).show();
                 }
             }).addOnFailureListener(e -> {
 
-                Toast.makeText(context, "Error deleting. Try Again", Toast.LENGTH_SHORT).show();
-                Log.e("DeleteImage", "Failed to delete image: " + e.getMessage());
+                StyleableToast.makeText(context, "Error deleting. Try Again", Toast.LENGTH_SHORT,R.style.failureToast).show();
             });
         }
             DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference("categories")
@@ -146,18 +144,13 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
                                 dishIds.add(id);
                             }
                         }
-                        // Update the dishes array in the category node
                         categoryRef.setValue(dishIds).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                // Dish ID removed from category successfully
-                                Log.d("DeleteDish", "Dish ID removed from category successfully");
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                // Failed to remove dish ID from category
-                                Log.e("DeleteDish", "Failed to remove dish ID from category: " + e.getMessage());
                             }
                         });
                     }
@@ -165,7 +158,7 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                     Toast.makeText(context,"Database error",Toast.LENGTH_SHORT).show();
+                     StyleableToast.makeText(context,"Database error",Toast.LENGTH_SHORT,R.style.failureToast).show();
                 }
             });
     }
@@ -180,7 +173,7 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
              }
              @Override
              public void onCancelled(@NonNull DatabaseError error) {
-                  Toast.makeText(context,"Database error in retrieving restaurant name",Toast.LENGTH_SHORT).show();
+                  StyleableToast.makeText(context,"Database error in retrieving restaurant name",Toast.LENGTH_SHORT,R.style.failureToast).show();
              }
          });
     }
@@ -195,7 +188,7 @@ public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDish
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(context,"Database error in retrieving category name",Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(context,"Database error in retrieving category name",Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }

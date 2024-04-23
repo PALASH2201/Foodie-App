@@ -24,8 +24,35 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
     </style>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:statusBarColor">@color/navy_blue</item>
+    <style name="successToast">
+        <item name="stStrokeWidth">2dp</item>
+        <item name="stStrokeColor">#000000</item>
+        <item name="stTextSize">20sp</item>
+        <item name="stColorBackground">#22EC4E</item>
+        <item name="stRadius">20dp</item>
+        <item name="stFont">@font/bubblegum_sans</item>
+        <item name="stIconStart">@drawable/check_24</item>
     </style>
-
+    <style name="failureToast">
+        <item name="stStrokeWidth">2dp</item>
+        <item name="stStrokeColor">#000000</item>
+        <item name="stTextSize">20sp</item>
+        <item name="stColorBackground">#FF4F4F</item>
+        <item name="stRadius">12dp</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stLength">LONG</item>
+        <item name="stFont">@font/concert_one</item>
+        <item name="stIconStart">@drawable/info</item>
+    </style>
+    <style name="warningToast">
+        <item name="stStrokeWidth">2dp</item>
+        <item name="stStrokeColor">#000000</item>
+        <item name="stTextSize">20sp</item>
+        <item name="stColorBackground">#FFE433</item>
+        <item name="stRadius">12dp</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stLength">LONG</item>
+        <item name="stFont">@font/concert_one</item>
+        <item name="stIconStart">@drawable/info</item>
+    </style>
 </resources>

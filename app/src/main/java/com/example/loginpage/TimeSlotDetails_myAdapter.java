@@ -26,6 +26,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class TimeSlotDetails_myAdapter extends RecyclerView.Adapter<TimeSlot_MyViewHolder> {
     private final Context context;
     private final List<TimeSlotDataClass> dataList;
@@ -70,19 +72,10 @@ public class TimeSlotDetails_myAdapter extends RecyclerView.Adapter<TimeSlot_MyV
                 holder.available_slot_info.setText(numSlotsAvailable);
                 holder.selectedTimeSlot_checkBox.setTag(position);
 
-//            if (position == lastCheckedPosition) {
-//                holder.selectedTimeSlot_checkBox.setChecked(true);
-//            } else {
-//                holder.selectedTimeSlot_checkBox.setChecked(false);
-//            }
 
             holder.selectedTimeSlot_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    if (lastCheckedPosition != -1 && lastCheckedPosition != position) {
-//                        notifyItemChanged(lastCheckedPosition);
-//                    }
-//                    lastCheckedPosition = position;
 
                     day = null;selected_timeSlot=null;available_slots=null;
                     int checkboxPosition = (int) buttonView.getTag();
@@ -156,12 +149,12 @@ public class TimeSlotDetails_myAdapter extends RecyclerView.Adapter<TimeSlot_MyV
         timeSlotRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(context,timeSlot+" on "+ day+" successfully deleted!",Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(context,timeSlot+" on "+ day+" successfully deleted!",Toast.LENGTH_LONG,R.style.successToast).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context,"Failed in deleting "+timeSlot+", Try Again!",Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(context,"Failed in deleting "+timeSlot+", Try Again!",Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
 

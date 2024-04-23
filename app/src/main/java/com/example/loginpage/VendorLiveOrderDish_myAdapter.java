@@ -33,11 +33,8 @@ public class VendorLiveOrderDish_myAdapter extends RecyclerView.Adapter<VendorLi
     @Override
     public void onBindViewHolder(@NonNull VendorLiveOrderDish_myViewHolder holder, int position) {
            String temp_var = dataList.get(position).getDishQ()+" X ";
-        Log.d("dishQ:",temp_var);
             holder.dish_quantity.setText(temp_var);
-        Log.d("dishName:",dataList.get(position).getDishName());
             holder.dish_name.setText(dataList.get(position).getDishName());
-        Log.d("dishPrice:",dataList.get(position).getTotalPrice());
             holder.dish_price.setText(dataList.get(position).getTotalPrice());
     }
     @Override

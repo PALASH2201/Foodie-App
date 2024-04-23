@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 
 public class User_order_success extends AppCompatActivity {
 
@@ -61,6 +63,7 @@ public class User_order_success extends AppCompatActivity {
         String customerName = intent.getStringExtra("customer Name");
         String customerContact = intent.getStringExtra("customer Contact");
         String dateTime = getCurrentDateTime();
+        assert total_bill != null;
         updateVendorAnalytics(total_bill,restaurant_id);
         addToOrderHistory(total_bill,dateTime,time_slot_selected,day,restaurant_name,restaurant_id,customerName,customerContact);
 
@@ -84,8 +87,8 @@ public class User_order_success extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public void addToOrderHistory(String totalbill , String curDate,String time_slot_selected,String day,String restaurant_name,String restaurant_id,String customerName,String customerContact) {
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    public void addToOrderHistory(String totalBill , String curDate,String time_slot_selected,String day,String restaurant_name,String restaurant_id,String customerName,String customerContact) {
+        String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference userRef = rootRef.child("users").child(userId);
         DatabaseReference contactRef = userRef.child("contact_number");
@@ -103,7 +106,7 @@ public class User_order_success extends AppCompatActivity {
                         String orderId = orderHistoryRef.push().getKey();
                         orderHistoryRef.child("Order Id").setValue(orderId);
                         DatabaseReference billRef = orderHistoryRef.child("Total Bill");
-                        billRef.setValue(totalbill);
+                        billRef.setValue(totalBill);
                         DatabaseReference time_slot_ref = orderHistoryRef.child("Time Slot");
                         time_slot_ref.setValue(time_slot_selected);
                         DatabaseReference day_ref = orderHistoryRef.child("Day");
@@ -124,14 +127,14 @@ public class User_order_success extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(User_order_success.this,"Database error",Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void updateVendorAnalytics(String totalPrice,String restaurant_id){
-        String priceParts[] = totalPrice.split("\\s");
+        String[] priceParts = totalPrice.split("\\s");
 
         DatabaseReference restRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id);
         DatabaseReference pendingOrderRef = restRef.child("Pending Orders");
@@ -140,6 +143,7 @@ public class User_order_success extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     String curValue = snapshot.getValue(String.class);
+                    assert curValue != null;
                     String newValue = String.valueOf(Integer.parseInt(curValue) + 1);
                     pendingOrderRef.setValue(newValue);
                 }else{
@@ -158,6 +162,7 @@ public class User_order_success extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     String curValue = snapshot.getValue(String.class);
+                    assert curValue != null;
                     String newValue = String.valueOf(Double.parseDouble(curValue) + Double.parseDouble(priceParts[1]));
                     earningRef.setValue(newValue);
                 }else{
@@ -187,21 +192,21 @@ public class User_order_success extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                 Toast.makeText(User_order_success.this,"Database error has occurred",Toast.LENGTH_SHORT).show();
+                 StyleableToast.makeText(User_order_success.this,"Database error has occurred",Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }
-    public void updateLiveOrders(String restaurant_id,String curdate,String userId){
+    public void updateLiveOrders(String restaurant_id,String curDate,String userId){
          DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users");
          userRef.addListenerForSingleValueEvent(new ValueEventListener() {
              @Override
              public void onDataChange(@NonNull DataSnapshot snapshot) {
-                 parseUserData(snapshot,restaurant_id,curdate,userId);
+                 parseUserData(snapshot,restaurant_id,curDate,userId);
              }
 
              @Override
              public void onCancelled(@NonNull DatabaseError error) {
-                 Toast.makeText(User_order_success.this, "Could not retrieve user data to update live orders", Toast.LENGTH_SHORT).show();
+                 StyleableToast.makeText(User_order_success.this, "Could not retrieve user data to update live orders", Toast.LENGTH_SHORT,R.style.failureToast).show();
              }
          });
     }
@@ -228,20 +233,13 @@ public class User_order_success extends AppCompatActivity {
                     LiveOrderDishDataClass dish = new LiveOrderDishDataClass(dishQuantity, dishName, dishPrice);
                     dishes.add(dish);
             }
-        Log.d("Token in order success",customerToken);
+
         LiveOrderDataClass liveOrder = new LiveOrderDataClass(timeSlot,"Pending",customerName,customerContact,customerToken,orderId,totalBill,dishes);
+        assert orderId != null;
         DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id).child("Live Orders").child(orderId);
-        ordersRef.setValue(liveOrder).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(User_order_success.this,"Could not update live orders",Toast.LENGTH_SHORT).show();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("cart");
-                cartRef.removeValue();
-            }
+        ordersRef.setValue(liveOrder).addOnFailureListener(e -> Toast.makeText(User_order_success.this,"Could not update live orders",Toast.LENGTH_SHORT).show()).addOnSuccessListener(unused -> {
+            DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("cart");
+            cartRef.removeValue();
         });
     }
     private String getCurrentDateTime() {

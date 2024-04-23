@@ -26,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 
 public class UserDishDetails_myAdapter extends RecyclerView.Adapter<UserDishDetails_MyViewHolder> {
     private final Context context;
@@ -72,7 +74,7 @@ public class UserDishDetails_myAdapter extends RecyclerView.Adapter<UserDishDeta
                 int newQuantity = currentQuantity - 1;
                 holder.recQuantity.setText(String.valueOf(newQuantity));
             } else {
-                Toast.makeText(context, "Quantity cannot be less than 1", Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(context, "Quantity cannot be less than 1", Toast.LENGTH_LONG,R.style.warningToast).show();
             }
         });
 
@@ -114,7 +116,7 @@ public class UserDishDetails_myAdapter extends RecyclerView.Adapter<UserDishDeta
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(context,"Database error in retrieving restaurant name",Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(context,"Database error in retrieving restaurant name",Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }
@@ -129,7 +131,7 @@ public class UserDishDetails_myAdapter extends RecyclerView.Adapter<UserDishDeta
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(context,"Database error in retrieving category name",Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(context,"Database error in retrieving category name",Toast.LENGTH_LONG,R.style.failureToast).show();
             }
         });
     }

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 public class VendorMenu_viewer extends AppCompatActivity {
 
@@ -76,12 +77,9 @@ public class VendorMenu_viewer extends AppCompatActivity {
         retrieveRestaurantIdByName();
 
         TextView addCategories = findViewById(R.id.addCategories);
-        addCategories.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                 Intent intent = new Intent(VendorMenu_viewer.this , Vendor_category_upload.class);
-                 startActivity(intent);
-            }
+        addCategories.setOnClickListener(v -> {
+             Intent intent1 = new Intent(VendorMenu_viewer.this , Vendor_category_upload.class);
+             startActivity(intent1);
         });
     }
 
@@ -94,17 +92,16 @@ public class VendorMenu_viewer extends AppCompatActivity {
                 if (snapshot.exists()) {
                     for (DataSnapshot restaurantSnapshot : snapshot.getChildren()) {
                         String restaurantId = restaurantSnapshot.getKey();
-                        Log.d("Restaurant Id", "Id: " + restaurantId);
                         HandleDatabase(restaurantId);
                     }
                 } else {
-                    Toast.makeText(VendorMenu_viewer.this, "No restaurant found with the specified name", Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(VendorMenu_viewer.this, "No restaurant found with the specified name", Toast.LENGTH_SHORT,R.style.warningToast).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(VendorMenu_viewer.this, "Failed to fetch restaurant ID: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(VendorMenu_viewer.this, "Failed to fetch restaurant ID: " + error.getMessage(), Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }

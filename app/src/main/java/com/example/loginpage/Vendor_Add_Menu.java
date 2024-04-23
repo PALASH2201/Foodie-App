@@ -11,15 +11,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,10 +24,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 
 public class Vendor_Add_Menu extends AppCompatActivity {
@@ -72,7 +69,7 @@ public class Vendor_Add_Menu extends AppCompatActivity {
                         uri = data.getData();
                         uploadImage.setImageURI(uri);
                     } else {
-                        Toast.makeText(Vendor_Add_Menu.this, "No Image Selection", Toast.LENGTH_SHORT).show();
+                        StyleableToast.makeText(Vendor_Add_Menu.this, "No Image Selection", Toast.LENGTH_SHORT,R.style.warningToast).show();
                     }
                 }
         );
@@ -93,27 +90,16 @@ public class Vendor_Add_Menu extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        catRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+        catRef.putFile(uri).addOnSuccessListener(taskSnapshot -> {
 
-                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                uriTask.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        imageURL = uri.toString();
-                        dialog.dismiss();
-                        uploadData();
-                        uploadImage.setImageResource(R.drawable.uploading);
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+            uriTask.addOnSuccessListener(uri -> {
+                imageURL = uri.toString();
                 dialog.dismiss();
-            }
-        });
+                uploadData();
+                uploadImage.setImageResource(R.drawable.uploading);
+            });
+        }).addOnFailureListener(e -> dialog.dismiss());
     }
 
     public void uploadData(){
@@ -130,21 +116,13 @@ public class Vendor_Add_Menu extends AppCompatActivity {
         assert dish_id != null;
         FirebaseDatabase.getInstance().getReference("dishes").child(dish_id)
 
-                .setValue(dataClass).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(Vendor_Add_Menu.this,"Saved",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Vendor_Add_Menu.this, Vendor_menu_detail.class));
-                            finish();
-                        }
+                .setValue(dataClass).addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        StyleableToast.makeText(Vendor_Add_Menu.this,"Details saved!",Toast.LENGTH_SHORT,R.style.successToast).show();
+                        startActivity(new Intent(Vendor_Add_Menu.this, Vendor_menu_detail.class));
+                        finish();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Vendor_Add_Menu.this, e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                });
+                }).addOnFailureListener(e -> StyleableToast.makeText(Vendor_Add_Menu.this, e.getMessage(),Toast.LENGTH_SHORT,R.style.failureToast).show());
     }
 
     private void appendCategoryToRestaurant(String dishId , String categoryId) {

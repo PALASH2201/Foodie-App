@@ -23,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class Cart_myAdapter extends RecyclerView.Adapter<Cart_MyViewHolder> {
     private final Context context ;
     private final List<CartDataClass> dataList;
@@ -116,7 +118,7 @@ public class Cart_myAdapter extends RecyclerView.Adapter<Cart_MyViewHolder> {
                     subtotal.setText("Rs: "+subTotal);
                     totalBill.setText("Rs: "+total_bill);
                 } else {
-                    Toast.makeText(context, "Quantity cannot be less than 1", Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(context, "Quantity cannot be less than 1",Toast.LENGTH_LONG,R.style.failureToast).show();
                 }
             }
         });
@@ -148,12 +150,12 @@ public class Cart_myAdapter extends RecyclerView.Adapter<Cart_MyViewHolder> {
         dishRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(context,"Item successfully removed from cart",Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(context,"Item successfully removed from cart",Toast.LENGTH_SHORT,R.style.successToast).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(context,"Error in removing item from the cart",Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(context,"Error in removing item from the cart",Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }

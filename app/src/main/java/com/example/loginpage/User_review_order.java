@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class User_review_order extends AppCompatActivity {
     String updated_available_slots,restaurant_name ,time_slot,day,totalBill,availableSlots,restaurant_id;
     AlertDialog dialog;
@@ -72,7 +74,7 @@ public class User_review_order extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-              Toast.makeText(User_review_order.this,"Database error! TRY AGAIN",Toast.LENGTH_SHORT).show();
+              StyleableToast.makeText(User_review_order.this,"Database error! TRY AGAIN",Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }
@@ -84,11 +86,8 @@ public class User_review_order extends AppCompatActivity {
                 if(snapshot.exists()){
                    updated_available_slots  = snapshot.child("available_slots").getValue(String.class);
                     assert updated_available_slots != null;
-                    Log.d("Updated available slots",updated_available_slots);
-                    assert updated_available_slots != null;
                     if(Integer.parseInt(updated_available_slots) > 0 ){
                        isSlotAvailable = true;
-                        Log.d("Updated available slots",updated_available_slots);
                    }
                     updateUI(isSlotAvailable);
                 }
@@ -96,7 +95,7 @@ public class User_review_order extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(User_review_order.this,"Could not get not number of slots!",Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(User_review_order.this,"Could not get not number of slots!",Toast.LENGTH_LONG,R.style.failureToast).show();
             }
         });
     }
@@ -133,7 +132,7 @@ public class User_review_order extends AppCompatActivity {
             });
         }
         else{
-            Toast.makeText(User_review_order.this,"No slots available in current time slot,please choose another",Toast.LENGTH_SHORT).show();
+            StyleableToast.makeText(User_review_order.this,"No slots available in current time slot,please choose another",Toast.LENGTH_LONG,R.style.failureToast).show();
             dialog.dismiss();
             payButton.setClickable(false);
         }

@@ -32,13 +32,11 @@ public class UserOrderHistoryDishes_myAdapter extends RecyclerView.Adapter<UserO
 
     @Override
     public void onBindViewHolder(@NonNull UserOrderHistoryDishes_myViewHolder holder, int position) {
-        Log.d("N",orderHistoryDishList.get(position).getDishName());
         holder.dish_name.setText(orderHistoryDishList.get(position).getDishName());
         String temp_var = orderHistoryDishList.get(position).getDishQuantity()+" X ";
-        Log.d("Q:",temp_var);
         holder.dish_quantity.setText(temp_var);
-        Log.d("P",orderHistoryDishList.get(position).getDishPrice());
-        holder.dish_price.setText(orderHistoryDishList.get(position).getDishPrice());
+        temp_var = "Rs: "+orderHistoryDishList.get(position).getDishPrice();
+        holder.dish_price.setText(temp_var);
     }
 
     @Override
