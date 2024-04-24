@@ -10,8 +10,8 @@
 
     <TextView
         android:id="@+id/mess_name"
-        android:layout_width="379dp"
-        android:layout_height="72dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/orange"
         android:gravity="center"
         android:textAlignment="center"
@@ -23,12 +23,12 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="352dp"
-        android:layout_height="545dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/addDishes"
@@ -39,11 +39,12 @@
 
     <Button
         android:id="@+id/addDishes"
-        android:layout_width="332dp"
-        android:layout_height="56dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:backgroundTint="@color/orange"
         android:text="@string/addDishes"
         android:textSize="20sp"
+        android:fontFamily="@font/epilogue_semibold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"

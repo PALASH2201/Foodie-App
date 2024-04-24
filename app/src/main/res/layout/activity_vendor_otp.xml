@@ -59,8 +59,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/epilogue_semibold"
         android:text="Enter OTP sent to your phone number"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center"
+        android:textAlignment="center"
         android:letterSpacing="0.08"
         android:textStyle="bold"
         android:textSize="25sp"

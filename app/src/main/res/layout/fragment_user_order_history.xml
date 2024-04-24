@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:neumorph="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,12 +22,11 @@
             app:layout_constraintVertical_bias="0.0"
             app:neumorph_lightSource="leftTop"
             app:neumorph_backgroundColor="@color/white"
-            app:neumorph_shadowColorDark="#112A46"
+            app:neumorph_shadowColorDark="@color/orange"
             app:neumorph_shapeType="flat"
             tools:layout_editor_absoluteX="0dp">
 
             <TextView
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -35,7 +34,7 @@
                 android:text="YOUR ORDER HISTORY"
                 android:letterSpacing="0.4"
                 android:textColor="#112A46"
-                android:background="#ACC8E5"
+                android:background="@color/orange_btn_color"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </soup.neumorphism.NeumorphCardView>

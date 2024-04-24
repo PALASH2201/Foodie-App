@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/beige"
+    android:background="@color/light_orange"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Vendor_addTimeSlot">
@@ -31,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Add Time Slots"
+                android:fontFamily="@font/epilogue_semibold"
                 android:textAlignment="center"
                 android:textColor="@color/orange"
                 android:textSize="30sp" />
@@ -40,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="Select day:"
+                android:fontFamily="@font/epilogue_semibold"
                 android:textSize="18sp" />
 
             <Spinner
@@ -52,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
+                android:fontFamily="@font/epilogue_semibold"
                 android:text="Time slot:"
                 android:textSize="18sp" />
 
@@ -65,6 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
+                android:fontFamily="@font/epilogue_semibold"
                 android:text="Available slots:"
                 android:textSize="18sp" />
 
@@ -74,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Enter number of slots"
                 android:inputType="number"
+                android:fontFamily="@font/epilogue_semibold"
                 android:padding="8dp" />
 
             <CheckBox
@@ -81,6 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
+                android:fontFamily="@font/epilogue_semibold"
                 android:text="Same time slot every day" />
 
             <LinearLayout
@@ -96,6 +102,7 @@
                     android:layout_margin="8dp"
                     android:backgroundTint="@color/orange"
                     android:text="Add Slot"
+                    android:fontFamily="@font/epilogue_semibold"
                     android:textColor="@color/white"
                     android:textSize="25sp" />
             </LinearLayout>

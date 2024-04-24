@@ -51,6 +51,7 @@
                 android:background="@drawable/orange_border"
                 android:gravity="start|center_vertical"
                 android:hint="Enter dish name"
+                android:fontFamily="@font/epilogue_semibold"
                 android:padding="16dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black" />
@@ -63,6 +64,7 @@
                 android:background="@drawable/orange_border"
                 android:gravity="start|center_vertical"
                 android:hint="Enter dish description"
+                android:fontFamily="@font/epilogue_semibold"
                 android:inputType="textMultiLine"
                 android:padding="16dp"
                 android:textColor="@color/black"
@@ -77,6 +79,7 @@
                 android:gravity="start|center_vertical"
                 android:hint="Enter dish price"
                 android:inputType="number"
+                android:fontFamily="@font/epilogue_semibold"
                 android:padding="16dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black" />
@@ -89,8 +92,8 @@
                 android:backgroundTint="@color/orange"
                 android:text="UPDATE"
                 android:textAlignment="center"
-                android:textSize="35sp"
-                app:cornerRadius="20dp" />
+                android:textSize="25sp"
+                app:cornerRadius="10dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

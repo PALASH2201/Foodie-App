@@ -30,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="Vendor Registration"
                 android:textAlignment="center"
+                android:fontFamily="@font/epilogue_semibold"
                 android:textColor="@color/red"
                 android:textSize="30sp" />
 

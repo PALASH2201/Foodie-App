@@ -101,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:backgroundTint="@color/orange_btn_color"
+            android:backgroundTint="@color/orange"
             android:text="@string/addtoCart"
             android:textColor="@color/black"
             android:textSize="20sp" />

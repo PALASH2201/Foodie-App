@@ -31,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Add Category"
+                android:fontFamily="@font/epilogue_semibold"
                 android:textAlignment="center"
                 android:textColor="@color/red"
                 android:textSize="30sp" />
@@ -51,20 +52,21 @@
                 android:background="@drawable/orange_border"
                 android:gravity="start|center_vertical"
                 android:hint="Enter category name"
+                android:fontFamily="@font/epilogue_semibold"
                 android:padding="16dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black" />
 
             <Button
                 android:id="@+id/saveButton"
-                android:layout_width="326dp"
-                android:layout_height="77dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/orange"
                 android:text="Save"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="35sp"
+                android:textSize="25sp"
                 app:cornerRadius="@dimen/fastscroll__bubble_corner" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
+<soup.neumorphism.NeumorphCardView
     android:id="@+id/time_slot_card"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,13 +9,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/orange_border"
     app:cardCornerRadius="30dp"
+    app:neumorph_shadowColorDark="@color/orange_btn_color"
     app:cardElevation="20dp"
     android:layout_margin="15dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/light_orange"
         android:orientation="horizontal">
 
         <CheckBox
@@ -35,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Sunday"
+            android:fontFamily="@font/cinzel_decorative_bold"
             android:padding="6dp"
             android:textColor="@color/orange"
             android:textSize="28sp"
@@ -52,6 +54,7 @@
             android:layout_marginBottom="5dp"
             android:padding="8dp"
             android:text="Time slot:"
+            android:fontFamily="@font/epilogue_semibold"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/available_slot_info"
@@ -67,6 +70,7 @@
             android:layout_marginBottom="5dp"
             android:padding="8dp"
             android:text="Available slots:"
+            android:fontFamily="@font/epilogue_semibold"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,9 +85,9 @@
             android:layout_width="98dp"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:backgroundTint="@color/yellow"
+            android:backgroundTint="@color/orange"
             android:text="Edit"
-            android:textColor="@color/orange"
+            android:textColor="@color/black"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/deleteButton"
@@ -97,9 +101,9 @@
             android:layout_width="98dp"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:backgroundTint="@color/yellow"
+            android:backgroundTint="@color/orange"
             android:text="Delete"
-            android:textColor="@color/orange"
+            android:textColor="@color/black"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -111,4 +115,4 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.cardview.widget.CardView>
+</soup.neumorphism.NeumorphCardView>

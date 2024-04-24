@@ -8,8 +8,9 @@
     tools:context=".User_cart">
 
     <TextView
+        android:id="@+id/cartHeader"
         android:layout_width="match_parent"
-        android:layout_height="61dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="52dp"
         android:background="@color/orange"
         android:gravity="center"
@@ -18,41 +19,37 @@
         android:textColor="@color/white"
         android:textSize="35sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-<ScrollView
-    android:id="@+id/scrollView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.214" >
+        app:layout_constraintVertical_bias="0.0" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
         android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cartHeader"
+        app:layout_constraintBottom_toTopOf="@id/billLayout"
+        app:layout_constraintVertical_bias="0.414"
         />
 
-</ScrollView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/billLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:layout_margin="5dp"
         app:layout_constraintBottom_toTopOf="@+id/cartCheckoutBtn"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView">
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -162,8 +159,9 @@
         android:layout_width="283dp"
         android:layout_height="63dp"
         android:backgroundTint="@color/orange"
-        android:text="Proceed to select timeslot"
+        android:text="Proceed to select time slot"
         android:textSize="16sp"
+        android:fontFamily="@font/epilogue_semibold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

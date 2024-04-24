@@ -35,6 +35,7 @@
                 android:background="@color/white"
                 android:drawableEnd="@drawable/add"
                 android:text="Add Menu Item"
+                android:fontFamily="@font/epilogue_semibold"
                 android:textAlignment="center"
                 android:textColor="@color/red"
                 android:textSize="30sp" />
@@ -58,6 +59,7 @@
                 android:gravity="start|center_vertical"
                 android:hint="Enter dish name"
                 android:padding="16dp"
+                android:fontFamily="@font/epilogue_semibold"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black" />
 
@@ -71,6 +73,7 @@
                 android:hint="Enter dish description"
                 android:inputType="textMultiLine"
                 android:padding="16dp"
+                android:fontFamily="@font/epilogue_semibold"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black" />
 
@@ -82,6 +85,7 @@
                 android:background="@drawable/orange_border"
                 android:gravity="start|center_vertical"
                 android:hint="Enter dish price"
+                android:fontFamily="@font/epilogue_semibold"
                 android:inputType="number"
                 android:padding="16dp"
                 android:textColor="@color/black"
@@ -94,6 +98,7 @@
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/orange"
                 android:text="Save"
+                android:fontFamily="@font/epilogue_semibold"
                 android:layout_gravity="center"
                 android:textAlignment="center"
                 android:textSize="35sp"

@@ -100,7 +100,7 @@
 
                 <Button
                     android:textColor="@color/black"
-                    android:backgroundTint="@color/orange_btn_color"
+                    android:backgroundTint="@color/orange"
                     android:layout_margin="5dp"
                     android:layout_gravity="center"
                     android:id="@+id/updateStatusButton"
