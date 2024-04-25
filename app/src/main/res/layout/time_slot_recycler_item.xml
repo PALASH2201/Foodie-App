@@ -7,9 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/orange_border"
     app:cardCornerRadius="30dp"
-    app:neumorph_shadowColorDark="@color/orange_btn_color"
+    app:neumorph_shadowColorDark="@color/orange"
     app:cardElevation="20dp"
     android:layout_margin="15dp">
 
@@ -24,12 +23,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/time_slot_info"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.447" />
+            app:layout_constraintVertical_bias="0.094" />
 
         <TextView
             android:id="@+id/day"

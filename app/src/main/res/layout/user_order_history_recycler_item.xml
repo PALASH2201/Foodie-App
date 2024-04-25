@@ -20,6 +20,7 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="Takeaway successful"
+                android:fontFamily="@font/epilogue_semibold"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -68,9 +69,19 @@
                 app:layout_constraintTop_toBottomOf="@id/orderTime">
 
                 <TextView
+                    android:id="@+id/chosen_restaurant"
+                    android:layout_marginStart="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/epilogue_semibold"
+                    android:text="Restaurant Name:"
+                    android:textSize="20sp"/>
+
+                <TextView
                     android:id="@+id/chosen_time_slot"
                     android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
+                    android:fontFamily="@font/epilogue_semibold"
                     android:layout_height="wrap_content"
                     android:text="Time Slot:"
                     android:textSize="20sp"/>
@@ -95,6 +106,7 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:layout_marginStart="5dp"
+                    android:fontFamily="@font/epilogue_semibold"
                     android:text="Total Bill :"
                     android:textSize="18sp" />
 

@@ -70,7 +70,6 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:background="@drawable/rounded_corner_background"
                     android:paddingEnd="10dp"
                     android:id="@+id/restName"
                     android:layout_width="match_parent"
@@ -94,7 +93,6 @@
                     android:textColor="@color/orange"
                     android:textSize="20sp" />
                 <TextView
-                    android:background="@drawable/rounded_corner_background"
                     android:paddingEnd="10dp"
                     android:id="@+id/timeslot"
                     android:layout_width="match_parent"
@@ -119,7 +117,6 @@
                     android:textColor="@color/orange"
                     android:textSize="20sp" />
                 <TextView
-                    android:background="@drawable/rounded_corner_background"
                     android:paddingEnd="10dp"
                     android:id="@+id/availableSlots"
                     android:layout_width="match_parent"
@@ -144,7 +141,7 @@
                     android:textColor="@color/orange"
                     android:textSize="20sp"/>
                 <TextView
-                    android:background="@drawable/rounded_corner_background"
+
                     android:paddingEnd="10dp"
                     android:id="@+id/totalBill_info"
                     android:layout_width="match_parent"
@@ -166,6 +163,7 @@
         android:textAlignment="center"
         android:textSize="25sp"
         app:cornerRadius="20dp"
+        android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.956"

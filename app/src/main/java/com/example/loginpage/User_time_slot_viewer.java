@@ -65,6 +65,8 @@ public class User_time_slot_viewer extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         String day = findDay();
+        Log.d("Day in time slot",day);
+        Log.d("Restaurant Name in time slot",restaurant_name);
         HandleDatabase(day,restaurant_name,restaurant_id);
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

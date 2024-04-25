@@ -25,8 +25,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Objects;
-
 import io.github.muddz.styleabletoast.StyleableToast;
 
 public class Registration extends AppCompatActivity {
@@ -69,9 +67,6 @@ public class Registration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser curUser = mAuth.getCurrentUser();
-        if(curUser!= null){
-            String userid = mAuth.getCurrentUser().getUid();
             editTextEmail = findViewById(R.id.email);
             editTextPassword = findViewById(R.id.password);
             editName = findViewById(R.id.name_reg);
@@ -79,9 +74,6 @@ public class Registration extends AppCompatActivity {
             buttonReg = findViewById(R.id.btn_register);
             progressBar =findViewById(R.id.progressBar);
             textView = findViewById(R.id.loginNow);
-
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userid);
-
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -95,33 +87,33 @@ public class Registration extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     progressBar.setVisibility(View.VISIBLE);
+
                     String email,password,name,contact;
                     email = String.valueOf(editTextEmail.getText());
                     password = String.valueOf(editTextPassword.getText());
                     name = String.valueOf(editName.getText());
                     contact = String.valueOf(editContact.getText());
 
-                    if(TextUtils.isEmpty(email)){
-                        StyleableToast.makeText(Registration.this,"Please enter your email",Toast.LENGTH_SHORT,R.style.warningToast).show();
-                        return;
-                    }
-                    if(TextUtils.isEmpty(password)){
-                        StyleableToast.makeText(Registration.this,"Please enter a minimum 6 character password",Toast.LENGTH_SHORT,R.style.warningToast).show();
-                        return;
-                    }
                     if(TextUtils.isEmpty(name)){
                         StyleableToast.makeText(Registration.this,"Please enter your name",Toast.LENGTH_SHORT,R.style.warningToast).show();
+                        progressBar.setVisibility(View.GONE);
+                        return;
+                    }
+                    if(TextUtils.isEmpty(email)){
+                        StyleableToast.makeText(Registration.this,"Please enter your email",Toast.LENGTH_SHORT,R.style.warningToast).show();
+                        progressBar.setVisibility(View.GONE);
                         return;
                     }
                     if(TextUtils.isEmpty(contact)){
                         StyleableToast.makeText(Registration.this,"Please enter your contact",Toast.LENGTH_SHORT,R.style.warningToast).show();
+                        progressBar.setVisibility(View.GONE);
                         return;
                     }
-
-                    userRef.child("customer_name").setValue(name);
-                    userRef.child("email_id").setValue(email);
-                    userRef.child("contact_number").setValue(contact);
-
+                    if(TextUtils.isEmpty(password)){
+                        StyleableToast.makeText(Registration.this,"Please enter a minimum 6 character password",Toast.LENGTH_SHORT,R.style.warningToast).show();
+                        progressBar.setVisibility(View.GONE);
+                        return;
+                    }
                     mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -131,6 +123,12 @@ public class Registration extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
+                                            String userid = mAuth.getCurrentUser().getUid();
+                                            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userid);
+                                            userRef.child("customer_name").setValue(name);
+                                            userRef.child("email_id").setValue(email);
+                                            userRef.child("contact_number").setValue(contact);
+
                                             StyleableToast.makeText(Registration.this, "Account created.Please verify your email id",
                                                     Toast.LENGTH_SHORT,R.style.successToast).show();
                                             SharedPreferences.Editor editor = getSharedPreferences("UserPrefs", MODE_PRIVATE).edit();
@@ -140,7 +138,6 @@ public class Registration extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (mAuth.getCurrentUser().isEmailVerified()) {
-                                                        // Email is verified, allow user to log in
                                                         Intent intent = new Intent(getApplicationContext(),Login.class);
                                                         startActivity(intent);
                                                         finish();
@@ -164,7 +161,6 @@ public class Registration extends AppCompatActivity {
                     });
                 }
             });
-        }
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

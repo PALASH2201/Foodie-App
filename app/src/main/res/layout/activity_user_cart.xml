@@ -16,6 +16,7 @@
         android:background="@color/orange_btn_color"
         android:gravity="center"
         android:text="YOUR CART"
+        android:fontFamily="@font/epilogue_semibold"
         android:textAlignment="center"
         android:textColor="@color/dark_orange"
         android:textSize="35sp"
@@ -69,6 +70,7 @@
                     android:layout_marginStart="5dp"
                     android:gravity="start"
                     android:text="Sub Total"
+                    android:fontFamily="@font/epilogue_semibold"
                     android:textSize="18sp"
                     android:textColor="@color/black" />
 
@@ -101,6 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start"
+                    android:fontFamily="@font/epilogue_semibold"
                     android:layout_marginStart="5dp"
                     android:text="Platform Charges"
                     android:textSize="18sp"
@@ -135,6 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start"
+                    android:fontFamily="@font/epilogue_semibold"
                     android:layout_marginStart="5dp"
                     android:text="Total"
                     android:textSize="18sp"

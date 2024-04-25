@@ -78,10 +78,12 @@ public class Login extends AppCompatActivity {
 
                 if(TextUtils.isEmpty(email)){
                     StyleableToast.makeText(Login.this,"Please enter your email!",Toast.LENGTH_LONG,R.style.warningToast).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
                 if(TextUtils.isEmpty(password)){
                     StyleableToast.makeText(Login.this,"Please enter your password!",Toast.LENGTH_LONG,R.style.warningToast).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 

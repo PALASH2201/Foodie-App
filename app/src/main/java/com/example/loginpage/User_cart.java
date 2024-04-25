@@ -71,6 +71,7 @@ public class User_cart extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(User_cart.this,User_time_slot_viewer.class);
                 intent.putExtra("restaurant_name",restaurant_name);
+                Log.d("restName in cart",restaurant_name);
                 intent.putExtra("restaurant_id",restaurant_id);
                 intent.putExtra("total bill",totalBill.getText().toString());
                 startActivity(intent);

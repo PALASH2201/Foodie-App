@@ -120,6 +120,8 @@ public class User_order_success extends AppCompatActivity {
                         day_ref.setValue(day);
                         DatabaseReference rest_id = orderHistoryRef.child("Restaurant_id");
                         rest_id.setValue(restaurant_id);
+                        DatabaseReference rest_name = orderHistoryRef.child("Restaurant Name");
+                        rest_name.setValue(restaurant_name);
                         DatabaseReference dishRef = orderHistoryRef.child(Objects.requireNonNull(cartSnapshot.getKey()));
                         dishRef.setValue(cartSnapshot.getValue())
                                 .addOnCompleteListener(task -> {

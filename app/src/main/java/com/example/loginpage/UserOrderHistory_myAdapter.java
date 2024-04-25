@@ -50,6 +50,8 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
     @Override
     public void onBindViewHolder(@NonNull UserOrderHistory_myViewHolder holder, @SuppressLint("RecyclerView") int position) {
         getOrderStatus(orderHistoryList.get(position).getRest_id(),orderHistoryList.get(position).getOrderId(),holder);
+        temp_var = "Mess/Canteen Name: "+orderHistoryList.get(position).getRest_name();
+        holder.chosen_restaurant.setText(temp_var);
         holder.orderDay.setText(orderHistoryList.get(position).getDay());
         holder.orderTime.setText(orderHistoryList.get(position).getOrderTime());
         temp_var = "Order Id: "+orderHistoryList.get(position).getOrderId();
@@ -74,9 +76,6 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
     }
 
     public void getOrderStatus(String restaurant_id , String orderId,@NonNull UserOrderHistory_myViewHolder holder){
-        if(holder.orderStatus.getText().toString().equals("Takeaway successful")){
-            holder.updateStatusButton.setVisibility(View.GONE);
-        }
         DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id).child("Live Orders").child(orderId);
         orderRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -142,19 +141,20 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
 
                 }
             });
-        }else{
+        }else if(holder.orderStatus.getText().toString().equals("Pending")){
             StyleableToast.makeText(context,"Order is still being prepared!",Toast.LENGTH_LONG,R.style.warningToast).show();
         }
     }
 }
 
 class UserOrderHistory_myViewHolder extends  RecyclerView.ViewHolder{
-    TextView orderTime , orderDay ,chosen_time_slot,orderId,customerBill,orderStatus;
+    TextView orderTime , orderDay ,chosen_time_slot,orderId,customerBill,orderStatus,chosen_restaurant;
     Button updateStatusButton;
     LinearLayout orderDetails;
     RecyclerView dish_details_recycler_view;
     public UserOrderHistory_myViewHolder(@NonNull View itemView) {
         super(itemView);
+        chosen_restaurant = itemView.findViewById(R.id.chosen_restaurant);
         updateStatusButton = itemView.findViewById(R.id.updateStatusButton);
         orderStatus = itemView.findViewById(R.id.orderStatus);
         orderDay = itemView.findViewById(R.id.orderDay);

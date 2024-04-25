@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.github.muddz.styleabletoast.StyleableToast;
+import soup.neumorphism.NeumorphTextView;
 
 public class Mess_1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -49,7 +50,7 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
     private DrawerLayout drawerLayout;
     private HashMap<Integer, Class<?>> fragmentMap;
     private HashMap<Integer, Class<?>> activityMap;
-    TextView mess_name;
+    NeumorphTextView mess_name;
     RecyclerView recyclerView;
     String user_id,restaurant_name,restaurant_id;
     List<CategoriesDataClass> dataList ;
@@ -141,13 +142,14 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
         adapter = new Categories_myAdapter(Mess_1.this , dataList,false);
         recyclerView.setAdapter(adapter);
 
+        restaurant_name = mess_name.getText().toString();
         retrieveRestaurantIdByName();
 
         adapter.setOnItemClickListener(new Categories_myAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, boolean isVendor) {
                 if(!isVendor){
-                    restaurant_name = mess_name.getText().toString();
+
                     restaurant_id = dataList.get(position).getRestaurant_id();
 
                     Intent intent = new Intent(Mess_1.this,User_menu_detail.class);
@@ -211,6 +213,7 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
                     Intent intent = new Intent(Mess_1.this, User_cart.class);
                     intent.putExtra("User Id",user_id);
                     intent.putExtra("restaurant_name",restaurant_name);
+                    Log.d("restName in mess",restaurant_name);
                     intent.putExtra("restaurant_id",restaurant_id);
                     startActivity(intent);
                 } else {

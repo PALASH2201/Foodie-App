@@ -68,6 +68,7 @@ public class User_orderHistory extends Fragment {
                     String Day = orderHistorySnapshot.child("Day").getValue(String.class);
                     String orderId = orderHistorySnapshot.child("Order Id").getValue(String.class);
                     String rest_id = orderHistorySnapshot.child("Restaurant_id").getValue(String.class);
+                    String rest_name = orderHistorySnapshot.child("Restaurant Name").getValue(String.class);
 
                     List<UserOrderHistoryDishDataClass> dishList = new ArrayList<>();
                     for (DataSnapshot dishInfo: orderHistorySnapshot.getChildren()) {
@@ -84,7 +85,7 @@ public class User_orderHistory extends Fragment {
                     }
                     dishMap.put(orderId, dishList);
 
-                    UserOrderHistoryDataClass userOrderHistoryDataClass = new UserOrderHistoryDataClass(Day,orderId,order_time,chosen_time_slot,customerBill,rest_id,dishMap);
+                    UserOrderHistoryDataClass userOrderHistoryDataClass = new UserOrderHistoryDataClass(Day,orderId,order_time,chosen_time_slot,customerBill,rest_id,rest_name,dishMap);
                     userOrderHistoryDataClassList.add(0,userOrderHistoryDataClass);
 
                 }
