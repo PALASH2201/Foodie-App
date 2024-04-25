@@ -3,6 +3,7 @@ package com.example.loginpage;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +12,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +37,6 @@ public class User_cart extends AppCompatActivity {
     private AlertDialog dialog;
     List<CartDataClass> dataList ;
     String userId,restaurant_name , restaurant_id;
-    double subTotal ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +76,10 @@ public class User_cart extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.orange_btn_color));
     }
     public void getCartDetails(String userId){
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userId);

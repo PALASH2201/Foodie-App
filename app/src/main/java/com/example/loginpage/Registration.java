@@ -69,103 +69,105 @@ public class Registration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         mAuth = FirebaseAuth.getInstance();
-        String userid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-        editTextEmail = findViewById(R.id.email);
-        editTextPassword = findViewById(R.id.password);
-        editName = findViewById(R.id.name_reg);
-        editContact = findViewById(R.id.contact_reg);
-        buttonReg = findViewById(R.id.btn_register);
-        progressBar =findViewById(R.id.progressBar);
-        textView = findViewById(R.id.loginNow);
+        FirebaseUser curUser = mAuth.getCurrentUser();
+        if(curUser!= null){
+            String userid = mAuth.getCurrentUser().getUid();
+            editTextEmail = findViewById(R.id.email);
+            editTextPassword = findViewById(R.id.password);
+            editName = findViewById(R.id.name_reg);
+            editContact = findViewById(R.id.contact_reg);
+            buttonReg = findViewById(R.id.btn_register);
+            progressBar =findViewById(R.id.progressBar);
+            textView = findViewById(R.id.loginNow);
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userid);
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(userid);
 
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        buttonReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                String email,password,name,contact;
-                email = String.valueOf(editTextEmail.getText());
-                password = String.valueOf(editTextPassword.getText());
-                name = String.valueOf(editName.getText());
-                contact = String.valueOf(editContact.getText());
-
-                if(TextUtils.isEmpty(email)){
-                    StyleableToast.makeText(Registration.this,"Please enter your email",Toast.LENGTH_SHORT,R.style.warningToast).show();
-                    return;
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    startActivity(intent);
+                    finish();
                 }
-                if(TextUtils.isEmpty(password)){
-                    StyleableToast.makeText(Registration.this,"Please enter a minimum 6 character password",Toast.LENGTH_SHORT,R.style.warningToast).show();
-                    return;
-                }
-                if(TextUtils.isEmpty(name)){
-                    StyleableToast.makeText(Registration.this,"Please enter your name",Toast.LENGTH_SHORT,R.style.warningToast).show();
-                    return;
-                }
-                if(TextUtils.isEmpty(contact)){
-                    StyleableToast.makeText(Registration.this,"Please enter your contact",Toast.LENGTH_SHORT,R.style.warningToast).show();
-                    return;
-                }
+            });
 
-                userRef.child("customer_name").setValue(name);
-                userRef.child("email_id").setValue(email);
-                userRef.child("contact_number").setValue(contact);
+            buttonReg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    String email,password,name,contact;
+                    email = String.valueOf(editTextEmail.getText());
+                    password = String.valueOf(editTextPassword.getText());
+                    name = String.valueOf(editName.getText());
+                    contact = String.valueOf(editContact.getText());
 
-                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                progressBar.setVisibility(View.GONE);
-                                if (task.isSuccessful()) {
-                                    mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()){
-                                                StyleableToast.makeText(Registration.this, "Account created.Please verify your email id",
-                                                        Toast.LENGTH_SHORT,R.style.successToast).show();
-                                                SharedPreferences.Editor editor = getSharedPreferences("UserPrefs", MODE_PRIVATE).edit();
-                                                editor.putBoolean("isEmailVerified", false);
-                                                editor.apply();
-                                                mAuth.getCurrentUser().reload().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                        if (mAuth.getCurrentUser().isEmailVerified()) {
-                                                            // Email is verified, allow user to log in
-                                                            Intent intent = new Intent(getApplicationContext(),Login.class);
-                                                            startActivity(intent);
-                                                            finish();
-                                                        }
+                    if(TextUtils.isEmpty(email)){
+                        StyleableToast.makeText(Registration.this,"Please enter your email",Toast.LENGTH_SHORT,R.style.warningToast).show();
+                        return;
+                    }
+                    if(TextUtils.isEmpty(password)){
+                        StyleableToast.makeText(Registration.this,"Please enter a minimum 6 character password",Toast.LENGTH_SHORT,R.style.warningToast).show();
+                        return;
+                    }
+                    if(TextUtils.isEmpty(name)){
+                        StyleableToast.makeText(Registration.this,"Please enter your name",Toast.LENGTH_SHORT,R.style.warningToast).show();
+                        return;
+                    }
+                    if(TextUtils.isEmpty(contact)){
+                        StyleableToast.makeText(Registration.this,"Please enter your contact",Toast.LENGTH_SHORT,R.style.warningToast).show();
+                        return;
+                    }
+
+                    userRef.child("customer_name").setValue(name);
+                    userRef.child("email_id").setValue(email);
+                    userRef.child("contact_number").setValue(contact);
+
+                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressBar.setVisibility(View.GONE);
+                            if (task.isSuccessful()) {
+                                mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            StyleableToast.makeText(Registration.this, "Account created.Please verify your email id",
+                                                    Toast.LENGTH_SHORT,R.style.successToast).show();
+                                            SharedPreferences.Editor editor = getSharedPreferences("UserPrefs", MODE_PRIVATE).edit();
+                                            editor.putBoolean("isEmailVerified", false);
+                                            editor.apply();
+                                            mAuth.getCurrentUser().reload().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (mAuth.getCurrentUser().isEmailVerified()) {
+                                                        // Email is verified, allow user to log in
+                                                        Intent intent = new Intent(getApplicationContext(),Login.class);
+                                                        startActivity(intent);
+                                                        finish();
                                                     }
-                                                });
-                                            }
-                                            else{
-                                                StyleableToast.makeText(Registration.this, "Authentication failed.",
-                                                        Toast.LENGTH_SHORT,R.style.failureToast).show();
-                                            }
+                                                }
+                                            });
                                         }
-                                    });
-                                }
-                                else {
-                                    // If sign in fails, display a message to the user.
-                                    StyleableToast.makeText(Registration.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT,R.style.failureToast).show();
-                                }
+                                        else{
+                                            StyleableToast.makeText(Registration.this, "Authentication failed.",
+                                                    Toast.LENGTH_SHORT,R.style.failureToast).show();
+                                        }
+                                    }
+                                });
                             }
-                        });
-            }
-        });
-
+                            else {
+                                // If sign in fails, display a message to the user.
+                                StyleableToast.makeText(Registration.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT,R.style.failureToast).show();
+                            }
+                        }
+                    });
+                }
+            });
+        }
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.light_orange));
     }
 }

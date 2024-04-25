@@ -74,8 +74,9 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
     }
 
     public void getOrderStatus(String restaurant_id , String orderId,@NonNull UserOrderHistory_myViewHolder holder){
-        Log.d("Rest-id-order-status",restaurant_id);
-        Log.d("Order-id-order-status",orderId);
+        if(holder.orderStatus.getText().toString().equals("Takeaway successful")){
+            holder.updateStatusButton.setVisibility(View.GONE);
+        }
         DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id).child("Live Orders").child(orderId);
         orderRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -103,6 +104,7 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
         if(holder.orderStatus.getText().toString().equals("Ready for Pickup")){
             order_status = "Takeaway successful";
             orderRef.child("orderStatus").setValue(order_status);
+            holder.updateStatusButton.setVisibility(View.GONE);
             holder.orderStatus.setText(order_status);
 
             DatabaseReference restRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id);

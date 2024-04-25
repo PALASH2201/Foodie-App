@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.github.muddz.styleabletoast.StyleableToast;
+import soup.neumorphism.NeumorphCardView;
 
 public class TimeSlotDetails_myAdapter extends RecyclerView.Adapter<TimeSlot_MyViewHolder> {
     private final Context context;
@@ -165,7 +166,7 @@ class TimeSlot_MyViewHolder extends RecyclerView.ViewHolder{
     CheckBox selectedTimeSlot_checkBox;
     Button editButton , deleteButton;
      TextView time_slot_info , available_slot_info ,day;
-     CardView time_slot_card ;
+     NeumorphCardView time_slot_card ;
     public TimeSlot_MyViewHolder(@NonNull View itemView){
         super(itemView);
         day = itemView.findViewById(R.id.day);

@@ -2,11 +2,14 @@ package com.example.loginpage;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -22,6 +25,8 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 public class VendorOTP extends AppCompatActivity {
 
@@ -39,6 +44,11 @@ public class VendorOTP extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_otp);
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.light_orange));
 
         otpInput = findViewById(R.id.login_otp);
         nextBtn = findViewById(R.id.login_next_btn);
@@ -75,7 +85,7 @@ public class VendorOTP extends AppCompatActivity {
 
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
-                                Toast.makeText(VendorOTP.this,"OTP verification failed",Toast.LENGTH_SHORT).show();
+                                StyleableToast.makeText(VendorOTP.this,"OTP verification failed",Toast.LENGTH_SHORT,R.style.failureToast).show();
                                 setInProgress(false);
                             }
 
@@ -84,7 +94,7 @@ public class VendorOTP extends AppCompatActivity {
                                 super.onCodeSent(s, forceResendingToken);
                                 verificationCode = s;
                                 resendingToken = forceResendingToken;
-                                Toast.makeText(VendorOTP.this,"OTP sent successfully",Toast.LENGTH_SHORT).show();
+                                StyleableToast.makeText(VendorOTP.this,"OTP sent successfully",Toast.LENGTH_SHORT,R.style.successToast).show();
                                 setInProgress(false);
                             }
                         });
@@ -115,7 +125,7 @@ public class VendorOTP extends AppCompatActivity {
                 intent.putExtra("phone", phoneNumber);
                 startActivity(intent);
             } else {
-                Toast.makeText(VendorOTP.this,"OTP verification failed",Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(VendorOTP.this,"OTP verification failed",Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }

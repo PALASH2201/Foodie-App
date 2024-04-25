@@ -171,7 +171,7 @@ public class Categories_myAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(context,"Database error",Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -186,7 +186,7 @@ public class Categories_myAdapter extends RecyclerView.Adapter<MyViewHolder> {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                StyleableToast.makeText(context,"Database error in retrieving restaurant name",Toast.LENGTH_SHORT,R.style.failureToast).show();
+
             }
         });
     }

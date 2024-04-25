@@ -86,7 +86,7 @@
         <activity
             android:name=".Vendor_menu_detail"
             android:exported="false"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/Theme.Material3.Light.NoActionBar"/>
         <activity
             android:name=".VendorMenu_viewer"
             android:exported="false"

@@ -27,6 +27,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.muddz.styleabletoast.StyleableToast;
+
 public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser user;
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(MainActivity.this,"No restaurant found!",Toast.LENGTH_SHORT).show();
+
             }
         });
 

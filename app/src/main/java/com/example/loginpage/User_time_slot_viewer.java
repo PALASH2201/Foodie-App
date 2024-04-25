@@ -3,11 +3,14 @@ package com.example.loginpage;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -63,6 +66,10 @@ public class User_time_slot_viewer extends AppCompatActivity {
 
         String day = findDay();
         HandleDatabase(day,restaurant_name,restaurant_id);
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.light_orange));
     }
     public void HandleDatabase(String day,String restaurant_name,String restaurant_id){
         DatabaseReference timeSlotsRef = FirebaseDatabase.getInstance().getReference("time_slots").child(day).child(restaurant_name);

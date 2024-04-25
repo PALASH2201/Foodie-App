@@ -12,7 +12,7 @@
         android:id="@+id/btn_register"
         android:layout_width="186dp"
         android:layout_height="66dp"
-        android:layout_marginBottom="168dp"
+        android:layout_marginBottom="136dp"
         android:backgroundTint="#FF5722"
         android:shadowColor="#00FFFFFF"
         android:shadowRadius="9"
@@ -24,10 +24,11 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pass_reg"
         app:layout_constraintVertical_bias="1.0" />
+
 
     <TextView
         android:id="@+id/loginNow"
@@ -35,6 +36,7 @@
         android:layout_height="48dp"
         android:clickable="true"
         android:focusable="true"
+        android:fontFamily="@font/concert_one"
         android:gravity="center"
         android:text="Click to Login"
         android:textColor="#121010"
@@ -42,12 +44,11 @@
         android:textColorHint="#000000"
         android:textColorLink="#000000"
         android:textSize="26sp"
-        android:fontFamily="@font/concert_one"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_register"
-        app:layout_constraintVertical_bias="0.151"
+        app:layout_constraintVertical_bias="0.137"
         tools:ignore="HardcodedText,TextSizeCheck" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -56,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="480dp"
+        android:layout_marginBottom="440dp"
         android:isScrollContainer="false"
         android:nestedScrollingEnabled="false"
         android:overScrollMode="ifContentScrolls"
@@ -94,7 +95,6 @@
             android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_reg"
         android:layout_width="0dp"
@@ -116,10 +116,10 @@
         app:hintTextColor="#FF4900"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameLayout"
-        app:layout_constraintVertical_bias="0.094"
+        app:layout_constraintVertical_bias="0.244"
         app:placeholderTextColor="#070707"
         app:prefixTextColor="#F30606"
         app:suffixTextColor="#000000"
@@ -131,13 +131,13 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/baseline_contact_mail_24"
             android:drawablePadding="10dp"
+            android:fontFamily="@font/epilogue_semibold"
             android:hint="@string/email"
             android:inputType="text|textEmailAddress|textAutoComplete|textAutoCorrect"
             android:scrollbarAlwaysDrawHorizontalTrack="false"
             android:scrollHorizontally="false"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:fontFamily="@font/epilogue_semibold"
             android:textColor="#000000"
             android:textColorHighlight="#FDD835"
             android:textColorHint="#757575"
@@ -151,9 +151,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="300dp"
         android:isScrollContainer="false"
         android:nestedScrollingEnabled="false"
         android:overScrollMode="ifContentScrolls"
@@ -167,26 +166,24 @@
         app:hintEnabled="true"
         app:hintTextAppearance="@style/MyHintTextAppearance"
         app:hintTextColor="#FF4900"
-        app:layout_constraintBottom_toTopOf="@id/pass_reg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/email_reg"
-        app:layout_constraintVertical_bias="0.0"
         app:suffixTextColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/contact_reg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start|center_vertical"
-            android:hint="@string/contact_input"
-            android:outlineProvider="none"
-            android:padding="16dp"
-            android:inputType="phone|number"
-            android:fontFamily="@font/epilogue_semibold"
             android:drawableStart="@drawable/call_24"
             android:drawablePadding="10dp"
+            android:fontFamily="@font/epilogue_semibold"
+            android:gravity="start|center_vertical"
+            android:hint="@string/contact_input"
+            android:inputType="phone|number"
+            android:outlineProvider="none"
+            android:padding="16dp"
             android:shadowColor="@color/black"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
@@ -199,7 +196,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="264dp"
+        android:layout_marginBottom="220dp"
         android:isScrollContainer="false"
         android:nestedScrollingEnabled="false"
         android:overScrollMode="ifContentScrolls"
@@ -234,12 +231,12 @@
             android:drawableStart="@drawable/lock_icon"
             android:drawablePadding="10dp"
             android:drawingCacheQuality="low"
+            android:fontFamily="@font/epilogue_semibold"
             android:foregroundTint="#000000"
             android:hint="@string/password"
             android:inputType="text|textPassword|textNoSuggestions"
             android:password="true"
             android:phoneNumber="false"
-            android:fontFamily="@font/epilogue_semibold"
             android:scrollbarAlwaysDrawHorizontalTrack="false"
             android:scrollHorizontally="false"
             android:selectAllOnFocus="true"
@@ -252,29 +249,17 @@
             tools:ignore="Deprecated" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="286dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="100dp"
-        android:background="#FFFFFF"
-        android:fontFamily="casual"
-        android:gravity="center"
-        android:rotationY="16"
-        android:shadowColor="#E4AC350F"
-        android:shadowDy="9"
-        android:text="@string/appname"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#F44336"
-        android:textColorHighlight="#F40B5B"
-        android:textColorHint="#000000"
-        android:textSize="60sp"
-        android:textStyle="bold"
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="196dp"
+        android:layout_height="160dp"
+        android:src="@drawable/foodease"
+        app:layout_constraintBottom_toTopOf="@+id/nameLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints,TextSizeCheck" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -289,7 +274,7 @@
     <FrameLayout
         android:layout_width="414dp"
         android:layout_height="70dp"
-        android:background="@color/orange"
+        android:background="@color/light_orange"
         android:foregroundGravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -302,7 +287,7 @@
             android:gravity="center"
             android:fontFamily="@font/cinzel_decorative_bold"
             android:text="@string/register_header"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/dark_orange"
             android:textSize="34sp" />
     </FrameLayout>
 

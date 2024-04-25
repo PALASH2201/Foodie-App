@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:layout_margin="20dp"
     android:weightSum="100"
-  android:background="@color/beige"
+  android:background="@color/light_orange"
     tools:context=".VendorLogin">
 
 
@@ -59,6 +58,7 @@
         app:tint="@color/black" />
 
     <TextView
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Enter mobile number"
@@ -69,6 +69,7 @@
         android:layout_weight="5"/>
 
     <LinearLayout
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -98,6 +99,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center_vertical"

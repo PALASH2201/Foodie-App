@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -166,6 +169,10 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
 
             }
         });
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.orange_btn_color));
     }
 
     @Override
@@ -235,7 +242,7 @@ public class Mess_1 extends AppCompatActivity implements NavigationView.OnNaviga
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                StyleableToast.makeText(Mess_1.this, "Failed to fetch restaurant ID: " + error.getMessage(), Toast.LENGTH_SHORT,R.style.failureToast).show();
+
             }
         });
     }

@@ -25,32 +25,37 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <soup.neumorphism.NeumorphTextView
-            style="@style/Widget.Neumorph.TextView"
-            android:id="@+id/mess_name"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="2dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="35sp"
-            android:fontFamily="@font/bubblegum_sans"
-            android:textStyle="bold" />
-
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <soup.neumorphism.NeumorphTextView
+                android:id="@+id/mess_name"
+                style="@style/Widget.Neumorph.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center"
+                android:layout_margin="2dp"
+                android:elevation="5dp"
+                android:fontFamily="@font/bubblegum_sans"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:orientation="vertical"
-                android:visibility="visible" />
-        </FrameLayout>
+                android:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@id/mess_name"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
