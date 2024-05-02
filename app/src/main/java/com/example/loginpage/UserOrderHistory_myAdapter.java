@@ -16,13 +16,20 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import io.github.muddz.styleabletoast.StyleableToast;
@@ -68,6 +75,35 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
         holder.dish_details_recycler_view.setAdapter(adapter);
 
         holder.updateStatusButton.setOnClickListener(v -> updateStatus(orderHistoryList.get(position).getRest_id(),orderHistoryList.get(position).getOrderId(),holder));
+        holder.cancelOrderButton.setOnClickListener(v -> {
+            if(canCancelOrder(orderHistoryList.get(position).getOrderTime(),orderHistoryList.get(position).getTimeSlot())){
+                cancelOrder(orderHistoryList.get(position).getRest_id(),orderHistoryList.get(position).getOrderId());
+            }else{
+                StyleableToast.makeText(context,"Cannot cancel order at this time!",Toast.LENGTH_SHORT,R.style.warningToast).show();
+            }
+        });
+    }
+
+    public boolean canCancelOrder(String orderTime, String timeSlot) {
+        try {
+            boolean isPM = false;
+            Date currentTime = new Date();
+            String[] timeParts = timeSlot.split(" ");
+            String startTimeString = timeParts[0];
+            if(timeParts[3].equals("pm")){
+                isPM = true;
+            }
+            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm", Locale.getDefault());
+            Date startTime = timeFormat.parse(startTimeString.replaceAll("[^0-9:]", ""));
+            long cancellationTimeMillis = startTime.getTime() - (30 * 60 * 1000);
+            if (isPM) {
+                cancellationTimeMillis += 12 * 60 * 60 * 1000;
+            }
+            return currentTime.getTime() < cancellationTimeMillis;
+        } catch (ParseException e) {
+            Log.d("Order Cancel Status","Error");
+            return false;
+        }
     }
 
     @Override
@@ -84,6 +120,7 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
                     order_status = snapshot.child("orderStatus").getValue(String.class);
                     holder.orderStatus.setText(order_status);
                     if(order_status.equals("Ready for Pickup")){
+                        holder.cancelOrderButton.setVisibility(View.GONE);
                         holder.orderStatus.setBackgroundColor(ContextCompat.getColor(context,R.color.green));
                     }
                     else if(order_status.equals("Pending")){
@@ -95,6 +132,21 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 StyleableToast.makeText(context,"Database error! Try Again",Toast.LENGTH_LONG,R.style.failureToast).show();
+            }
+        });
+    }
+
+    public void cancelOrder(String restaurant_id , String orderId){
+        DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference("restaurants").child(restaurant_id).child("Live Orders").child(orderId);
+        orderRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                StyleableToast.makeText(context,"Your order is successfully cancelled. Please wait for your refund",Toast.LENGTH_SHORT,R.style.successToast).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                StyleableToast.makeText(context,"Could not cancel you order!",Toast.LENGTH_SHORT,R.style.failureToast).show();
             }
         });
     }
@@ -149,11 +201,12 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
 
 class UserOrderHistory_myViewHolder extends  RecyclerView.ViewHolder{
     TextView orderTime , orderDay ,chosen_time_slot,orderId,customerBill,orderStatus,chosen_restaurant;
-    Button updateStatusButton;
+    Button updateStatusButton,cancelOrderButton;
     LinearLayout orderDetails;
     RecyclerView dish_details_recycler_view;
     public UserOrderHistory_myViewHolder(@NonNull View itemView) {
         super(itemView);
+        cancelOrderButton = itemView.findViewById(R.id.cancelOrderButton);
         chosen_restaurant = itemView.findViewById(R.id.chosen_restaurant);
         updateStatusButton = itemView.findViewById(R.id.updateStatusButton);
         orderStatus = itemView.findViewById(R.id.orderStatus);

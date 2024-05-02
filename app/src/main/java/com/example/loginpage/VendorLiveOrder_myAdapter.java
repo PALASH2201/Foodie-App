@@ -218,7 +218,6 @@ public class VendorLiveOrder_myAdapter extends RecyclerView.Adapter<VendorLiveOr
                 startHour += 12;
             }
 
-            //Log.d("Start Hour",startHour+"");
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.HOUR_OF_DAY, startHour);
             calendar.set(Calendar.MINUTE, startMinute);

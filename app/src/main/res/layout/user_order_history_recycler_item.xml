@@ -109,18 +109,38 @@
                     android:fontFamily="@font/epilogue_semibold"
                     android:text="Total Bill :"
                     android:textSize="18sp" />
-
-                <Button
-                    android:textColor="@color/black"
-                    android:backgroundTint="@color/orange"
+                
+                <LinearLayout
                     android:layout_margin="5dp"
-                    android:layout_gravity="center"
-                    android:id="@+id/updateStatusButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Update Order Status"
-                    android:onClick="onUpdateStatusButtonClick" />
+                    android:orientation="horizontal">
 
+                    <Button
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/orange"
+                        android:layout_margin="5dp"
+                        android:layout_gravity="left"
+                        android:id="@+id/updateStatusButton"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Update Order Status"
+                        android:onClick="onUpdateStatusButtonClick" />
+
+
+                    <Button
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/orange"
+                        android:layout_margin="5dp"
+                        android:layout_gravity="end"
+                        android:id="@+id/cancelOrderButton"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Cancel Order"/>
+
+                </LinearLayout>
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
