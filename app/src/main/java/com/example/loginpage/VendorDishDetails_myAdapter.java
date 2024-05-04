@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.muddz.styleabletoast.StyleableToast;
+import soup.neumorphism.NeumorphCardView;
 
 public class VendorDishDetails_myAdapter extends RecyclerView.Adapter<VendorDishDetails_MyViewHolder> {
 
@@ -197,7 +198,7 @@ class VendorDishDetails_MyViewHolder extends RecyclerView.ViewHolder{
 
     ImageView recImage ;
     TextView recName;
-    CardView recCard ;
+    NeumorphCardView recCard ;
     ImageView arrowIcon;
     ConstraintLayout additionalDetailsLayout;
     TextView recDishPrice;
