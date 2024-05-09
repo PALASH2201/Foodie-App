@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/recCard"
-    app:cardCornerRadius="15dp"
+    app:cardCornerRadius="20dp"
     style="@style/Widget.Neumorph.CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -32,15 +32,20 @@
             android:textColor="@color/black"
             android:textSize="34sp" />
 
-        <ImageView
-            android:id="@+id/recImage"
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="20dp"
             android:layout_width="377dp"
             android:layout_height="209dp"
-            android:layout_marginTop="20dp"
-            android:contentDescription="@string/dish_image"
-            android:scaleType="centerCrop"
-            android:src="@drawable/uploading" />
+            app:cardCornerRadius="20dp">
 
+            <ImageView
+                android:id="@+id/recImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/dish_image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/uploading" />
+        </androidx.cardview.widget.CardView>
         <!-- Quantity Selector -->
         <LinearLayout
             android:layout_width="match_parent"

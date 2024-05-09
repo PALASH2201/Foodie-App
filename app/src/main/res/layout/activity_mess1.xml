@@ -9,7 +9,7 @@
     tools:openDrawer="start"
     android:id="@+id/drawer_layout"
     style="@style/Theme.Material3.Light.NoActionBar"
-    android:background="@color/light_orange">
+    android:background="@color/beige">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,7 +54,8 @@
                 android:layout_height="0dp"
                 android:orientation="vertical"
                 android:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@id/mess_name"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mess_name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

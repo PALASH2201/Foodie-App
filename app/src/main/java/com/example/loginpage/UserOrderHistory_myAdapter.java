@@ -156,7 +156,8 @@ public class UserOrderHistory_myAdapter extends RecyclerView.Adapter<UserOrderHi
                  if(snapshot.exists()){
                      String old_revenue = snapshot.getValue(String.class);
                      assert old_revenue != null;
-                     int new_revenue = Integer.parseInt(old_revenue) - Integer.parseInt(orderHistoryList.get(position).getTotalBill());
+                     String[] orderAmt = orderHistoryList.get(position).getTotalBill().split("Rs: ");
+                     Double new_revenue = Double.parseDouble(old_revenue) - Double.parseDouble(orderAmt[1]);
                      billRef.setValue(String.valueOf(new_revenue));
                  }
              }

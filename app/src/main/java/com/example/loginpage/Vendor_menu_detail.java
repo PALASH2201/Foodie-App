@@ -116,6 +116,7 @@ public class Vendor_menu_detail extends AppCompatActivity {
                     for (DataSnapshot dishSnapshot : dataSnapshot.getChildren()) {
                         String dishId = dishSnapshot.getValue(String.class);
                         dishIds.add(dishId);
+                        assert dishId != null;
                         Log.d("DishID",dishId);
                     }
                     Log.d("List Length" , dishIds.size()+"");

@@ -51,5 +51,7 @@
     <string name="logout_btn">Logout</string>
     <string name="vendor_analytics">Your analytics</string>
     <string name="vendor_pending_orders">Pending Orders</string>
+    <string name="edit_btn">Edit</string>
+    <string name="delete_btn">Delete</string>
 
 </resources>
